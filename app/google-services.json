@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "703195019360",
+    "firebase_url": "https://projetotcc-554db.firebaseio.com",
+    "project_id": "projetotcc-554db",
+    "storage_bucket": "projetotcc-554db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703195019360:android:fb3e4572ca7c1fbb",
+        "android_client_info": {
+          "package_name": "com.example.projetotcc10"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703195019360-p0026hrbe9suvhvij98kros2mrtfp2en.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.projetotcc10",
+            "certificate_hash": "07613aa72708e15b300dfee4d674eb4a616d173d"
+          }
+        },
+        {
+          "client_id": "703195019360-67645q65aerdlmotvcrm95vuvgbq17i2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQR7K1MCpwSlnulP75xkN1Sp6UH8N0cW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703195019360-67645q65aerdlmotvcrm95vuvgbq17i2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
