@@ -22,34 +22,23 @@
 
     <EditText
         android:id="@+id/editAnoGrades"
-        android:layout_width="300px"
+        android:layout_width="200px"
         android:layout_height="100px"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="100dp"
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editSemestreGrades"
-        android:layout_width="120px"
-        android:layout_height="100px"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:ems="10"
-        android:inputType="numberSigned"
-        app:layout_constraintStart_toEndOf="@+id/editAnoGrades"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Spinner
         android:id="@+id/spinnerCursoGrades"
         android:layout_width="150px"
         android:layout_height="100px"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="100dp"
         android:background="@color/colorPrimary"
-        app:layout_constraintStart_toEndOf="@+id/editSemestreGrades"
+        app:layout_constraintStart_toEndOf="@+id/spinnerSemestre"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -57,12 +46,20 @@
         android:layout_width="200px"
         android:layout_height="100px"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="88dp"
         android:background="@color/design_default_color_primary"
         android:text="Selecionar arquivo"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintBottom_toTopOf="@+id/uparGrade"
-        app:layout_constraintStart_toStartOf="@+id/editAnoGrades"
-        app:layout_constraintTop_toBottomOf="@+id/editSemestreGrades" />
+        app:layout_constraintStart_toStartOf="@+id/editAnoGrades" />
+
+    <Spinner
+        android:id="@+id/spinnerSemestre"
+        android:layout_width="200px"
+        android:layout_height="100px"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="100dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toEndOf="@+id/editAnoGrades"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
