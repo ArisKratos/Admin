@@ -30,18 +30,19 @@ public class ManterGrades extends AppCompatActivity {
         setContentView(R.layout.activity_manter_grades);
 
 
-         String[] semestres = new String[] {"1 semestre", "2 semestre"};
+         String[] ArraySemestres = new String[] {"1 semestre", "2 semestre"};
 
 
 
 
         linkUparGrade = findViewById(R.id.textSelecionarArquivo);
-        anoTurma = findViewById(R.id.editAnoGrades);
-        semestre = findViewById(R.id.spinnerSemestre);
+        anoTurma = findViewById(R.id.editAnoTurmaGrades);
+        semestre = findViewById(R.id.spinnerSemestreGrades);
         buttonUparGrade = findViewById(R.id.uparGrade);
+        cursos = findViewById(R.id.spinnerCursoGrades);
 
 
-        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, semestres);
+        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArraySemestres);
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         semestre.setAdapter(spinnerAdapter);
@@ -74,6 +75,8 @@ public class ManterGrades extends AppCompatActivity {
 
 
        });
+
+
 
 
     }

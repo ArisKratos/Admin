@@ -26,12 +26,11 @@
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="8dp"
-        android:text="Enviar para todo"
+        android:layout_marginTop="30dp"
+        android:text="Enviar para todos"
         app:layout_constraintBottom_toTopOf="@+id/editMensagem"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editAnoTurma" />
+        app:layout_constraintTop_toBottomOf="@+id/editAnoTurmaMsg" />
 
     <Button
         android:id="@+id/buttonEnviarMensagem"
@@ -47,36 +46,36 @@
         app:layout_constraintTop_toBottomOf="@+id/editMensagem" />
 
     <EditText
-        android:id="@+id/editAnoTurma"
-        android:layout_width="300px"
+        android:id="@+id/editAnoTurmaMsg"
+        android:layout_width="200px"
         android:layout_height="100px"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="100dp"
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editSemestre"
-        android:layout_width="120px"
-        android:layout_height="100px"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toEndOf="@+id/editAnoTurma"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="150px"
+        android:id="@+id/spinnerCursoMsg"
+        android:layout_width="200px"
         android:layout_height="100px"
         android:layout_marginStart="8dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editSemestre"
+        app:layout_constraintHorizontal_bias="0.246"
+        app:layout_constraintStart_toEndOf="@+id/spinnerSemestreMsg"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerSemestreMsg"
+        android:layout_width="200px"
+        android:layout_height="100px"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="100dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toEndOf="@+id/editAnoTurmaMsg"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
