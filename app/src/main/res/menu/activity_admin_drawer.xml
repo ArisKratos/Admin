@@ -16,6 +16,10 @@
             android:id="@+id/manter_curso"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_manter_curso" />
+        <item
+            android:id="@+id/manter_grades"
+            android:icon="@drawable/common_google_signin_btn_icon_dark_focused"
+            android:title="@string/menu_manter_grades" />
     </group>
 
     <item android:title="Communicate">

@@ -98,8 +98,13 @@ public class Admin extends AppCompatActivity
 
                 Intent intent = new Intent(this, MandarMensagem.class);
                 startActivity(intent);
+            } else if (id == R.id.manter_grades) {
 
-        } else if (id == R.id.admin_acoes) {
+                Intent intent = new Intent(this, ManterGrades.class);
+                startActivity(intent);
+
+
+            } else if (id == R.id.admin_acoes) {
 
         }
 
