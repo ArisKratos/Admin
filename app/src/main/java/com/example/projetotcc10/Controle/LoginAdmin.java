@@ -12,8 +12,8 @@ import com.example.projetotcc10.R;
 
 public class LoginAdmin extends AppCompatActivity {
 
-    private EditText emailAdmin, senhaAdmin;
-    private Button entrar;
+    private EditText aliasEmailAdmin, aliasSenhaAdmin;
+    private Button aliasBtnLogin;
 
 
     @Override
@@ -22,10 +22,10 @@ public class LoginAdmin extends AppCompatActivity {
         setContentView(R.layout.activity_login_admin);
 
 
-        entrar = findViewById(R.id.Button_Admin_Login);
+       aliasBtnLogin = findViewById(R.id.buttonAdminLogin);
 
 
-        entrar.setOnClickListener(new View.OnClickListener() {
+       aliasBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
