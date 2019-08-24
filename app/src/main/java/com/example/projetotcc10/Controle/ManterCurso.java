@@ -16,10 +16,10 @@ import java.util.List;
 public class ManterCurso extends AppCompatActivity {
 
 
-    ListView listCursos;
-    EditText curso;
-    Button buttoncadastrarCurso;
-    List<Curso> cursos;
+   // ListView listCursos;
+   private EditText aliasEditCurso;
+    private Button buttoncadastrarCurso;
+    private List<Curso> cursos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +27,9 @@ public class ManterCurso extends AppCompatActivity {
         setContentView(R.layout.activity_manter_curso);
 
 
-         curso = findViewById(R.id.editAdminEmail);
-         buttoncadastrarCurso = findViewById(R.id.Button_Cadastrar_Curso);
-         listCursos = findViewById(R.id.ListaProfessores);
+         aliasEditCurso= findViewById(R.id.editNomeCurso);
+         buttoncadastrarCurso = findViewById(R.id.buttonCadastrarCurso);
+
 
 
         buttoncadastrarCurso.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +44,7 @@ public class ManterCurso extends AppCompatActivity {
 
     }
 
-    private void limparCampos() {
+    /* private void limparCampos() {
         curso.setText("");
     }
 
@@ -54,6 +54,6 @@ public class ManterCurso extends AppCompatActivity {
         listCursos.setAdapter(adaptador);
         adaptador.notifyDataSetChanged();
 
-    }
+    }*/
 
 }

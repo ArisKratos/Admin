@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.projetotcc10.Controle.Admin;
 import com.example.projetotcc10.R;
 
 public class LoginAdmin extends AppCompatActivity {
@@ -22,7 +21,7 @@ public class LoginAdmin extends AppCompatActivity {
         setContentView(R.layout.activity_login_admin);
 
 
-       aliasBtnLogin = findViewById(R.id.buttonAdminLogin);
+       aliasBtnLogin = findViewById(R.id.buttonCadastrarAdm);
 
 
        aliasBtnLogin.setOnClickListener(new View.OnClickListener() {

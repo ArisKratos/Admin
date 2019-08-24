@@ -18,8 +18,8 @@ public class ManterProfessor extends AppCompatActivity {
 
 
     EditText nomeProfessor, senhaProfessor;
-    ListView listProf;
-    List<Professor> professores;
+    // ListView listProf;
+  //  List<Professor> professores;
     Button buttonCadastarProf;
 
     @Override
@@ -28,10 +28,10 @@ public class ManterProfessor extends AppCompatActivity {
         setContentView(R.layout.activity_manter_professor);
 
 
-        buttonCadastarProf = findViewById(R.id.Button_Cadastrar_Professor);
+        buttonCadastarProf = findViewById(R.id.buttonCadastrarProfessor);
         nomeProfessor = findViewById(R.id.editNomeProfessor);
         senhaProfessor = findViewById(R.id.editSenhaProfessor);
-        listProf = findViewById(R.id.ListaProfessores);
+       // listProf = findViewById(R.id.ListaProfessores);
 
 
 
@@ -44,11 +44,12 @@ public class ManterProfessor extends AppCompatActivity {
         });
 
     }
-    private void carregalistview(){
+  /*  private void carregalistview(){
 
         ArrayAdapter<Professor> adaptador = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, professores);
         listProf.setAdapter(adaptador);
         adaptador.notifyDataSetChanged();
 
     }
+    */
 }

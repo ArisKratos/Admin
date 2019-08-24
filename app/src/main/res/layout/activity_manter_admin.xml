@@ -4,56 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgColor"
     tools:context=".Controle.ManterAdmin">
 
-    <Button
-        android:id="@+id/buttonCadastrarAdmin"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/cadastrar"
-        android:textColor="@color/cardview_light_background"
-        android:background="#31D30F"
-        app:layout_constraintEnd_toEndOf="@+id/editSenhaAdmin"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="@+id/editSenhaAdmin"
-        app:layout_constraintTop_toBottomOf="@+id/editSenhaAdmin" />
 
     <EditText
-        android:id="@+id/editAdminEmail"
+        android:id="@+id/editNomeAdmin"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_edittext_rounded"
         android:ems="10"
-        android:hint="E-mail"
-        android:inputType="textPersonName"
+        android:hint="Nome"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:id="@+id/editEmailAdmin"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_edittext_rounded"
+        android:ems="10"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/editSenhaAdmin"
+        app:layout_constraintEnd_toEndOf="@+id/editNomeAdmin"
+        app:layout_constraintStart_toStartOf="@+id/editNomeAdmin"
+        app:layout_constraintTop_toBottomOf="@+id/editNomeAdmin" />
+    <EditText
         android:id="@+id/editSenhaAdmin"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_edittext_rounded"
         android:ems="10"
         android:hint="Senha"
+        android:paddingLeft="8dp"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editAdminEmail"
-        app:layout_constraintStart_toStartOf="@+id/editAdminEmail"
-        app:layout_constraintTop_toBottomOf="@+id/editAdminEmail" />
+        app:layout_constraintEnd_toEndOf="@+id/editEmailAdmin"
+        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintStart_toStartOf="@+id/editEmailAdmin"
+        app:layout_constraintTop_toBottomOf="@+id/editEmailAdmin" />
+    <Button
+        android:id="@+id/buttonCadastrarAdmin"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_button_rounded"
+        android:text="@string/cadastrar"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintEnd_toEndOf="@+id/editSenhaAdmin"
+        app:layout_constraintStart_toStartOf="@+id/editSenhaAdmin"
+        app:layout_constraintTop_toBottomOf="@+id/editSenhaAdmin" />
 
-    <ListView
-        android:id="@+id/listAdmins"
-        android:layout_width="411dp"
-        android:layout_height="446dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toEndOf="@+id/buttonCadastrarAdmin"
-        app:layout_constraintStart_toStartOf="@+id/buttonCadastrarAdmin"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCadastrarAdmin" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonActionVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="189dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCadastrarAdmin"
+        app:srcCompat="?attr/homeAsUpIndicator" />
+
+
 </android.support.constraint.ConstraintLayout>

@@ -4,44 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgColor"
     tools:context=".Controle.ManterCurso">
 
 
-    <Button
-        android:id="@+id/Button_Cadastrar_Curso"
-        android:layout_width="400px"
-        android:layout_height="150px"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:text="cadastrar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editAdminEmail" />
 
     <EditText
-        android:id="@+id/editAdminEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="8dp"
+        android:id="@+id/editNomeCurso"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_edittext_rounded"
         android:ems="10"
-        android:hint="Nome"
-        android:inputType="textPersonName"
+        android:hint="Curso"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
-        android:id="@+id/ListaProfessores"
-        android:layout_width="395dp"
-        android:layout_height="457dp"
-        android:layout_marginTop="44dp"
-        android:background="@drawable/ic_launcher_background"
-        app:layout_constraintTop_toBottomOf="@+id/Button_Cadastrar_Curso"
-        tools:layout_editor_absoluteX="8dp" />
+
+
+    <Button
+        android:id="@+id/buttonCadastrarCurso"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_button_rounded"
+        android:text="@string/cadastrar"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintEnd_toEndOf="@+id/editNomeCurso"
+        app:layout_constraintStart_toStartOf="@+id/editNomeCurso"
+        app:layout_constraintTop_toBottomOf="@+id/editNomeCurso" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonActionVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="189dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.388"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCadastrarCurso"
+        app:srcCompat="?attr/homeAsUpIndicator" />
 
 
 </android.support.constraint.ConstraintLayout>
