@@ -14,12 +14,14 @@ import com.example.projetotcc10.R;
 
 public class MandarMensagem extends AppCompatActivity {
 
-    EditText anoTurma, mensagem;
-    Spinner cursos;
-    Spinner semestre;
-    CheckBox checkSendForAll;
-    Button enviarMensagem;
-    Integer numeroSemestre;
+    private EditText anoTurma, mensagem;
+    private Spinner cursos;
+    private Spinner semestres;
+    private CheckBox checkSendForAll;
+    private Button enviarMensagem;
+    private Integer numeroSemestre;
+    private String nomeCurso;
+    private Integer anoTurmaNumero;
 
 
     @Override
@@ -27,11 +29,12 @@ public class MandarMensagem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mandar_mensagem);
 
-        String[] ArraySemestres = new String[] {"1 semestre", "2 semestre"};
+        String[] ArraySemestres = new String[] {"1", "2"};
+        String[] ArrayCursos = new String[]{"Informática", "Agropecuária"};
 
         anoTurma = findViewById(R.id.editAnoTurmaMsg);
         cursos = findViewById(R.id.spinnerCursoMsg);
-        semestre = findViewById(R.id.spinnerSemestreMsg);
+        semestres = findViewById(R.id.spinnerSemestreMsg);
         checkSendForAll = findViewById(R.id.checkSendAll);
         enviarMensagem = findViewById(R.id.buttonEnviarMensagem);
 
@@ -40,17 +43,22 @@ public class MandarMensagem extends AppCompatActivity {
 
 
 
-        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArraySemestres);
+        final ArrayAdapter<String> spinnerSemestres = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArraySemestres);
 
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        semestre.setAdapter(spinnerAdapter);
+        spinnerSemestres.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        semestres.setAdapter(spinnerSemestres);
+
+        final ArrayAdapter<String> spinnerCursos = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArrayCursos);
+
+        spinnerCursos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cursos.setAdapter(spinnerCursos);
 
 
          enviarMensagem.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
 
-                 switch (semestre.getSelectedItemPosition()){
+                 switch (semestres.getSelectedItemPosition()) {
 
                      case 0:
 
@@ -62,10 +70,49 @@ public class MandarMensagem extends AppCompatActivity {
 
                      default:
                  }
+                 switch (cursos.getSelectedItemPosition()) {
 
-                 Toast.makeText(getApplicationContext() , "semestre: " + numeroSemestre,Toast.LENGTH_SHORT).show();
+                     case 0:
+
+                         nomeCurso = spinnerCursos.getItem(0);
+                         break;
+                     case 1:
+                         nomeCurso = spinnerCursos.getItem(1);
+
+                         break;
+
+                     default:
+                 }
+                 try {
+
+
+                     if (anoTurma.getText().length() == 0) {
+                         anoTurma.setError("Precisa inserir \n o ano de ingresso\n da turma");
+
+
+                     } else {
+
+                         anoTurmaNumero = Integer.parseInt(anoTurma.getText().toString());
+                         if (anoTurmaNumero < 2000 || anoTurmaNumero > 2100) {
+                             anoTurma.setError("Ano inválido");
+                         } else {
+
+                             if (checkSendForAll.isChecked()) {
+                                 Toast.makeText(getApplicationContext(), "Semestre: " + numeroSemestre + "\nCurso: " + nomeCurso + "\nAno: " + anoTurmaNumero
+                                         + "\n Enviado para todos!", Toast.LENGTH_SHORT).show();
+                             } else {
+
+                                 Toast.makeText(getApplicationContext(), "Semestre: " + numeroSemestre + "\nCurso: " + nomeCurso + "\nAno: " + anoTurmaNumero, Toast.LENGTH_SHORT).show();
+                             }
+                         }
+
+                     }
+
+
+                 }catch (Exception e){
+                     e.printStackTrace();
+                 }
              }
-
 
          });
 

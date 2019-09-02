@@ -30,8 +30,8 @@ public class Admin extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getBaseContext(), MandarMensagem.class);
+                startActivity(intent);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -69,7 +69,7 @@ public class Admin extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);
@@ -82,9 +82,10 @@ public class Admin extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-            if (id == R.id.manter_admin) {
+        if (id == R.id.manter_admin) {
                 Intent intent = new Intent(this,ManterAdmin.class);
                 startActivity(intent);
+
 
         } else if (id == R.id.manter_professor) {
 

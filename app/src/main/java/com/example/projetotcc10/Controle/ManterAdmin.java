@@ -40,9 +40,7 @@ public class ManterAdmin extends AppCompatActivity {
 
         FloatingActionButton voltar = findViewById(R.id.buttonActionVoltar);
         voltar.setOnClickListener(new View.OnClickListener() {
-
             @Override
-
      public void onClick(View view) {
       onBackPressed();
      }

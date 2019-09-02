@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controle.ListaAdmin"></activity>
+
         <activity android:name=".Controle.ManterGrades" />
         <activity android:name=".Controle.MandarMensagem" />
         <activity android:name=".Controle.ManterAdmin" />

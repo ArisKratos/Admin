@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgColor"
     tools:context=".Controle.ManterGrades">
 
     <Button
@@ -12,9 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="144dp"
-        android:background="@color/colorPrimary"
-        android:text="upar"
+        android:layout_marginBottom="84dp"
+        android:background="@drawable/bg_button_rounded"
+        android:text="enviar"
+        android:textColor="@color/cardview_light_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -22,44 +24,65 @@
 
     <EditText
         android:id="@+id/editAnoTurmaGrades"
-        android:layout_width="200px"
-        android:layout_height="100px"
+        android:layout_width="130px"
+        android:layout_height="90px"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
+        android:hint="Ano"
         android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="parent"
+        android:maxLength="4"
+        android:textSize="23dp"
+        app:layout_constraintStart_toEndOf="@+id/spinnerCursoGrades"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinnerCursoGrades"
-        android:layout_width="200px"
-        android:layout_height="100px"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="100dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintStart_toEndOf="@+id/spinnerSemestreGrades"
+        android:layout_width="190px"
+        android:layout_height="80px"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/bg_spinner_rounded"
+        android:popupBackground="@drawable/bg_spinner_rounded"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textSelecionarArquivo"
         android:layout_width="200px"
-        android:layout_height="100px"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="88dp"
-        android:background="@color/design_default_color_primary"
+        android:layout_height="80px"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/bg_textview_rounded"
         android:text="Selecionar arquivo"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        app:layout_constraintBottom_toTopOf="@+id/uparGrade"
-        app:layout_constraintStart_toStartOf="@+id/editAnoTurmaGrades" />
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintStart_toEndOf="@+id/spinnerSemestreGrades"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonActionVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="189dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCadastrarProfessor"
+        app:srcCompat="?attr/homeAsUpIndicator" />
 
     <Spinner
         android:id="@+id/spinnerSemestreGrades"
-        android:layout_width="200px"
-        android:layout_height="100px"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="100dp"
-        android:background="@color/colorPrimary"
+        android:layout_width="50px"
+        android:layout_height="80px"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/bg_spinner_rounded"
+        android:popupBackground="@drawable/bg_spinner_rounded"
         app:layout_constraintStart_toEndOf="@+id/editAnoTurmaGrades"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -15,13 +15,14 @@ import com.example.projetotcc10.R;
 public class ManterGrades extends AppCompatActivity {
 
 
-    TextView linkUparGrade;
-    EditText anoTurma, semestreTurma;
-    Button buttonUparGrade;
-    Spinner cursos;
-    Spinner semestre;
-
-    Integer numeroSemestre;
+    private TextView linkUparGrade;
+    private EditText anoTurma;
+    private Button buttonUparGrade;
+    private Spinner cursos;
+    private Spinner semestres;
+    private String nomeCurso;
+    private Integer numeroSemestre;
+    private Integer anoTurmaNumero;
 
 
     @Override
@@ -30,22 +31,29 @@ public class ManterGrades extends AppCompatActivity {
         setContentView(R.layout.activity_manter_grades);
 
 
-         String[] ArraySemestres = new String[] {"1 semestre", "2 semestre"};
+         String[] ArraySemestres = new String[] {"1", "2"};
+         String[] ArrayCursos = new String[]{"Informática","Agropecuária"};
 
 
 
 
         linkUparGrade = findViewById(R.id.textSelecionarArquivo);
         anoTurma = findViewById(R.id.editAnoTurmaGrades);
-        semestre = findViewById(R.id.spinnerSemestreGrades);
+        semestres = findViewById(R.id.spinnerSemestreGrades);
         buttonUparGrade = findViewById(R.id.uparGrade);
         cursos = findViewById(R.id.spinnerCursoGrades);
 
 
-        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArraySemestres);
+        ArrayAdapter<String> spinnerSemestres = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArraySemestres);
 
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        semestre.setAdapter(spinnerAdapter);
+        spinnerSemestres.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        semestres.setAdapter(spinnerSemestres);
+
+
+        final ArrayAdapter<String> spinnerCursos = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArrayCursos);
+
+        spinnerCursos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cursos.setAdapter(spinnerCursos);
 
 
 
@@ -56,29 +64,57 @@ public class ManterGrades extends AppCompatActivity {
            public void onClick(View v) {
 
 
-             switch (semestre.getSelectedItemPosition()){
+               switch (semestres.getSelectedItemPosition()) {
 
-                 case 0:
+                   case 0:
 
-                    numeroSemestre = 1;
-                     break;
-                 case 1:
-                     numeroSemestre = 2;
-                     break;
+                       numeroSemestre = 1;
+                       break;
+                   case 1:
+                       numeroSemestre = 2;
+                       break;
 
-                 default:
-             }
-             Toast.makeText(getApplicationContext() , "semestre: " + numeroSemestre,Toast.LENGTH_SHORT).show();
+                   default:
+               }
+               switch (cursos.getSelectedItemPosition()) {
+
+                   case 0:
+
+                       nomeCurso = spinnerCursos.getItem(0);
+                       break;
+                   case 1:
+                       nomeCurso = spinnerCursos.getItem(1);
+
+                       break;
+
+                   default:
+               }
+               try {
+
+
+                   if (anoTurma.getText().length() == 0) {
+                       anoTurma.setError("Precisa inserir \n o ano de ingresso\n da turma");
+
+
+                   } else {
+
+                       anoTurmaNumero = Integer.parseInt(anoTurma.getText().toString());
+                       if (anoTurmaNumero < 2000 || anoTurmaNumero > 2100) {
+                           anoTurma.setError("Ano inválido");
+                       } else {
+
+                               Toast.makeText(getApplicationContext(), "Semestre: " + numeroSemestre + "\nCurso: " + nomeCurso + "\nAno: " + anoTurmaNumero, Toast.LENGTH_SHORT).show();
+                           }
+                       }
+
+
+
+
+               }catch (Exception e){
+                   e.printStackTrace();
+               }
            }
-
-
-
 
        });
 
-
-
-
-    }
-
-}
+}}
