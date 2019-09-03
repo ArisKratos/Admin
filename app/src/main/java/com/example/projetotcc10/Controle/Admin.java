@@ -83,7 +83,7 @@ public class Admin extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.manter_admin) {
-                Intent intent = new Intent(this,ManterAdmin.class);
+                Intent intent = new Intent(this,Listar_Admin.class);
                 startActivity(intent);
 
 

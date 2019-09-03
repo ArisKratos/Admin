@@ -23,8 +23,6 @@ public class ManterAdmin extends AppCompatActivity {
    private EditText aliasEmailAdmin, aliasSenhaAdmin;
     private Button aliasBtncadastrarAdmin;
 
-     private ListView listAdmin;
-     private  List<Admin>admins;
 
 
 
@@ -47,7 +45,6 @@ public class ManterAdmin extends AppCompatActivity {
         });
 
 
-
         aliasBtncadastrarAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,18 +54,7 @@ public class ManterAdmin extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
     }
-    private void carregalistview(){
 
-        ArrayAdapter<Admin> adaptador = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, admins);
-        listAdmin.setAdapter(adaptador);
-        adaptador.notifyDataSetChanged();
 
-    }
 }
