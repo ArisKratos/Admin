@@ -1,19 +1,15 @@
 package com.example.projetotcc10.Controle;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.projetotcc10.R;
-
-import java.util.List;
 
 public class ManterAdmin extends AppCompatActivity {
 
@@ -34,13 +30,14 @@ public class ManterAdmin extends AppCompatActivity {
 
        aliasEmailAdmin = findViewById(R.id.editEmailAdmin);
         aliasSenhaAdmin = findViewById(R.id.editSenhaAdmin);
-        aliasBtncadastrarAdmin = findViewById(R.id.buttonCadastrarAdmin);
+        aliasBtncadastrarAdmin = findViewById(R.id.buttonActionCadastrarAdmin);
 
         FloatingActionButton voltar = findViewById(R.id.buttonActionVoltar);
         voltar.setOnClickListener(new View.OnClickListener() {
             @Override
      public void onClick(View view) {
-      onBackPressed();
+                Intent intent = new Intent(view.getContext(), ManterAdmin.class);
+                startActivity(intent);
      }
         });
 
