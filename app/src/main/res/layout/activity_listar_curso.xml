@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_google_signin_btn_text_dark_disabled"
-    tools:context=".Controle.Listar_Admin">
+    tools:context=".Controle.Listar_Curso">
 
     <ListView
-        android:id="@+id/listAdmin"
+        android:id="@+id/listCurso"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="70dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/buttonActionCadastrarAdmin"
+        android:id="@+id/buttonActionCadastrarCurso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
@@ -27,7 +27,9 @@
         android:clickable="true"
         android:src="@android:drawable/ic_input_add"
         app:backgroundTint="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toTopOf="@+id/listAdmin"
+        app:layout_constraintBottom_toTopOf="@+id/listCurso"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 </android.support.constraint.ConstraintLayout>

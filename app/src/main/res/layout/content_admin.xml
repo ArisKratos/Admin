@@ -8,4 +8,10 @@
     tools:context=".Controle.Admin"
     tools:showIn="@layout/app_bar_admin">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/msg_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="164dp"
+        tools:layout_editor_absoluteY="135dp" />
 </android.support.constraint.ConstraintLayout>
