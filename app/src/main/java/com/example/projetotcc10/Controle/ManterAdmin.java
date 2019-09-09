@@ -36,7 +36,7 @@ public class ManterAdmin extends AppCompatActivity {
         voltar.setOnClickListener(new View.OnClickListener() {
             @Override
      public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ManterAdmin.class);
+                Intent intent = new Intent(view.getContext(), Listar_Admin.class);
                 startActivity(intent);
      }
         });

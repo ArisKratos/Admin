@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/nome_Prof"
+        android:layout_width="321dp"
+        android:layout_height="133dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/bg_edittext_rounded"
+        android:text="Marcelo"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mensagem_Prof"
+        android:layout_width="312dp"
+        android:layout_height="85dp"
+        android:text="adahsoudhaoshda"
+        app:layout_constraintBottom_toBottomOf="@+id/nome_Prof"
+        app:layout_constraintEnd_toEndOf="@+id/nome_Prof"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/nome_Prof"
+        app:layout_constraintTop_toTopOf="@+id/nome_Prof"
+        app:layout_constraintVertical_bias="0.854" />
+
+</android.support.constraint.ConstraintLayout>

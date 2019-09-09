@@ -3,7 +3,7 @@ package com.example.projetotcc10.Controle;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -18,8 +18,12 @@ import android.view.Menu;
 
 import com.example.projetotcc10.R;
 
+import java.util.List;
+
 public class Admin extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private List<Mensagem> mensagens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +48,15 @@ public class Admin extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.msg_recycler);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.myRecycler);
 
+        recyclerView.setAdapter(new MeuAdapter(mensagens, this));
 
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-
+        recyclerView.setLayoutManager(layout);
 
     }
-
 
     @Override
     public void onBackPressed() {
