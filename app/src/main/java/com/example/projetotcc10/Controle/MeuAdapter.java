@@ -17,7 +17,7 @@ import java.util.List;
 public class MeuAdapter extends RecyclerView.Adapter  {
 
 
-    private List<Mensagem> mensagens = new ArrayList<>();
+    private List<Mensagem> mensagens;
     private Context context;
 
 
@@ -25,14 +25,16 @@ public class MeuAdapter extends RecyclerView.Adapter  {
 
 
 
-    public MeuAdapter(List<Mensagem> mensagens, Context context){
+    public MeuAdapter(List<Mensagem> m, Context context){
 
 
       Mensagem mensagem = new Mensagem("ola", "Marcelo");
         Mensagem mensagem1 = new Mensagem("tudo bem", "Emilio");
-      this.mensagens.add(mensagem);
-      this.mensagens.add(mensagem1);
-              this.context = context;
+//      this.mensagens.add(mensagem);
+//      this.mensagens.add(mensagem1);
+
+        this.mensagens = m;
+      this.context = context;
 
     }
 
@@ -53,15 +55,15 @@ public class MeuAdapter extends RecyclerView.Adapter  {
         MeuViewHolder holder = (MeuViewHolder) viewHolder;
         Mensagem mensagem = mensagens.get(position);
 
+        holder.professor.setText(mensagem.getProfessor());
         holder.mensagem.setText(mensagem.getMensagem());
 
     }
 
     @Override
     public int getItemCount() {
-        return mensagens.size();
+        return mensagens == null ? 0 : mensagens.size();
     }
-
 
 
 

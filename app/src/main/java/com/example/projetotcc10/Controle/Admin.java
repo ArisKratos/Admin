@@ -18,6 +18,7 @@ import android.view.Menu;
 
 import com.example.projetotcc10.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Admin extends AppCompatActivity
@@ -50,12 +51,26 @@ public class Admin extends AppCompatActivity
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.myRecycler);
 
-        recyclerView.setAdapter(new MeuAdapter(mensagens, this));
+        mensagens = new ArrayList<>();
+
+        Mensagem mensagem = new Mensagem("ola", "Marcelo");
+        Mensagem mensagem1 = new Mensagem("tudo bem", "Emilio");
+        Mensagem mensagem2 = new Mensagem("tudo bem", "Emilio");
+        Mensagem mensagem3 = new Mensagem("tudo bem", "Emilio");
+        Mensagem mensagem4 = new Mensagem("tudo bem", "Emilio");
+
+        mensagens.add(mensagem);
+        mensagens.add(mensagem1);
+        mensagens.add(mensagem2);
+        mensagens.add(mensagem3);
+        mensagens.add(mensagem4);
+
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
         recyclerView.setLayoutManager(layout);
 
+        recyclerView.setAdapter(new MeuAdapter(mensagens, this));
     }
 
     @Override
