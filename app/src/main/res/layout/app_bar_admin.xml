@@ -22,6 +22,9 @@
 
     <include
         layout="@layout/content_admin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:background="@android:color/holo_blue_dark" />
 
     <android.support.design.widget.FloatingActionButton

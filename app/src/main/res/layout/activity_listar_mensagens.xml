@@ -10,7 +10,7 @@
         android:id="@+id/nome_Prof"
         android:layout_width="341dp"
         android:layout_height="107dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/bg_edittext_rounded"
         android:text="Marcelo"
         android:textColor="@color/design_default_color_primary"
@@ -70,6 +70,6 @@
         android:text="12/10/19"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nome_Prof"
-        tools:text="@tools:sample/date/ddmmyy" />
+        tools:text="@tools:sample/date/mmddyy" />
 
 </android.support.constraint.ConstraintLayout>
