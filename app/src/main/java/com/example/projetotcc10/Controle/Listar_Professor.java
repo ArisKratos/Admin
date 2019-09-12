@@ -24,7 +24,11 @@ public class Listar_Professor extends AppCompatActivity {
     private Button aliasCadastrarProfessor;
 
 
-    private String[] ArrayProfessores = new String[]{"Joao\njoao@gmail.com","Lucas\nlucas@gmail.com", "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com","Joao\njoao@gmail.com","Lucas\nlucas@gmail.com"};
+    private String[] ArrayProfessores = new String[]{"Joao\njoao@gmail.com","Lucas\nlucas@gmail.com",
+            "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com",
+            "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com",
+            "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com", "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com",
+            "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

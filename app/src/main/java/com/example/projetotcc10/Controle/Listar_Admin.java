@@ -25,7 +25,13 @@ public class Listar_Admin extends AppCompatActivity {
     private Button aliasCadastrarAdmin;
 
 
-    private String[] ArrayAdmins = new String[]{"Joao\njoao@gmail.com","Lucas\nlucas@gmail.com", "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com","Joao\njoao@gmail.com","Lucas\nlucas@gmail.com"};
+    private String[] ArrayAdmins = new String[]{"Joao\njoao@gmail.com","Lucas\n" +
+            "lucas@gmail.com", "Joao\njoao@gmail.com","Lucas\n" +
+            "lucas@gmail.com","Joao\njoao@gmail.com","Lucas\n" +
+            "lucas@gmail.com","Joao\njoao@gmail.com","Lucas\n" +
+            "lucas@gmail.com", "Joao\njoao@gmail.com","Lucas\n" +
+            "lucas@gmail.com","Joao\njoao@gmail.com","Lucas\n" +
+            "lucas@gmail.com"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

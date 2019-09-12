@@ -29,7 +29,19 @@ public class Listar_Curso extends AppCompatActivity {
     private Button aliasCadastrarCurso;
 
 
-    private String[] ArrayCursos = new String[]{"Informática\n","Agropecuária\n", "TADS\n","Engenharia\n","Direito\n","Elétrica\n"};
+    private String[] ArrayCursos = new String[]{
+            "Informática\n",
+            "Agropecuária\n",
+            "TADS\n",
+            "Informática\n",
+            "Agropecuária\n",
+            "TADS\n"
+            ,"Engenharia\n",
+            "Direito\n",
+            "Elétrica\n",
+            "Engenharia\n"
+            ,"Direito\n",
+            "Elétrica\n"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

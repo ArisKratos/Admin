@@ -15,6 +15,7 @@
         android:layout_marginTop="144dp"
         android:background="@drawable/bg_edittext_rounded"
         android:ems="10"
+        android:gravity="top"
         android:hint="Digite sua mensagem:"
         android:inputType="textMultiLine"
         android:maxLength="300"
