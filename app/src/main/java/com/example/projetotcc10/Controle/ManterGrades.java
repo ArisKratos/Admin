@@ -1,7 +1,10 @@
 package com.example.projetotcc10.Controle;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,7 +34,12 @@ public class ManterGrades extends AppCompatActivity {
         setContentView(R.layout.activity_manter_grades);
 
 
-         String[] ArraySemestres = new String[] {"1", "2"};
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle("Enviar grades");
+
+
+        String[] ArraySemestres = new String[] {"1", "2"};
          String[] ArrayCursos = new String[]{"Informática","Agropecuária"};
 
 
@@ -56,7 +64,14 @@ public class ManterGrades extends AppCompatActivity {
         cursos.setAdapter(spinnerCursos);
 
 
-
+        FloatingActionButton voltar = findViewById(R.id.buttonActionVoltar);
+        voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), Admin.class);
+                startActivity(intent);
+            }
+        });
 
 
        buttonUparGrade.setOnClickListener(new View.OnClickListener() {
@@ -99,11 +114,11 @@ public class ManterGrades extends AppCompatActivity {
                    } else {
 
                        anoTurmaNumero = Integer.parseInt(anoTurma.getText().toString());
-                       if (anoTurmaNumero < 2000 || anoTurmaNumero > 2100) {
+                       if (anoTurmaNumero < 2000|| anoTurmaNumero > 2100) {
                            anoTurma.setError("Ano inválido");
                        } else {
 
-                               Toast.makeText(getApplicationContext(), "Semestre: " + numeroSemestre + "\nCurso: " + nomeCurso + "\nAno: " + anoTurmaNumero, Toast.LENGTH_SHORT).show();
+                               Toast.makeText(getApplicationContext(), "Grade enviada com sucesso para: \n"+"Semestre: " + numeroSemestre + "\nCurso: " + nomeCurso + "\nAno: " + anoTurmaNumero, Toast.LENGTH_SHORT).show();
                            }
                        }
 
@@ -117,4 +132,15 @@ public class ManterGrades extends AppCompatActivity {
 
        });
 
-}}
+}
+    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
+        switch (item.getItemId()) {
+            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+                startActivity(new Intent(this, Admin.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
+                finishAffinity();  //Método para matar a activity e não deixa-lá indexada na pilhagem
+                break;
+            default:break;
+        }
+        return true;
+    }
+}

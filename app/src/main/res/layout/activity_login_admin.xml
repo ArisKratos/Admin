@@ -45,7 +45,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_button_rounded"
-        android:text="@string/logar"
+        android:text="@string/Entrar"
         android:textColor="@color/cardview_light_background"
         app:layout_constraintEnd_toEndOf="@+id/editSenhaAdmin"
         app:layout_constraintStart_toStartOf="@+id/editSenhaAdmin"

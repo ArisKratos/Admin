@@ -10,6 +10,8 @@ public class MeuViewHolder extends RecyclerView.ViewHolder {
 
  final TextView mensagem;
  final TextView professor;
+ final TextView data;
+ final TextView turma;
 
 
  public MeuViewHolder(View view) {
@@ -19,6 +21,11 @@ public class MeuViewHolder extends RecyclerView.ViewHolder {
      professor = (TextView)
              view.findViewById(R.id.nome_Prof);
 
+     data = (TextView)
+             view.findViewById(R.id.dataMsg);
+
+     turma= (TextView)
+             view.findViewById(R.id.turmaMsg);
 
  }
 

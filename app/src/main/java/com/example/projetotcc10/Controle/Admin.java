@@ -16,9 +16,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.example.projetotcc10.Modelo.Mensagem;
 import com.example.projetotcc10.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Admin extends AppCompatActivity
@@ -40,6 +43,9 @@ public class Admin extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        getSupportActionBar().setTitle("Últimas mensagens");
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,11 +59,16 @@ public class Admin extends AppCompatActivity
 
         mensagens = new ArrayList<>();
 
-        Mensagem mensagem = new Mensagem("ola", "Marcelo");
-        Mensagem mensagem1 = new Mensagem("tudo bem", "Emilio");
-        Mensagem mensagem2 = new Mensagem("tudo bem", "Emilio");
-        Mensagem mensagem3 = new Mensagem("tudo bem", "Emilio");
-        Mensagem mensagem4 = new Mensagem("tudo bem", "Emilio");
+        SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
+        Date data = new Date();
+        String dataFormatada = formataData.format(data);
+
+
+        Mensagem mensagem = new Mensagem("Pessoal, amanhã tragam os trabalhos prontos, valerá nota!!", " Marcelo", "2016/2",  dataFormatada);
+        Mensagem mensagem1 = new Mensagem("Bom dia turma, só para avisar que amanhã no lugar de Desenvolvimento terá Ed.Física", "Emilio", "2018/1", dataFormatada);
+        Mensagem mensagem2 = new Mensagem("Bom dia turma, só para avisar que amanhã no lugar de Desenvolvimento terá Ed.Física", "Emilio", "2018/1", dataFormatada);
+        Mensagem mensagem3 = new Mensagem("Bom dia turma, só para avisar que amanhã no lugar de Desenvolvimento terá Ed.Física", "Emilio", "2018/1", dataFormatada);
+        Mensagem mensagem4 = new Mensagem("Pessoal, amanhã tragam os trabalhos prontos, valerá nota!!", "Marcelo", "2016/2",  dataFormatada);
 
         mensagens.add(mensagem);
         mensagens.add(mensagem1);
@@ -71,7 +82,10 @@ public class Admin extends AppCompatActivity
         recyclerView.setLayoutManager(layout);
 
         recyclerView.setAdapter(new MeuAdapter(mensagens, this));
+
     }
+
+
 
     @Override
     public void onBackPressed() {

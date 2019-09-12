@@ -20,6 +20,7 @@ public class LoginAdmin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_admin);
 
+        getSupportActionBar().setTitle("Administrador");
 
        aliasBtnLogin = findViewById(R.id.buttonCadastrarAdm);
 

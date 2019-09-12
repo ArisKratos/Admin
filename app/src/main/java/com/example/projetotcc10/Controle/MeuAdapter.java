@@ -6,12 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
+import com.example.projetotcc10.Modelo.Mensagem;
 import com.example.projetotcc10.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MeuAdapter extends RecyclerView.Adapter  {
@@ -20,23 +18,30 @@ public class MeuAdapter extends RecyclerView.Adapter  {
     private List<Mensagem> mensagens;
     private Context context;
 
+    public MeuAdapter(List<Mensagem> mensagens, Context context){
 
 
+ 
+
+//
+
+        this.mensagens = mensagens;
+        this.context = context;
+
+    }
+
+    //  public MeuAdapter(List<Mensagem> mensagens, Context context){
 
 
-
-    public MeuAdapter(List<Mensagem> m, Context context){
-
-
-      Mensagem mensagem = new Mensagem("ola", "Marcelo");
-        Mensagem mensagem1 = new Mensagem("tudo bem", "Emilio");
+    //  Mensagem mensagem = new Mensagem("ola", "Marcelo", dataMensagem);
+     //   Mensagem mensagem1 = new Mensagem("tudo bem", "Emilio", dataMensagem,);
 //      this.mensagens.add(mensagem);
 //      this.mensagens.add(mensagem1);
 
-        this.mensagens = m;
-      this.context = context;
+   //     this.mensagens = mensagens;
+   //   this.context = context;
 
-    }
+//    }
 
     @NonNull
     @Override
@@ -55,8 +60,9 @@ public class MeuAdapter extends RecyclerView.Adapter  {
         MeuViewHolder holder = (MeuViewHolder) viewHolder;
         Mensagem mensagem = mensagens.get(position);
 
-        holder.professor.setText(mensagem.getProfessor());
+        holder.mensagem.setText(mensagem.getProfessor());
         holder.mensagem.setText(mensagem.getMensagem());
+
 
     }
 
