@@ -4,8 +4,10 @@
 
 package com.example.projetotcc10.Controle;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -27,6 +29,7 @@ public class Listar_Curso extends AppCompatActivity {
     private ListView listaCurso;
     private List<Professor> cursos;
     private Button aliasCadastrarCurso;
+    private  AlertDialog alerta;
 
 
     private String[] ArrayCursos = new String[]{
@@ -76,15 +79,37 @@ public class Listar_Curso extends AppCompatActivity {
                 // TODO Auto-generated method stub
 
 
-
+                exemplo_simples();
                 listaCurso.getItemAtPosition(position);
-
-                Toast.makeText(getApplicationContext(), "Item Deleted", Toast.LENGTH_LONG).show();
 
                 return true;
             }
 
         });
+    }
+    private void exemplo_simples() {
+        //Cria o gerador do AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //define o titulo
+        builder.setTitle("Alerta!");
+        //define a mensagem
+        builder.setMessage("Deseja mesmo excluir esse curso?");
+        //define um botão como positivo
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                Toast.makeText(getApplicationContext(), "Curso excluido" , Toast.LENGTH_SHORT).show();
+            }
+        });
+        //define um botão como negativo.
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                Toast.makeText(getApplicationContext(), "Ação cancelada" , Toast.LENGTH_SHORT).show();
+            }
+        });
+        //cria o AlertDialog
+        alerta = builder.create();
+        //Exibe
+        alerta.show();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar

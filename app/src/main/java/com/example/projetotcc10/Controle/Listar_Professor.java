@@ -1,7 +1,9 @@
 package com.example.projetotcc10.Controle;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -22,7 +24,7 @@ public class Listar_Professor extends AppCompatActivity {
     private ListView listaProf;
     private List<Professor> professores;
     private Button aliasCadastrarProfessor;
-
+    private AlertDialog alerta;
 
     private String[] ArrayProfessores = new String[]{"Joao\njoao@gmail.com","Lucas\nlucas@gmail.com",
             "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com",
@@ -94,6 +96,31 @@ public class Listar_Professor extends AppCompatActivity {
         listaProf.setAdapter(adaptador);
         adaptador.notifyDataSetChanged();
 
+    }
+
+    private void exemplo_simples() {
+        //Cria o gerador do AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //define o titulo
+        builder.setTitle("Alerta!");
+        //define a mensagem
+        builder.setMessage("Deseja mesmo excluir esse professor?");
+        //define um botão como positivo
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                Toast.makeText(getApplicationContext(), "Professor excluido" , Toast.LENGTH_SHORT).show();
+            }
+        });
+        //define um botão como negativo.
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                Toast.makeText(getApplicationContext(), "Ação cancelada" , Toast.LENGTH_SHORT).show();
+            }
+        });
+        //cria o AlertDialog
+        alerta = builder.create();
+        //Exibe
+        alerta.show();
     }
 
 
