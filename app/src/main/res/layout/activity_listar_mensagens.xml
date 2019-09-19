@@ -12,6 +12,8 @@
         android:layout_height="107dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_edittext_rounded"
+        android:paddingLeft="30dp"
+        android:paddingTop="3dp"
         android:text="Marcelo"
         android:textColor="@color/design_default_color_primary"
         android:textSize="20dp"

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controle.Listar_Curso"></activity>
+        <activity android:name=".Controle.Mensagem_Completa"></activity>
+        <activity android:name=".Controle.Listar_Curso" />
         <activity android:name=".Controle.Listar_Admin" />
         <activity android:name=".Controle.Listar_Professor" />
         <activity android:name=".Controle.ManterGrades" />

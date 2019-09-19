@@ -18,15 +18,18 @@ public class Mensagem  {
     private String turmaMensagem;
     private String dataMensagem;
 
-    public String getDataMensagem() {
+    public String getDataMensagem()
+    {
         return dataMensagem;
     }
 
-    public void setDataMensagem(String dataMensagem) {
+    public void setDataMensagem(String dataMensagem)
+    {
         this.dataMensagem = dataMensagem;
     }
 
-    public String getTurmaMensagem() {
+    public String getTurmaMensagem()
+    {
     return turmaMensagem;
    }
 
