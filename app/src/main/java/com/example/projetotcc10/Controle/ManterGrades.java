@@ -52,6 +52,25 @@ public class ManterGrades extends AppCompatActivity {
         cursos = findViewById(R.id.spinnerCursoGrades);
 
 
+
+        linkUparGrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                    Intent intent = new Intent();
+                    intent.setType("application/pdf");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
+
+
+                }
+
+            });
+
+
+
+
         ArrayAdapter<String> spinnerSemestres = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArraySemestres);
 
         spinnerSemestres.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
