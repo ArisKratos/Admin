@@ -1,6 +1,7 @@
 package com.example.projetotcc10.Controle;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,13 +12,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.projetotcc10.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ManterAdmin extends AppCompatActivity {
 
 
 
 
-   private EditText aliasEmailAdmin, aliasSenhaAdmin;
+   private EditText aliasEmailAdmin, aliasSenhaAdmin, aliasNomeAdmin;
     private Button aliasBtncadastrarAdmin;
 
 
@@ -35,6 +41,8 @@ public class ManterAdmin extends AppCompatActivity {
 
         aliasEmailAdmin = findViewById(R.id.editEmailAdmin);
         aliasSenhaAdmin = findViewById(R.id.editSenhaAdmin);
+        aliasNomeAdmin = findViewById(R.id.editNomeAdmin);
+
         aliasBtncadastrarAdmin = findViewById(R.id.buttonActionCadastrarAdmin);
 
         FloatingActionButton voltar = findViewById(R.id.buttonActionVoltar);
@@ -50,13 +58,42 @@ public class ManterAdmin extends AppCompatActivity {
         aliasBtncadastrarAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext() ,"Admin cadastrado com sucesso!" , Toast.LENGTH_SHORT).show();
+              createUser();
 
             }
         });
 
 
     }
+
+    private void createUser() {
+
+        String email = aliasEmailAdmin.getText().toString();
+        String senha = aliasSenhaAdmin.getText().toString();
+        String nome = aliasNomeAdmin.getText().toString();
+
+
+        if (email == null || email.isEmpty() || senha == null || senha.isEmpty() || nome == null || nome.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Email, nome e senha devem ser preenchidos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, senha)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful())
+                                Toast.makeText(getApplicationContext(), "Teste" + task.getResult().getUser().getUid(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            Toast.makeText(getApplicationContext(),"Teste" +  e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+        }
 
 
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar

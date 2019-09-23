@@ -22,9 +22,12 @@ public class LoginAdmin extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Administrador");
 
+
+        aliasEmailAdmin = findViewById(R.id.editEmailAdmin);
+        aliasSenhaAdmin = findViewById(R.id.editSenhaAdmin);
+
+
        aliasBtnLogin = findViewById(R.id.buttonCadastrarAdm);
-
-
        aliasBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
