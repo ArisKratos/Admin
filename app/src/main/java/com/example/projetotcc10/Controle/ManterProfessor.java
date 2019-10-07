@@ -6,17 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.projetotcc10.Modelo.Curso;
-import com.example.projetotcc10.Modelo.Professor;
 import com.example.projetotcc10.R;
-
-import java.util.List;
 
 public class ManterProfessor extends AppCompatActivity {
 

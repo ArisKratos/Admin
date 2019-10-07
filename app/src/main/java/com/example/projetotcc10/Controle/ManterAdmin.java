@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,9 +15,15 @@ import android.widget.Toast;
 import com.example.projetotcc10.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.example.projetotcc10.Modelo.Admin;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.UUID;
 
 public class ManterAdmin extends AppCompatActivity {
 
@@ -83,6 +90,9 @@ public class ManterAdmin extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful())
                                 Toast.makeText(getApplicationContext(), "Teste" + task.getResult().getUser().getUid(), Toast.LENGTH_SHORT).show();
+
+                                saveUserInFirebase();
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -94,6 +104,32 @@ public class ManterAdmin extends AppCompatActivity {
                         }
                     });
         }
+
+    private void saveUserInFirebase() {
+
+        String filename = UUID.randomUUID().toString();
+        String uid = FirebaseAuth.getInstance().getUid();
+        String nomeAdmin = aliasNomeAdmin.getText().toString();
+
+        Admin admin = new Admin(uid, nomeAdmin);
+
+
+        FirebaseFirestore.getInstance().collection("admins")
+                .add(admin).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+
+              Log.i ("Teste \n", documentReference.getId());
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+               Log.i("Teste \n", e.getMessage());
+            }
+        });
+
+    }
 
 
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar

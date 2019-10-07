@@ -32,6 +32,9 @@ public class Admin extends AppCompatActivity
 
     private ArrayList<Mensagem> mensagens;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

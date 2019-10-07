@@ -16,8 +16,6 @@ import android.widget.Toast;
 
 import com.example.projetotcc10.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Listar_Admin extends AppCompatActivity {

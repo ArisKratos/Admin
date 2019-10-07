@@ -2,16 +2,21 @@ package com.example.projetotcc10.Modelo;
 
 public class Admin {
 
-    private Integer id;
+    private String id;
     private String nomeAdmin;
     private String emailAdmin;
     private String senhaAdmin;
 
-    public Integer getId() {
+    public Admin(String id, String nomeAdmin) {
+        this.id = id;
+        this.nomeAdmin = nomeAdmin;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
