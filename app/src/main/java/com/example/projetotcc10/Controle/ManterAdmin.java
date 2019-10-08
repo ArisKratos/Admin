@@ -89,8 +89,8 @@ public class ManterAdmin extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful())
-                                Toast.makeText(getApplicationContext(), "Teste" + task.getResult().getUser().getUid(), Toast.LENGTH_SHORT).show();
 
+                                Log.i("Teste", task.getResult().getUser().getUid());
                                 saveUserInFirebase();
 
                         }
@@ -99,7 +99,7 @@ public class ManterAdmin extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
 
-                            Toast.makeText(getApplicationContext(),"Teste" +  e.getMessage(), Toast.LENGTH_SHORT).show();
+                           Log.i("Teste" ,  e.getMessage());
 
                         }
                     });
@@ -112,17 +112,16 @@ public class ManterAdmin extends AppCompatActivity {
         String nomeAdmin = aliasNomeAdmin.getText().toString();
 
         Admin admin = new Admin(uid, nomeAdmin);
-
-
         FirebaseFirestore.getInstance().collection("admins")
-                .add(admin).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                .add(admin)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
 
               Log.i ("Teste \n", documentReference.getId());
 
-              Intent intent = new Intent(ManterAdmin.this, Listar_Admin.class);
-              startActivity(intent);
+             // Intent intent = new Intent(ManterAdmin.this, Listar_Admin.class);
+             // startActivity(intent);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
