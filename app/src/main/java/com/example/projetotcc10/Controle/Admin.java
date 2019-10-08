@@ -21,7 +21,9 @@ import com.example.projetotcc10.Adapters.MeuAdapter;
 import com.example.projetotcc10.Adapters.MeuViewHolder;
 import com.example.projetotcc10.Modelo.Mensagem;
 import com.example.projetotcc10.R;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.net.Inet4Address;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -123,7 +125,9 @@ public class Admin extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            onBackPressed();
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(Admin.this, LoginAdmin.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

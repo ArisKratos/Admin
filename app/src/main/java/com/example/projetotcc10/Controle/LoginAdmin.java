@@ -57,7 +57,7 @@ public class LoginAdmin extends AppCompatActivity {
 
                         aliasEmailAdmin.setText("");
                         aliasSenhaAdmin.setText("");
-                        
+
                         Intent intent = new Intent(getApplicationContext(), Admin.class);
                         startActivity(intent);
                     }

@@ -120,8 +120,8 @@ public class ManterAdmin extends AppCompatActivity {
 
               Log.i ("Teste \n", documentReference.getId());
 
-             // Intent intent = new Intent(ManterAdmin.this, Listar_Admin.class);
-             // startActivity(intent);
+          Intent intent = new Intent(ManterAdmin.this, Listar_Admin.class);
+          startActivity(intent);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
