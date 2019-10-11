@@ -2,10 +2,12 @@ package com.example.projetotcc10.Controle;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +17,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.projetotcc10.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -23,19 +30,17 @@ public class Listar_Admin extends AppCompatActivity {
     private ListView listaAdmin;
     private List<Admin> admins;
     private Button aliasCadastrarAdmin;
-
     private AlertDialog alerta;
+    private final static String TAG  = "Firelog";
 
-
-
-    private String[] ArrayAdmins = new String[]{"Joao\njoao@gmail.com","Lucas\n" +
+    /*    private String[] ArrayAdmins = new String[]{"Joao\njoao@gmail.com","Lucas\n" +
             "lucas@gmail.com", "Joao\njoao@gmail.com","Lucas\n" +
             "lucas@gmail.com","Joao\njoao@gmail.com","Lucas\n" +
             "lucas@gmail.com","Joao\njoao@gmail.com","Lucas\n" +
             "lucas@gmail.com", "Joao\njoao@gmail.com","Lucas\n" +
             "lucas@gmail.com","Joao\njoao@gmail.com","Lucas\n" +
-            "lucas@gmail.com"};
-
+           "lucas@gmail.com"};
+ */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,7 @@ public class Listar_Admin extends AppCompatActivity {
 
         listaAdmin = findViewById(R.id.listAdmin);
 
+
         carregalistview();
 
         FloatingActionButton cadastrar = findViewById(R.id.buttonActionCadastrarAdmin);
@@ -56,7 +62,9 @@ public class Listar_Admin extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext() ,ManterAdmin.class);
                 startActivity(intent);
             }
+
         });
+
 
 
         listaAdmin.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -65,18 +73,17 @@ public class Listar_Admin extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
 
-
-
              listaAdmin.getItemAtPosition(position);
              exemplo_simples();
-
-
-
                 return true;
             }
 
         });
+
         }
+
+
+
     private void exemplo_simples() {
         //Cria o gerador do AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -101,6 +108,7 @@ public class Listar_Admin extends AppCompatActivity {
         //Exibe
         alerta.show();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
@@ -119,18 +127,40 @@ public class Listar_Admin extends AppCompatActivity {
         return;
     }
 
-
     private void carregalistview(){
 
-        ArrayAdapter <String> adaptador = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ArrayAdmins);
+        ArrayAdapter <Admin> adaptador = new ArrayAdapter<Admin>(this, android.R.layout.simple_list_item_1, admins);
         listaAdmin.setAdapter(adaptador);
         adaptador.notifyDataSetChanged();
 
+        listaAdmin.setAdapter(adaptador);
+
+
+        FirebaseFirestore.getInstance().collection("admins")
+
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                String nome = document.getString("nomeAdmin");
+                                String email = document.getString("emailAdmin");
+
+                               // Log.d(TAG   , document.getId() + " => " + document.getData());
+                                Log.d(TAG   , nome + " => " + email);
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+
+                    }
+                });
+
+
+
+
     }
-
-
-
-
-
 
 }

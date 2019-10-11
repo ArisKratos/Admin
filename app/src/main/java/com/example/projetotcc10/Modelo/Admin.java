@@ -7,9 +7,10 @@ public class Admin {
     private String emailAdmin;
     private String senhaAdmin;
 
-    public Admin(String id, String nomeAdmin) {
+    public Admin(String id, String nomeAdmin, String emailAdmin) {
         this.id = id;
         this.nomeAdmin = nomeAdmin;
+        this.emailAdmin = emailAdmin;
     }
 
     public String getId() {

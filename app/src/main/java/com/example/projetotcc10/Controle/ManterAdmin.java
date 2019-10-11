@@ -70,7 +70,6 @@ public class ManterAdmin extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void createUser() {
@@ -88,10 +87,14 @@ public class ManterAdmin extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful())
+                            if (task.isSuccessful()) {
 
-                                Log.i("Teste", task.getResult().getUser().getUid());
+                                //   Log.i("Teste", task.getResult().getUser().getUid());
                                 saveUserInFirebase();
+                            } else{
+                            Toast.makeText(ManterAdmin.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+
+                        }
 
                         }
                     })
@@ -99,7 +102,7 @@ public class ManterAdmin extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
 
-                           Log.i("Teste" ,  e.getMessage());
+                         Log.i("Teste" ,  e.getMessage());
 
                         }
                     });
@@ -107,11 +110,12 @@ public class ManterAdmin extends AppCompatActivity {
 
     private void saveUserInFirebase() {
 
-        String filename = UUID.randomUUID().toString();
+       // String filename = UUID.randomUUID().toString();
         String uid = FirebaseAuth.getInstance().getUid();
+        String email = aliasEmailAdmin.getText().toString();
         String nomeAdmin = aliasNomeAdmin.getText().toString();
 
-        Admin admin = new Admin(uid, nomeAdmin);
+        Admin admin = new Admin(uid, nomeAdmin, email);
         FirebaseFirestore.getInstance().collection("admins")
                 .add(admin)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

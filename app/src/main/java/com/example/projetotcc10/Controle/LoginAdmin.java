@@ -53,13 +53,19 @@ public class LoginAdmin extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener <AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task <AuthResult> task) {
-                        Log.i("Teste", task.getResult().getUser().getUid());
+                        Log.i("ERRO", String.valueOf(task.isSuccessful()));
+
+                        if(task.isSuccessful()) {
+                            Intent intent = new Intent(getApplicationContext(), Admin.class);
+
+                            startActivity(intent);
+                        }
+                         else  {
+                             Toast.makeText(LoginAdmin.this, "Authentication failed." ,Toast.LENGTH_SHORT).show();
+                        }
 
                         aliasEmailAdmin.setText("");
                         aliasSenhaAdmin.setText("");
-
-                        Intent intent = new Intent(getApplicationContext(), Admin.class);
-                        startActivity(intent);
                     }
                 })
                         .addOnFailureListener(new OnFailureListener() {
