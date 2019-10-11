@@ -23,12 +23,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Listar_Admin extends AppCompatActivity {
 
     private ListView listaAdmin;
-    private List<Admin> admins;
+    private List<com.example.projetotcc10.Modelo.Admin> admins;
+    private List<com.example.projetotcc10.Modelo.Admin> listaAux;
     private Button aliasCadastrarAdmin;
     private AlertDialog alerta;
     private final static String TAG  = "Firelog";
@@ -52,6 +54,7 @@ public class Listar_Admin extends AppCompatActivity {
 
         listaAdmin = findViewById(R.id.listAdmin);
 
+        listaAux = new ArrayList<>();
 
         carregalistview();
 
@@ -129,11 +132,6 @@ public class Listar_Admin extends AppCompatActivity {
 
     private void carregalistview(){
 
-        ArrayAdapter <Admin> adaptador = new ArrayAdapter<Admin>(this, android.R.layout.simple_list_item_1, admins);
-        listaAdmin.setAdapter(adaptador);
-        adaptador.notifyDataSetChanged();
-
-        listaAdmin.setAdapter(adaptador);
 
 
         FirebaseFirestore.getInstance().collection("admins")
@@ -143,14 +141,26 @@ public class Listar_Admin extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            listaAux.clear();
+
+
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 String nome = document.getString("nomeAdmin");
                                 String email = document.getString("emailAdmin");
 
+                                com.example.projetotcc10.Modelo.Admin u = new com.example.projetotcc10.Modelo.Admin(document.getId(), nome, email);
+
+                                listaAux.add(u);
                                // Log.d(TAG   , document.getId() + " => " + document.getData());
                                 Log.d(TAG   , nome + " => " + email);
                             }
+
+                          ArrayAdapter<com.example.projetotcc10.Modelo.Admin> adaptador = new ArrayAdapter<com.example.projetotcc10.Modelo.Admin>(getBaseContext(), android.R.layout.simple_list_item_1, listaAux);
+                           listaAdmin.setAdapter(adaptador);
+                          adaptador.notifyDataSetChanged();
+
+
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }

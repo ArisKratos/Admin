@@ -45,4 +45,8 @@ public class Admin {
         this.nomeAdmin = nomeAdmin;
     }
 
+    @Override
+    public String toString() {
+        return nomeAdmin + '\n' + emailAdmin;
+    }
 }

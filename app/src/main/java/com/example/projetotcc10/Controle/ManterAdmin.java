@@ -36,6 +36,8 @@ public class ManterAdmin extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +92,7 @@ public class ManterAdmin extends AppCompatActivity {
                             if (task.isSuccessful()) {
 
                                 //   Log.i("Teste", task.getResult().getUser().getUid());
-                                saveUserInFirebase();
+                                saveAdminInFirebase();
                             } else{
                             Toast.makeText(ManterAdmin.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
 
@@ -108,7 +110,7 @@ public class ManterAdmin extends AppCompatActivity {
                     });
         }
 
-    private void saveUserInFirebase() {
+    private void saveAdminInFirebase() {
 
        // String filename = UUID.randomUUID().toString();
         String uid = FirebaseAuth.getInstance().getUid();
