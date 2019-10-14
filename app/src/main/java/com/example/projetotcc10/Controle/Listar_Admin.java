@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.example.projetotcc10.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -30,19 +32,12 @@ public class Listar_Admin extends AppCompatActivity {
 
     private ListView listaAdmin;
     private List<com.example.projetotcc10.Modelo.Admin> admins;
-    private List<com.example.projetotcc10.Modelo.Admin> listaAux;
+   // private List<com.example.projetotcc10.Modelo.Admin> listaAux;
     private Button aliasCadastrarAdmin;
     private AlertDialog alerta;
     private final static String TAG  = "Firelog";
+    com.example.projetotcc10.Modelo.Admin admin;
 
-    /*    private String[] ArrayAdmins = new String[]{"Joao\njoao@gmail.com","Lucas\n" +
-            "lucas@gmail.com", "Joao\njoao@gmail.com","Lucas\n" +
-            "lucas@gmail.com","Joao\njoao@gmail.com","Lucas\n" +
-            "lucas@gmail.com","Joao\njoao@gmail.com","Lucas\n" +
-            "lucas@gmail.com", "Joao\njoao@gmail.com","Lucas\n" +
-            "lucas@gmail.com","Joao\njoao@gmail.com","Lucas\n" +
-           "lucas@gmail.com"};
- */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +49,7 @@ public class Listar_Admin extends AppCompatActivity {
 
         listaAdmin = findViewById(R.id.listAdmin);
 
-        listaAux = new ArrayList<>();
+        admins = new ArrayList<>();
 
         carregalistview();
 
@@ -62,55 +57,53 @@ public class Listar_Admin extends AppCompatActivity {
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext() ,ManterAdmin.class);
+                Intent intent = new Intent(view.getContext(), ManterAdmin.class);
                 startActivity(intent);
             }
 
         });
 
 
-
         listaAdmin.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                           int position, long id) {
+                                           final int position, long id) {
 
-             listaAdmin.getItemAtPosition(position);
-             exemplo_simples();
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Alerta!");
+                builder.setMessage("Deseja mesmo excluir esse administrador?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                        String positionStr = String.valueOf(position);
+                        
+                        Toast.makeText(getApplicationContext(), "Administrador excluido", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Toast.makeText(getApplicationContext(), "Ação cancelada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                alerta = builder.create();
+                alerta.show();
+
                 return true;
             }
 
         });
 
-        }
-
-
-
-    private void exemplo_simples() {
-        //Cria o gerador do AlertDialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //define o titulo
-        builder.setTitle("Alerta!");
-        //define a mensagem
-        builder.setMessage("Deseja mesmo excluir esse administrador?");
-        //define um botão como positivo
-        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(getApplicationContext(), "Administrador excluido" , Toast.LENGTH_SHORT).show();
-            }
-        });
-        //define um botão como negativo.
-        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(getApplicationContext(), "Ação cancelada" , Toast.LENGTH_SHORT).show();
-            }
-        });
-        //cria o AlertDialog
-        alerta = builder.create();
-        //Exibe
-        alerta.show();
     }
+
+
+
+   // private void excluir_item() {
+
+   // }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
@@ -141,7 +134,7 @@ public class Listar_Admin extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            listaAux.clear();
+                           admins.clear();
 
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
@@ -151,12 +144,12 @@ public class Listar_Admin extends AppCompatActivity {
 
                                 com.example.projetotcc10.Modelo.Admin u = new com.example.projetotcc10.Modelo.Admin(document.getId(), nome, email);
 
-                                listaAux.add(u);
+                                admins.add(u);
                                // Log.d(TAG   , document.getId() + " => " + document.getData());
                                 Log.d(TAG   , nome + " => " + email);
                             }
 
-                          ArrayAdapter<com.example.projetotcc10.Modelo.Admin> adaptador = new ArrayAdapter<com.example.projetotcc10.Modelo.Admin>(getBaseContext(), android.R.layout.simple_list_item_1, listaAux);
+                          ArrayAdapter<com.example.projetotcc10.Modelo.Admin> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, admins);
                            listaAdmin.setAdapter(adaptador);
                           adaptador.notifyDataSetChanged();
 

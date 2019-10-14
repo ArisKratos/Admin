@@ -28,15 +28,8 @@ import java.util.UUID;
 public class ManterAdmin extends AppCompatActivity {
 
 
-
-
    private EditText aliasEmailAdmin, aliasSenhaAdmin, aliasNomeAdmin;
-    private Button aliasBtncadastrarAdmin;
-
-
-
-
-
+   private Button aliasBtncadastrarAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +46,8 @@ public class ManterAdmin extends AppCompatActivity {
         aliasNomeAdmin = findViewById(R.id.editNomeAdmin);
 
         aliasBtncadastrarAdmin = findViewById(R.id.buttonActionCadastrarAdmin);
+
+
 
         FloatingActionButton voltar = findViewById(R.id.buttonActionVoltar);
         voltar.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +138,9 @@ public class ManterAdmin extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-                startActivity(new Intent(this, Admin.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
+                //startActivity(new Intent(ManterAdmin.this, Admin.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
+                Intent intent = new Intent(ManterAdmin.this, Listar_Admin.class);
+                startActivity(intent);
                 finishAffinity();  //Método para matar a activity e não deixa-lá indexada na pilhagem
                 break;
             default:break;

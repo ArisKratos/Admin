@@ -1,6 +1,6 @@
 package com.example.projetotcc10.Modelo;
 
-public class Admin {
+public class  Admin {
 
     private String id;
     private String nomeAdmin;

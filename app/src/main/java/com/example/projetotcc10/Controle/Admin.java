@@ -32,10 +32,7 @@ import java.util.List;
 public class Admin extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ArrayList<Mensagem> mensagens;
-
-
-
+        private ArrayList<Mensagem> mensagens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
