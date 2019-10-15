@@ -36,7 +36,7 @@ public class Listar_Admin extends AppCompatActivity {
     private Button aliasCadastrarAdmin;
     private AlertDialog alerta;
     private final static String TAG  = "Firelog";
-    com.example.projetotcc10.Modelo.Admin admin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class Listar_Admin extends AppCompatActivity {
         listaAdmin = findViewById(R.id.listAdmin);
 
         admins = new ArrayList<>();
+        com.example.projetotcc10.Modelo.Admin admin;
 
         carregalistview();
 
@@ -78,7 +79,23 @@ public class Listar_Admin extends AppCompatActivity {
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
 
-                        String positionStr = String.valueOf(position);
+                        com.example.projetotcc10.Modelo.Admin admin = new com.example.projetotcc10.Modelo.Admin(admins.get(position).getId(),admins.get(position).getNomeAdmin(), admins.get(position).getEmailAdmin());
+                        //admin.setId(admins.get(position).getId());
+
+                         FirebaseFirestore.getInstance().collection("admins").document(admin.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                             @Override
+                             public void onSuccess(Void aVoid) {
+                                 Toast.makeText(Listar_Admin.this, "Administrador excluído com sucesso", Toast.LENGTH_SHORT).show();
+                             }
+                         }).addOnFailureListener(new OnFailureListener() {
+                             @Override
+                             public void onFailure(@NonNull Exception e) {
+                                 Toast.makeText(Listar_Admin.this, "Erro ao deletar administrador", Toast.LENGTH_SHORT).show();
+                             }
+                         });
+                           carregalistview();
+                       //com.example.projetotcc10.Modelo.Admin admin =  admins.get(position).getId();
+
                         
                         Toast.makeText(getApplicationContext(), "Administrador excluido", Toast.LENGTH_SHORT).show();
                     }
