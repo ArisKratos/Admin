@@ -24,7 +24,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,6 @@ public class Listar_Admin extends AppCompatActivity {
     private Button aliasCadastrarAdmin;
     private AlertDialog alerta;
     private final static String TAG  = "Firelog";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +62,10 @@ public class Listar_Admin extends AppCompatActivity {
 
         });
 
-
         listaAdmin.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            final int position, long id) {
-
-
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle("Alerta!");
                 builder.setMessage("Deseja mesmo excluir esse administrador?");
@@ -115,13 +108,6 @@ public class Listar_Admin extends AppCompatActivity {
         });
 
     }
-
-
-
-   // private void excluir_item() {
-
-   // }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
@@ -139,21 +125,14 @@ public class Listar_Admin extends AppCompatActivity {
         finishAffinity(); //Método para matar a activity e não deixa-lá indexada na pilhagem
         return;
     }
-
     private void carregalistview(){
-
-
-
         FirebaseFirestore.getInstance().collection("admins")
-
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                            admins.clear();
-
-
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 String nome = document.getString("nomeAdmin");
@@ -177,10 +156,6 @@ public class Listar_Admin extends AppCompatActivity {
 
                     }
                 });
-
-
-
-
     }
 
 }
