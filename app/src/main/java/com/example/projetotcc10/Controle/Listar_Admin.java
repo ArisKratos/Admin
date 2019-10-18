@@ -21,9 +21,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,25 +80,56 @@ public class Listar_Admin extends AppCompatActivity {
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
 
-                        com.example.projetotcc10.Modelo.Admin admin = new com.example.projetotcc10.Modelo.Admin(admins.get(position).getId(),admins.get(position).getNomeAdmin(), admins.get(position).getEmailAdmin());
+                        final com.example.projetotcc10.Modelo.Admin admin = new com.example.projetotcc10.Modelo.Admin(admins.get(position).getId(),admins.get(position).getNomeAdmin(), admins.get(position).getEmailAdmin());
+                        admin.setSenhaAdmin(admins.get(position).getSenhaAdmin());
                         //admin.setId(admins.get(position).getId());
 
-                         FirebaseFirestore.getInstance().collection("admins").document(admin.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                             @Override
-                             public void onSuccess(Void aVoid) {
-                                 Toast.makeText(Listar_Admin.this, "Administrador excluído com sucesso", Toast.LENGTH_SHORT).show();
-                             }
-                         }).addOnFailureListener(new OnFailureListener() {
-                             @Override
-                             public void onFailure(@NonNull Exception e) {
-                                 Toast.makeText(Listar_Admin.this, "Erro ao deletar administrador", Toast.LENGTH_SHORT).show();
-                             }
-                         });
-                           carregalistview();
-                       //com.example.projetotcc10.Modelo.Admin admin =  admins.get(position).getId();
+                        // pega usuario atual
+                        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                        //loga o cara que deve ser apagado
+                        AuthCredential credential = EmailAuthProvider.getCredential(admin.getEmailAdmin(), admin.getSenhaAdmin());
+                        FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()) {
+                                    task.getResult().getUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(Listar_Admin.this, "Excluiu", Toast.LENGTH_SHORT).show();
+
+                                            FirebaseFirestore.getInstance().collection("admins").document(admin.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(Listar_Admin.this, "Administrador excluído com sucesso", Toast.LENGTH_SHORT).show();
+                                                    carregalistview();
+
+                                                    //recoloca o usuario na sessão
+                                                    FirebaseAuth.getInstance().updateCurrentUser(user);
+
+//                                 user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                     @Override
+//                                     public void onComplete(@NonNull Task<Void> task) {
+//
+//                                     }
+//                                 });
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(Listar_Admin.this, "Erro ao deletar administrador", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
+
 
                         
-                        Toast.makeText(getApplicationContext(), "Administrador excluido", Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -137,8 +176,10 @@ public class Listar_Admin extends AppCompatActivity {
 
                                 String nome = document.getString("nomeAdmin");
                                 String email = document.getString("emailAdmin");
+                                String senha = document.getString("senhaAdmin");
 
                                 com.example.projetotcc10.Modelo.Admin u = new com.example.projetotcc10.Modelo.Admin(document.getId(), nome, email);
+                                u.setSenhaAdmin(senha);
 
                                 admins.add(u);
                                // Log.d(TAG   , document.getId() + " => " + document.getData());

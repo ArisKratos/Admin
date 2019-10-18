@@ -111,8 +111,10 @@ public class ManterAdmin extends AppCompatActivity {
         String uid = FirebaseAuth.getInstance().getUid();
         String email = aliasEmailAdmin.getText().toString();
         String nomeAdmin = aliasNomeAdmin.getText().toString();
+        String senhaAdmin = aliasSenhaAdmin.getText().toString();
 
         Admin admin = new Admin(uid, nomeAdmin, email);
+        admin.setSenhaAdmin(senhaAdmin);
         FirebaseFirestore.getInstance().collection("admins")
                 .add(admin)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
