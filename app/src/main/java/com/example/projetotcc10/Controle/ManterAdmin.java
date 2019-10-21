@@ -23,10 +23,7 @@ import com.example.projetotcc10.Modelo.Admin;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.UUID;
-
 public class ManterAdmin extends AppCompatActivity {
-
 
    private EditText aliasEmailAdmin, aliasSenhaAdmin, aliasNomeAdmin;
    private Button aliasBtncadastrarAdmin;
@@ -63,18 +60,15 @@ public class ManterAdmin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
               createUser();
-
             }
         });
 
     }
-
     private void createUser() {
 
         String email = aliasEmailAdmin.getText().toString();
         String senha = aliasSenhaAdmin.getText().toString();
         String nome = aliasNomeAdmin.getText().toString();
-
 
         if (email == null || email.isEmpty() || senha == null || senha.isEmpty() || nome == null || nome.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Email, nome e senha devem ser preenchidos", Toast.LENGTH_SHORT).show();
@@ -84,10 +78,11 @@ public class ManterAdmin extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+
                             if (task.isSuccessful()) {
 
-                                //   Log.i("Teste", task.getResult().getUser().getUid());
                                 saveAdminInFirebase();
+
                             } else{
                             Toast.makeText(ManterAdmin.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
 
@@ -109,11 +104,11 @@ public class ManterAdmin extends AppCompatActivity {
 
        // String filename = UUID.randomUUID().toString();
         String uid = FirebaseAuth.getInstance().getUid();
-        String email = aliasEmailAdmin.getText().toString();
+        String emailAdmin = aliasEmailAdmin.getText().toString();
         String nomeAdmin = aliasNomeAdmin.getText().toString();
         String senhaAdmin = aliasSenhaAdmin.getText().toString();
 
-        Admin admin = new Admin(uid, nomeAdmin, email);
+        Admin admin = new Admin(uid, nomeAdmin, emailAdmin);
         admin.setSenhaAdmin(senhaAdmin);
         FirebaseFirestore.getInstance().collection("admins")
                 .add(admin)
@@ -135,8 +130,6 @@ public class ManterAdmin extends AppCompatActivity {
         });
 
     }
-
-
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
@@ -149,6 +142,4 @@ public class ManterAdmin extends AppCompatActivity {
         }
         return true;
     }
-
-
 }

@@ -39,8 +39,6 @@ public class Listar_Admin extends AppCompatActivity {
 
     private ListView listaAdmin;
     private List<com.example.projetotcc10.Modelo.Admin> admins;
-   // private List<com.example.projetotcc10.Modelo.Admin> listaAux;
-    private Button aliasCadastrarAdmin;
     private AlertDialog alerta;
     private final static String TAG  = "Firelog";
 
@@ -103,17 +101,9 @@ public class Listar_Admin extends AppCompatActivity {
                                                 public void onSuccess(Void aVoid) {
                                                     Toast.makeText(Listar_Admin.this, "Administrador excluído com sucesso", Toast.LENGTH_SHORT).show();
                                                     carregalistview();
-
                                                     //recoloca o usuario na sessão
                                                     FirebaseAuth.getInstance().updateCurrentUser(user);
-
-//                                 user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                     @Override
-//                                     public void onComplete(@NonNull Task<Void> task) {
-//
-//                                     }
-//                                 });
-                                                }
+        }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
@@ -125,11 +115,6 @@ public class Listar_Admin extends AppCompatActivity {
                                 }
                             }
                         });
-
-
-
-                        
-
                     }
                 });
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -137,15 +122,11 @@ public class Listar_Admin extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Ação cancelada", Toast.LENGTH_SHORT).show();
                     }
                 });
-
                 alerta = builder.create();
                 alerta.show();
-
                 return true;
             }
-
         });
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
@@ -187,9 +168,8 @@ public class Listar_Admin extends AppCompatActivity {
                             }
 
                           ArrayAdapter<com.example.projetotcc10.Modelo.Admin> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, admins);
-                           listaAdmin.setAdapter(adaptador);
+                            listaAdmin.setAdapter(adaptador);
                           adaptador.notifyDataSetChanged();
-
 
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
