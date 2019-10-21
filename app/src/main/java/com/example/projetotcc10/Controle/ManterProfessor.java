@@ -1,23 +1,32 @@
 package com.example.projetotcc10.Controle;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.projetotcc10.Modelo.Professor;
 import com.example.projetotcc10.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ManterProfessor extends AppCompatActivity {
 
 
-    EditText nomeProfessor, senhaProfessor;
-    // ListView listProf;
-  //  List<Professor> professores;
+    EditText aliasNomeProfessor, aliasSenhaProfessor, aliasEmailProfessor;
     Button aliasBtnCadastrarProf;
 
     @Override
@@ -29,22 +38,12 @@ public class ManterProfessor extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle("Cadastrar professor");
 
+        aliasNomeProfessor = findViewById(R.id.editNomeProfessor);
+        aliasEmailProfessor = findViewById(R.id.editEmailProfessor);
+        aliasSenhaProfessor = findViewById(R.id.editSenhaProfessor);
 
         aliasBtnCadastrarProf = findViewById(R.id.buttonCadastrarProfessor);
-        nomeProfessor = findViewById(R.id.editNomeProfessor);
-        senhaProfessor = findViewById(R.id.editSenhaProfessor);
-       // listProf = findViewById(R.id.ListaProfessores);
 
-
-
-        aliasBtnCadastrarProf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(getApplicationContext() ,"Professor cadastrado com sucesso!" , Toast.LENGTH_SHORT).show();
-
-            }
-        });
         FloatingActionButton voltar = findViewById(R.id.buttonActionVoltar);
         voltar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,15 +52,83 @@ public class ManterProfessor extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-  /*  private void carregalistview(){
 
-        ArrayAdapter<Professor> adaptador = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, professores);
-        listProf.setAdapter(adaptador);
-        adaptador.notifyDataSetChanged();
+        aliasBtnCadastrarProf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                createProf();
+            }
+        });
     }
-    */
+       private void createProf() {
+
+            String email = aliasEmailProfessor.getText().toString();
+            String senha = aliasSenhaProfessor.getText().toString();
+            String nome = aliasNomeProfessor.getText().toString();
+
+            if (email == null || email.isEmpty() || senha == null || senha.isEmpty() || nome == null || nome.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Email, nome e senha devem ser preenchidos", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, senha)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()) {
+
+                                saveProfInFirebase();
+
+                            } else{
+                                Toast.makeText(ManterProfessor.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            Log.i("Teste" ,  e.getMessage());
+
+                        }
+                    });
+        }
+
+        private void saveProfInFirebase() {
+
+            String uid = FirebaseAuth.getInstance().getUid();
+            String emailProf = aliasEmailProfessor.getText().toString();
+            String nomeProf = aliasNomeProfessor.getText().toString();
+            String senhaProf = aliasSenhaProfessor.getText().toString();
+
+            Professor professor = new Professor();
+            professor.setId(uid);
+            professor.setEmailProfessor(emailProf);
+            professor.setNomeProfessor(nomeProf);
+            professor.setSenhaProfessor(senhaProf);
+
+            FirebaseFirestore.getInstance().collection("professores")
+                    .add(professor)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+
+                            Log.i ("Teste \n", documentReference.getId());
+
+                            Intent intent = new Intent(ManterProfessor.this, Listar_Professor.class);
+                            startActivity(intent);
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.i("Teste \n", e.getMessage());
+                }
+            });
+
+        }
 
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {

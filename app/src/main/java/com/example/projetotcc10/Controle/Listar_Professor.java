@@ -2,35 +2,54 @@ package com.example.projetotcc10.Controle;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+
+import android.support.annotation.NonNull;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+
+import android.util.Log;
+
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.projetotcc10.Modelo.Professor;
 import com.example.projetotcc10.R;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Listar_Professor extends AppCompatActivity {
 
     private ListView listaProf;
-    private List<Professor> professores;
-    private Button aliasCadastrarProfessor;
+    private List<Professor> profs;
     private AlertDialog alerta;
+    private final static String TAG  = "Firelog";
 
-    private String[] ArrayProfessores = new String[]{"Joao\njoao@gmail.com","Lucas\nlucas@gmail.com",
-            "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com",
-            "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com",
-            "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com", "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com",
-            "Joao\njoao@gmail.com","Lucas\nlucas@gmail.com"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +64,7 @@ public class Listar_Professor extends AppCompatActivity {
 
         listaProf = findViewById(R.id.listProfessor);
 
-
+        profs = new ArrayList<>();
 
         carregalistview();
 
@@ -58,23 +77,46 @@ public class Listar_Professor extends AppCompatActivity {
             }
         });
 
-
         listaProf.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                           int position, long id) {
-                // TODO Auto-generated method stub
+            public boolean onItemLongClick(AdapterView<?> parent, final View view,
+                                           final int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Alerta!");
+                builder.setMessage("Deseja mesmo excluir esse professor?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                         final Professor professor = profs.get(position);
+
+                         FirebaseFirestore.getInstance().collection("professores").document(professor.getId()).delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(Listar_Professor.this, "professor excluído com sucesso", Toast.LENGTH_SHORT).show();
+                                        carregalistview();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Listar_Professor.this, "Erro ao deletar professor", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
 
 
-
-                listaProf.getItemAtPosition(position);
-
-                Toast.makeText(getApplicationContext(), "Item Deleted", Toast.LENGTH_LONG).show();
-
+                    }
+                });
+                builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Toast.makeText(getApplicationContext(), "Ação cancelada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alerta = builder.create();
+                alerta.show();
                 return true;
             }
-
         });
     }
     @Override
@@ -88,43 +130,44 @@ public class Listar_Professor extends AppCompatActivity {
         }
         return true;
     }
+    public void carregalistview(){
+        FirebaseFirestore.getInstance().collection("professores")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            profs.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                String nome = document.getString("nomeProfessor");
+                                String email = document.getString("emailProfessor");
+                                String senha = document.getString("senhaProfessor");
+
+                                Professor u = new Professor();
+
+                                u.setNomeProfessor(nome);
+                                u.setEmailProfessor(email);
+                                u.setSenhaProfessor(senha);
 
 
-    private void carregalistview(){
+                                profs.add(u);
+                                // Log.d(TAG   , document.getId() + " => " + document.getData());
+                                Log.d(TAG   , nome + " => " + email);
+                            }
 
-        ArrayAdapter<String> adaptador = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ArrayProfessores);
-        listaProf.setAdapter(adaptador);
-        adaptador.notifyDataSetChanged();
+                            ArrayAdapter<Professor> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1,profs);
+                            listaProf.setAdapter(adaptador);
+                            adaptador.notifyDataSetChanged();
+
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
 
     }
 
-    private void exemplo_simples() {
-        //Cria o gerador do AlertDialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //define o titulo
-        builder.setTitle("Alerta!");
-        //define a mensagem
-        builder.setMessage("Deseja mesmo excluir esse professor?");
-        //define um botão como positivo
-        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(getApplicationContext(), "Professor excluido" , Toast.LENGTH_SHORT).show();
-            }
-        });
-        //define um botão como negativo.
-        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(getApplicationContext(), "Ação cancelada" , Toast.LENGTH_SHORT).show();
-            }
-        });
-        //cria o AlertDialog
-        alerta = builder.create();
-        //Exibe
-        alerta.show();
-    }
 
-
-
-
-}
 

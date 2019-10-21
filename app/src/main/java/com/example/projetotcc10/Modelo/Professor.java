@@ -2,20 +2,29 @@ package com.example.projetotcc10.Modelo;
 
 public class Professor {
 
-    private Integer id;
+    private String id;
     private String nomeProfessor;
+    private  String emailProfessor;
     private String senhaProfessor;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getNomeProfessor() {
         return nomeProfessor;
+    }
+
+    public String getEmailProfessor() {
+        return emailProfessor;
+    }
+
+    public void setEmailProfessor(String emailProfessor) {
+        this.emailProfessor = emailProfessor;
     }
 
     public void setNomeProfessor(String nomeProfessor) {
@@ -29,6 +38,10 @@ public class Professor {
     public void setSenhaProfessor(String senhaProfessor) {
         this.senhaProfessor = senhaProfessor;
     }
+    @Override
 
+    public String toString() {
+        return nomeProfessor + '\n' + emailProfessor;
+    }
 
 }

@@ -59,12 +59,12 @@ public class ManterAdmin extends AppCompatActivity {
         aliasBtncadastrarAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              createUser();
+              createAdmin();
             }
         });
 
     }
-    private void createUser() {
+    private void createAdmin() {
 
         String email = aliasEmailAdmin.getText().toString();
         String senha = aliasSenhaAdmin.getText().toString();
@@ -110,7 +110,7 @@ public class ManterAdmin extends AppCompatActivity {
 
         Admin admin = new Admin(uid, nomeAdmin, emailAdmin);
         admin.setSenhaAdmin(senhaAdmin);
-        FirebaseFirestore.getInstance().collection("admins")
+        FirebaseFirestore.getInstance().collection("administradores")
                 .add(admin)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

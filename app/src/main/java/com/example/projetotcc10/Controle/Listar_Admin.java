@@ -54,7 +54,6 @@ public class Listar_Admin extends AppCompatActivity {
         listaAdmin = findViewById(R.id.listAdmin);
 
         admins = new ArrayList<>();
-        com.example.projetotcc10.Modelo.Admin admin;
 
         carregalistview();
 
@@ -80,7 +79,7 @@ public class Listar_Admin extends AppCompatActivity {
 
                         final com.example.projetotcc10.Modelo.Admin admin = new com.example.projetotcc10.Modelo.Admin(admins.get(position).getId(),admins.get(position).getNomeAdmin(), admins.get(position).getEmailAdmin());
                         admin.setSenhaAdmin(admins.get(position).getSenhaAdmin());
-                        //admin.setId(admins.get(position).getId());
+
 
                         // pega usuario atual
                         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -96,7 +95,7 @@ public class Listar_Admin extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Toast.makeText(Listar_Admin.this, "Excluiu", Toast.LENGTH_SHORT).show();
 
-                                            FirebaseFirestore.getInstance().collection("admins").document(admin.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            FirebaseFirestore.getInstance().collection("administradores").document(admin.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Toast.makeText(Listar_Admin.this, "Administrador excluído com sucesso", Toast.LENGTH_SHORT).show();
@@ -146,7 +145,7 @@ public class Listar_Admin extends AppCompatActivity {
         return;
     }
     private void carregalistview(){
-        FirebaseFirestore.getInstance().collection("admins")
+        FirebaseFirestore.getInstance().collection("administradores")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -178,5 +177,4 @@ public class Listar_Admin extends AppCompatActivity {
                     }
                 });
     }
-
 }
