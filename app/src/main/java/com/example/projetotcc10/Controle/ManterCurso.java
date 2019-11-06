@@ -1,9 +1,11 @@
 package com.example.projetotcc10.Controle;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,11 @@ import android.widget.Toast;
 
 import com.example.projetotcc10.Modelo.Curso;
 import com.example.projetotcc10.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -19,12 +26,12 @@ public class ManterCurso extends AppCompatActivity {
 
 
    // ListView listCursos;
-   private EditText aliasEditCurso;
+   private EditText aliasCurso;
     private Button aliasBtnCadastrarCurso;
-    private List<Curso> cursos;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manter_curso);
 
@@ -32,7 +39,7 @@ public class ManterCurso extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle("Cadastrar curso");
 
-        aliasEditCurso= findViewById(R.id.editNomeCurso);
+        aliasCurso= findViewById(R.id.editNomeCurso);
         aliasBtnCadastrarCurso = findViewById(R.id.buttonCadastrarCurso);
 
 
@@ -41,8 +48,10 @@ public class ManterCurso extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getApplicationContext() ,"Curso cadastrado com sucesso!" , Toast.LENGTH_SHORT).show();
+                saveCursoInFirebase();
 
+                Intent intent = new Intent(ManterCurso.this, Listar_Curso.class);
+                startActivity(intent);
 
             }
         });
@@ -58,6 +67,38 @@ public class ManterCurso extends AppCompatActivity {
         });
 
     }
+
+
+    private void saveCursoInFirebase() {
+
+        String uid = FirebaseAuth.getInstance().getUid();
+
+        String nomeCurso = aliasCurso.getText().toString();
+
+
+        Curso curso = new Curso();
+        curso.setId(uid);
+        curso.setCurso(nomeCurso);
+        FirebaseFirestore.getInstance().collection("cursos")
+                .add(curso)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+
+                        Log.i ("Teste \n", documentReference.getId());
+
+                        Intent intent = new Intent(ManterCurso.this, Listar_Curso.class);
+                        startActivity(intent);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("Teste \n", e.getMessage());
+            }
+        });
+    }
+
 
     /* private void limparCampos() {
         curso.setText("");

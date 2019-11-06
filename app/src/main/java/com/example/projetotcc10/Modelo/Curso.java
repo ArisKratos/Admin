@@ -2,14 +2,14 @@ package com.example.projetotcc10.Modelo;
 
 public class Curso {
 
-    private Integer id;
+    private String id;
     private String curso;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -21,5 +21,9 @@ public class Curso {
         this.curso = curso;
     }
 
+    @Override
+    public String toString() {
 
+        return curso;
+    }
 }

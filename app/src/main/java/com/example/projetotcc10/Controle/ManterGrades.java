@@ -9,11 +9,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projetotcc10.Modelo.Curso;
 import com.example.projetotcc10.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManterGrades extends AppCompatActivity {
 
@@ -26,6 +31,8 @@ public class ManterGrades extends AppCompatActivity {
     private String nomeCurso;
     private Integer numeroSemestre;
     private Integer anoTurmaNumero;
+    private List<Curso> listCursos;
+
 
 
     @Override
@@ -40,6 +47,11 @@ public class ManterGrades extends AppCompatActivity {
 
 
         String[] ArraySemestres = new String[] {"1", "2"};
+
+
+
+         listCursos = new ArrayList<>();
+
          String[] ArrayCursos = new String[]{"Informática","Agropecuária"};
 
 
