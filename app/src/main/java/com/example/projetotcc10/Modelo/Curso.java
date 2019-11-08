@@ -1,6 +1,9 @@
 package com.example.projetotcc10.Modelo;
 
 public class Curso {
+    public Curso() {
+
+    }
 
     private String id;
     private String curso;

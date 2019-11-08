@@ -88,24 +88,41 @@ public class Listar_Professor extends AppCompatActivity {
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
 
-                         final Professor professor = profs.get(position);
 
-                         FirebaseFirestore.getInstance().collection("professores").document(professor.getId()).delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(Listar_Professor.this, "professor excluído com sucesso", Toast.LENGTH_SHORT).show();
-                                        carregalistview();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
+                        final Professor professor = profs.get(position);
+
+                        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                        //loga o cara que deve ser apagado
+                        AuthCredential credential = EmailAuthProvider.getCredential(professor.getEmailProfessor(), professor.getSenhaProfessor());
+                        FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(Listar_Professor.this, "Erro ao deletar professor", Toast.LENGTH_SHORT).show();
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    task.getResult().getUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(Listar_Professor.this, "Excluiu", Toast.LENGTH_SHORT).show();
 
+                                            FirebaseFirestore.getInstance().collection("professores").document(professor.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(Listar_Professor.this, "Professor excluído com sucesso", Toast.LENGTH_SHORT).show();
+                                                    carregalistview();
+                                                    //recoloca o usuario na sessão
+                                                    FirebaseAuth.getInstance().updateCurrentUser(user);
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(Listar_Professor.this, "Erro ao deletar professor", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
                             }
                         });
-
-
                     }
                 });
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -117,8 +134,9 @@ public class Listar_Professor extends AppCompatActivity {
                 alerta.show();
                 return true;
             }
-        });
-    }
+           });
+        }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
@@ -140,6 +158,8 @@ public class Listar_Professor extends AppCompatActivity {
                             profs.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
+
+                                String id = document.getId();
                                 String nome = document.getString("nomeProfessor");
                                 String email = document.getString("emailProfessor");
                                 String senha = document.getString("senhaProfessor");
@@ -149,6 +169,8 @@ public class Listar_Professor extends AppCompatActivity {
                                 u.setNomeProfessor(nome);
                                 u.setEmailProfessor(email);
                                 u.setSenhaProfessor(senha);
+                                u.setId(id);
+
 
 
                                 profs.add(u);

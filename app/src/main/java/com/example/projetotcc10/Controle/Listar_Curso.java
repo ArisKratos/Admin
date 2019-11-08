@@ -88,9 +88,8 @@ public class Listar_Curso extends AppCompatActivity {
                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface arg0, int arg1) {
 
-                      Curso curso = new Curso();
-                      curso.setCurso(cursos.get(position).getId());
-                      curso.setCurso(cursos.get(position).getCurso());
+                    final Curso curso = cursos.get(position);
+
 
                       FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                           @Override
@@ -142,16 +141,18 @@ public class Listar_Curso extends AppCompatActivity {
                             cursos.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
+
+                                String id = document.getId();
                                 String nomeCurso = document.getString("curso");
 
 
                                 Curso u = new Curso();
-                                u.setId(document.getId());
-                                 u.setCurso(nomeCurso);
+
+                                u.setId(id);
+                                u.setCurso(nomeCurso);
 
                                cursos.add(u);
                                 Log.d(TAG, nomeCurso);
-
                             }
 
                             ArrayAdapter<Curso> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, cursos);

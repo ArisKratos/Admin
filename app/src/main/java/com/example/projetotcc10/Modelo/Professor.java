@@ -2,6 +2,10 @@ package com.example.projetotcc10.Modelo;
 
 public class Professor {
 
+    public  Professor(){
+
+    }
+
     private String id;
     private String nomeProfessor;
     private  String emailProfessor;

@@ -36,12 +36,14 @@ public class LoginAdmin extends AppCompatActivity {
 
 
        aliasBtnLogin = findViewById(R.id.buttonCadastrarAdm);
-       aliasBtnLogin.setOnClickListener(new View.OnClickListener() {
+      aliasBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                Intent intent = new Intent(getApplicationContext(), Admin.class);
+                startActivity(intent);
 
-                String email = aliasEmailAdmin.getText().toString();
+             /*   String email = aliasEmailAdmin.getText().toString();
                 String senha = aliasSenhaAdmin.getText().toString();
 
                 if (email == null || email.isEmpty() || senha == null || senha.isEmpty()) {
@@ -75,11 +77,11 @@ public class LoginAdmin extends AppCompatActivity {
                                 Log.i("Teste" ,  e.getMessage());
 
                             }
-                        });
-
+  });
+*/
             }
         });
-    }
+   }
 
 
 }
