@@ -1,9 +1,11 @@
 package com.example.projetotcc10.Controle;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,11 @@ import android.widget.Toast;
 
 import com.example.projetotcc10.Modelo.Curso;
 import com.example.projetotcc10.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +33,13 @@ public class ManterGrades extends AppCompatActivity {
     private TextView linkUparGrade;
     private EditText anoTurma;
     private Button buttonUparGrade;
-    private Spinner cursos;
+    private Spinner spnCursos;
     private Spinner semestres;
     private String nomeCurso;
     private Integer numeroSemestre;
     private Integer anoTurmaNumero;
-    private List<Curso> listCursos;
+    private List<Curso> cursos;
+    private final static String TAG  = "Firelog";
 
 
 
@@ -48,12 +56,7 @@ public class ManterGrades extends AppCompatActivity {
 
         String[] ArraySemestres = new String[] {"1", "2"};
 
-
-
-         listCursos = new ArrayList<>();
-
-         String[] ArrayCursos = new String[]{"Informática","Agropecuária"};
-
+        cursos = new ArrayList<>();
 
 
 
@@ -61,27 +64,22 @@ public class ManterGrades extends AppCompatActivity {
         anoTurma = findViewById(R.id.editAnoTurmaGrades);
         semestres = findViewById(R.id.spinnerSemestreGrades);
         buttonUparGrade = findViewById(R.id.uparGrade);
-        cursos = findViewById(R.id.spinnerCursoGrades);
+        spnCursos = findViewById(R.id.spinnerCursoGrades);
 
+
+        carregarSpinnerCurso();
 
 
         linkUparGrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("application/pdf");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Selecione o arquivo PDF"), 1);
+            }
 
-
-                    Intent intent = new Intent();
-                    intent.setType("application/pdf");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
-
-
-                }
-
-            });
-
-
-
+        });
 
         ArrayAdapter<String> spinnerSemestres = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArraySemestres);
 
@@ -89,11 +87,56 @@ public class ManterGrades extends AppCompatActivity {
         semestres.setAdapter(spinnerSemestres);
 
 
-        final ArrayAdapter<String> spinnerCursos = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArrayCursos);
+        //   final ArrayAdapter<Curso> spinnerCursos = new ArrayAdapter<Curso>(this, android.R.layout.simple_spinner_item, cursos);
+        //  spinnerCursos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //  cursos.setAdapter(spinnerCursos);
 
-        spinnerCursos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cursos.setAdapter(spinnerCursos);
 
+
+
+        buttonUparGrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (semestres.getSelectedItemPosition()) {
+
+                    case 0:
+
+                        numeroSemestre = 1;
+                        break;
+                    case 1:
+                        numeroSemestre = 2;
+                        break;
+
+                    default:
+                }
+
+
+                Curso curso = (Curso) spnCursos.getSelectedItem();
+                nomeCurso = curso.getCurso();
+
+
+
+                try {
+                    if (anoTurma.getText().length() == 0) {
+                        anoTurma.setError("Precisa inserir \n o ano de ingresso\n da turma");
+
+
+                    } else {
+
+                        anoTurmaNumero = Integer.parseInt(anoTurma.getText().toString());
+                        if (anoTurmaNumero < 2000|| anoTurmaNumero > 2100) {
+                            anoTurma.setError("Ano inválido");
+                        } else {
+
+                            Toast.makeText(getApplicationContext(), "Grade enviada com sucesso para: \n"+"Semestre: " + numeroSemestre + "\nCurso: " + nomeCurso + "\nAno: " + anoTurmaNumero, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+        });
 
         FloatingActionButton voltar = findViewById(R.id.buttonActionVoltar);
         voltar.setOnClickListener(new View.OnClickListener() {
@@ -104,66 +147,43 @@ public class ManterGrades extends AppCompatActivity {
             }
         });
 
+    }
+    public void carregarSpinnerCurso() {
 
-       buttonUparGrade.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
+        FirebaseFirestore.getInstance().collection("cursos")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task <QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            cursos.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
 
-
-               switch (semestres.getSelectedItemPosition()) {
-
-                   case 0:
-
-                       numeroSemestre = 1;
-                       break;
-                   case 1:
-                       numeroSemestre = 2;
-                       break;
-
-                   default:
-               }
-               switch (cursos.getSelectedItemPosition()) {
-
-                   case 0:
-
-                       nomeCurso = spinnerCursos.getItem(0);
-                       break;
-                   case 1:
-                       nomeCurso = spinnerCursos.getItem(1);
-
-                       break;
-
-                   default:
-               }
-               try {
+                                String nomeCurso = document.getString("curso");
 
 
-                   if (anoTurma.getText().length() == 0) {
-                       anoTurma.setError("Precisa inserir \n o ano de ingresso\n da turma");
+                                Curso u = new Curso();
+                                u.setId(document.getId());
+                                u.setCurso(nomeCurso);
 
+                                cursos.add(u);
+                                Log.d(TAG, nomeCurso);
 
-                   } else {
+                            }
 
-                       anoTurmaNumero = Integer.parseInt(anoTurma.getText().toString());
-                       if (anoTurmaNumero < 2000|| anoTurmaNumero > 2100) {
-                           anoTurma.setError("Ano inválido");
-                       } else {
+                            final ArrayAdapter <Curso> adaptador = new ArrayAdapter <>(getBaseContext(), android.R.layout.simple_spinner_item, cursos);
+                            adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spnCursos.setAdapter(adaptador);
+                            adaptador.notifyDataSetChanged();
 
-                               Toast.makeText(getApplicationContext(), "Grade enviada com sucesso para: \n"+"Semestre: " + numeroSemestre + "\nCurso: " + nomeCurso + "\nAno: " + anoTurmaNumero, Toast.LENGTH_SHORT).show();
-                           }
-                       }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
 
+                    }
+                });
+    }
 
-
-
-               }catch (Exception e){
-                   e.printStackTrace();
-               }
-           }
-
-       });
-
-}
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
