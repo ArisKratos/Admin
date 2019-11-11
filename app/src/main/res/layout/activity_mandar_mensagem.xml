@@ -64,11 +64,11 @@
         android:inputType="numberDecimal"
         android:maxLength="4"
         android:textSize="23dp"
-        app:layout_constraintStart_toEndOf="@+id/spinnerCursoMsg"
+        app:layout_constraintStart_toEndOf="@+id/spinnerCursoTurma"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinnerCursoMsg"
+        android:id="@+id/spinnerCursoTurma"
         android:layout_width="190px"
         android:layout_height="80px"
         android:layout_marginStart="8dp"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinnerSemestreMsg"
+        android:id="@+id/spinnerSemestreTurma"
         android:layout_width="50px"
         android:layout_height="80px"
         android:layout_marginStart="8dp"

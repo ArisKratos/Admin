@@ -29,8 +29,8 @@
                 android:icon="@android:drawable/sym_action_chat"
                 android:title="@string/menu_enviar_mensagem" />
             <item
-                android:id="@+id/admin_acoes"
-                android:icon="@android:drawable/ic_menu_view"
+                android:id="@+id/admin_turma"
+                android:icon="@drawable/ic_menu_manage"
                 android:title="@string/menu_vizualizar_acoes" />
         </menu>
     </item>

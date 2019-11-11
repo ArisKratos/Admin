@@ -40,8 +40,8 @@ public class MandarMensagem extends AppCompatActivity {
         String[] ArrayCursos = new String[]{"Informática", "Agropecuária"};
 
         anoTurma = findViewById(R.id.editAnoTurmaMsg);
-        cursos = findViewById(R.id.spinnerCursoMsg);
-        semestres = findViewById(R.id.spinnerSemestreMsg);
+        cursos = findViewById(R.id.spinnerCursoTurma);
+        semestres = findViewById(R.id.spinnerSemestreTurma);
         checkSendForAll = findViewById(R.id.checkSendAll);
         enviarMensagem = findViewById(R.id.buttonEnviarMensagem);
 

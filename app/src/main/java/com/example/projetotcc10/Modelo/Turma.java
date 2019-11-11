@@ -1,6 +1,6 @@
 package com.example.projetotcc10.Modelo;
 
-public class AnoIngressoTurma {
+public class Turma {
 
     private Integer ano;
     private Integer semestre;
@@ -24,4 +24,3 @@ public class AnoIngressoTurma {
 
 
 }
-

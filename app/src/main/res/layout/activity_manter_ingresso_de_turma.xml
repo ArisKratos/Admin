@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controle.ManterIngressoDeTurma">
+
+
+    <TextView
+        android:id="@+id/textAux3"
+        android:layout_width="99dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Curso:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/listTurmas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAux"
+        app:layout_constraintVertical_bias="0.09" />
+
+    <EditText
+        android:id="@+id/editAnoTurmaIngresso"
+        android:layout_width="130px"
+        android:layout_height="90px"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:hint="Ano"
+        android:inputType="numberDecimal"
+        android:maxLength="4"
+        android:textSize="23dp"
+        app:layout_constraintStart_toEndOf="@+id/textAux2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textAux"
+        android:layout_width="254dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Semestre de ingresso:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAux2" />
+
+    <TextView
+        android:id="@+id/textAux2"
+        android:layout_width="197dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:text="Ano de ingresso:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerSemestreTurma"
+        android:layout_width="16dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="82dp"
+        android:background="@drawable/bg_spinner_rounded"
+        android:popupBackground="@drawable/bg_spinner_rounded"
+        app:layout_constraintStart_toEndOf="@+id/textAux"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerCursoTurma"
+        android:layout_width="84dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="132dp"
+        android:background="@drawable/bg_spinner_rounded"
+        android:popupBackground="@drawable/bg_spinner_rounded"
+        app:layout_constraintStart_toEndOf="@+id/textAux3"
+        app:layout_constraintTop_toTopOf="parent"></Spinner>
+
+    <ListView
+        android:id="@+id/listTurmas"
+        android:layout_width="395dp"
+        android:layout_height="447dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/bgColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCadastrarTurma" />
+
+    <Button
+        android:id="@+id/btnCadastrarTurma"
+        android:layout_width="163dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="184dp"
+        android:background="@drawable/bg_button_rounded"
+        android:text="@string/cadastrar"
+        app:layout_constraintStart_toEndOf="@+id/spinnerCursoTurma"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
