@@ -166,6 +166,9 @@ public class Listar_Professor extends AppCompatActivity {
 
                                 Professor u = new Professor();
 
+                                // talvez fique mais simples pegar o objeto todo do firebase//
+                                //#####################      u=(Professor)document.getData();
+
                                 u.setNomeProfessor(nome);
                                 u.setEmailProfessor(email);
                                 u.setSenhaProfessor(senha);

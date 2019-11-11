@@ -76,6 +76,7 @@ public class ManterCurso extends AppCompatActivity {
         String nomeCurso = aliasCurso.getText().toString();
 
 
+
         Curso curso = new Curso();
         curso.setId(uid);
         curso.setCurso(nomeCurso);

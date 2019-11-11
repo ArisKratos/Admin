@@ -2,6 +2,8 @@ package com.example.projetotcc10.Modelo;
 
 public class Turma {
 
+
+    private Integer id;
     private Integer ano;
     private Integer semestre;
 
@@ -22,5 +24,11 @@ public class Turma {
         this.semestre = semestre;
     }
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

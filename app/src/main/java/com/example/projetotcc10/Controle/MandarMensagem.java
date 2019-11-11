@@ -49,9 +49,7 @@ public class MandarMensagem extends AppCompatActivity {
         getSupportActionBar().setTitle("Enviar mensagem");
 
 
-        String[] ArraySemestres = new String[] {"1", "2"};
-
-        cursos = new ArrayList <>();
+       ;
 
         anoTurma = findViewById(R.id.editAnoTurmaMsg);
         spnCursos= findViewById(R.id.spinnerCursoTurma);
@@ -59,7 +57,9 @@ public class MandarMensagem extends AppCompatActivity {
         checkSendForAll = findViewById(R.id.checkSendAll);
         enviarMensagem = findViewById(R.id.buttonEnviarMensagem);
 
+        String[] ArraySemestres = new String[] {"1", "2"};
 
+        cursos = new ArrayList <>();
 
         carregarSpinnerCurso();
 
