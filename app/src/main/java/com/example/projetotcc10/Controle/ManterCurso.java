@@ -21,6 +21,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ManterCurso extends AppCompatActivity {
 
@@ -71,7 +72,7 @@ public class ManterCurso extends AppCompatActivity {
 
     private void saveCursoInFirebase() {
 
-        String uid = FirebaseAuth.getInstance().getUid();
+        String uid = UUID.randomUUID().toString();
 
         String nomeCurso = aliasCurso.getText().toString();
 
@@ -80,13 +81,13 @@ public class ManterCurso extends AppCompatActivity {
         Curso curso = new Curso();
         curso.setId(uid);
         curso.setCurso(nomeCurso);
-        FirebaseFirestore.getInstance().collection("cursos")
-                .add(curso)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        FirebaseFirestore.getInstance().collection("cursos").document(curso.getId())
+                .set(curso)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
+                    public void onSuccess(Void v) {
 
-                        Log.i ("Teste \n", documentReference.getId());
+                       // Log.i ("Teste \n", documentReference.getId());
 
                         Intent intent = new Intent(ManterCurso.this, Listar_Curso.class);
                         startActivity(intent);

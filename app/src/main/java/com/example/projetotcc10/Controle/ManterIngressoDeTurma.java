@@ -27,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class ManterIngressoDeTurma extends AppCompatActivity {
@@ -68,11 +69,8 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
         aliasBtnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 switch (aliasSpinnerSemestres.getSelectedItemPosition()) {
-
                     case 0:
-
                         numeroSemestre = 1;
                         break;
                     case 1:
@@ -81,7 +79,6 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
 
                     default:
                 }
-
                 try {
                     if (alisAnoTurma.getText().length() == 0) {
                         alisAnoTurma.setError("Precisa inserir \n o ano de ingresso\n da turma");
@@ -91,33 +88,35 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
                         if (anoTurmaNumero < 2000 || anoTurmaNumero > 2100) {
                             alisAnoTurma.setError("Ano inválido");
                         }
-
                     }
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
 
-            });
+//                String id =  FirebaseFirestore.getInstance().collection("cursos").document(nomeCurso).collection("turmas").getId();
 
-        Turma turma = new Turma();
-      //  turma.setId();
-        turma.setAno(anoTurmaNumero);
-        turma.setSemestre(numeroSemestre);
+                final Turma turma = new Turma();
+                turma.setId(UUID.randomUUID().toString());
+                turma.setAno(anoTurmaNumero);
+                turma.setSemestre(numeroSemestre);
 
-                Curso curso = (Curso) aliasSpinnerCursos.getSelectedItem();
+                final Curso curso = (Curso) aliasSpinnerCursos.getSelectedItem();
                 nomeCurso = curso.getCurso();
-              //String xyzvariavel=aliasCurso.getitemselected;
-                FirebaseFirestore.getInstance().collection("cursos").document(nomeCurso).collection("turmas")
-                        .add(turma)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                //String xyzvariavel=aliasCurso.getitemselected;
+
+                //String id =  FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(curso.getId()).getId();
+
+                FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(turma.getId())
+                        .set(turma)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onSuccess(DocumentReference documentReference) {
+                            public void onSuccess(Void v) {
 
-                                Log.i ("Teste \n", documentReference.getId());
-
+                                //Log.i ("Teste \n", documentReference.getId());
+                                String id = FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(curso.getId()).getId();
+                                //turma.setId(id);
+                                Toast.makeText(getApplicationContext(), "///" +id ,Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -125,7 +124,9 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
                         Log.i("Teste \n", e.getMessage());
                     }
                 });
+            }
 
+            });
 
     }
     private void carregarSpinners() {
@@ -163,7 +164,6 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
                         }
                     });
 
-
         String[] ArraySemestres = new String[] {"1", "2"};
 
 
@@ -173,8 +173,5 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
         aliasSpinnerSemestres.setAdapter(spinnerSemestres);
 
     }
-
-
-
 
 }

@@ -56,13 +56,11 @@ public class ManterProfessor extends AppCompatActivity {
         aliasBtnCadastrarProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 createProf();
             }
         });
     }
        private void createProf() {
-
             String email = aliasEmailProfessor.getText().toString();
             String senha = aliasSenhaProfessor.getText().toString();
             String nome = aliasNomeProfessor.getText().toString();
@@ -82,7 +80,6 @@ public class ManterProfessor extends AppCompatActivity {
 
                             } else{
                                 Toast.makeText(ManterProfessor.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-
                             }
                         }
                     })
@@ -95,7 +92,6 @@ public class ManterProfessor extends AppCompatActivity {
                         }
                     });
         }
-
         private void saveProfInFirebase() {
 
             String uid = FirebaseAuth.getInstance().getUid();
@@ -127,9 +123,7 @@ public class ManterProfessor extends AppCompatActivity {
                     Log.i("Teste \n", e.getMessage());
                 }
             });
-
         }
-
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
