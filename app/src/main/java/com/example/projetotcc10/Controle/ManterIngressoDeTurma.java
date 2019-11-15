@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -52,13 +51,13 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setTitle("Cadastrar turmas novas");
+        getSupportActionBar().setTitle("Manter turmas");
 
 
         alisAnoTurma = findViewById(R.id.editAnoTurmaIngresso);
         aliasSpinnerSemestres = findViewById(R.id.spinnerSemestreTurma);
         aliasSpinnerCursos = findViewById(R.id.spinnerCursoTurma);
-        aliasListTurma = findViewById(R.id.listTurmas);
+        //aliasListTurma = findViewById(R.id.listTurmas);
         aliasBtnCadastrar = findViewById(R.id.btnCadastrarTurma);
 
         cursos = new ArrayList<>();
@@ -96,15 +95,15 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
 
 //                String id =  FirebaseFirestore.getInstance().collection("cursos").document(nomeCurso).collection("turmas").getId();
 
-                final Turma turma = new Turma();
+                Turma turma = new Turma();
                 turma.setId(UUID.randomUUID().toString());
-                turma.setAno(anoTurmaNumero);
-                turma.setSemestre(numeroSemestre);
+                turma.setAno(anoTurmaNumero.toString());
+                turma.setSemestre(numeroSemestre.toString());
 
                 final Curso curso = (Curso) aliasSpinnerCursos.getSelectedItem();
                 nomeCurso = curso.getCurso();
-                //String xyzvariavel=aliasCurso.getitemselected;
 
+                //String xyzvariavel=aliasCurso.getitemselected;
                 //String id =  FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(curso.getId()).getId();
 
                 FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(turma.getId())
@@ -113,10 +112,11 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void v) {
 
-                                //Log.i ("Teste \n", documentReference.getId());
-                                String id = FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(curso.getId()).getId();
-                                //turma.setId(id);
-                                Toast.makeText(getApplicationContext(), "///" +id ,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Turma cadastrada com sucesso", Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(ManterIngressoDeTurma.this , Listar_Turma.class);
+                                startActivity(intent);
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override

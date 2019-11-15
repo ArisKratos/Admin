@@ -164,7 +164,7 @@ public class Admin extends AppCompatActivity
             } else if (id == R.id.admin_turma) {
 
 
-            Intent intent = new Intent(this, ManterIngressoDeTurma.class);
+            Intent intent = new Intent(this, Listar_Turma.class);
 
             startActivity(intent);
 

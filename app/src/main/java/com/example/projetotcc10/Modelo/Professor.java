@@ -42,8 +42,8 @@ public class Professor {
     public void setSenhaProfessor(String senhaProfessor) {
         this.senhaProfessor = senhaProfessor;
     }
-    @Override
 
+    @Override
     public String toString() {
         return nomeProfessor + '\n' + emailProfessor;
     }

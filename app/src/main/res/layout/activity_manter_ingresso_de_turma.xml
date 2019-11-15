@@ -9,24 +9,21 @@
 
     <TextView
         android:id="@+id/textAux3"
-        android:layout_width="99dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="71dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
         android:text="Curso:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/listTurmas"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAux"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintTop_toBottomOf="@+id/textAux" />
 
     <EditText
         android:id="@+id/editAnoTurmaIngresso"
         android:layout_width="130px"
         android:layout_height="90px"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="92dp"
         android:ems="10"
         android:hint="Ano"
         android:inputType="numberDecimal"
@@ -38,10 +35,10 @@
 
     <TextView
         android:id="@+id/textAux"
-        android:layout_width="254dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="243dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="Semestre de ingresso:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"
@@ -50,58 +47,52 @@
 
     <TextView
         android:id="@+id/textAux2"
-        android:layout_width="197dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="181dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="92dp"
         android:text="Ano de ingresso:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <Spinner
         android:id="@+id/spinnerSemestreTurma"
-        android:layout_width="16dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="82dp"
+        android:layout_width="50px"
+        android:layout_height="80px"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/bg_spinner_rounded"
         android:popupBackground="@drawable/bg_spinner_rounded"
         app:layout_constraintStart_toEndOf="@+id/textAux"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textAux2" />
+
 
     <Spinner
         android:id="@+id/spinnerCursoTurma"
-        android:layout_width="84dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="132dp"
+        android:layout_width="129dp"
+        android:layout_height="80px"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/bg_spinner_rounded"
         android:popupBackground="@drawable/bg_spinner_rounded"
         app:layout_constraintStart_toEndOf="@+id/textAux3"
-        app:layout_constraintTop_toTopOf="parent"></Spinner>
-
-    <ListView
-        android:id="@+id/listTurmas"
-        android:layout_width="395dp"
-        android:layout_height="447dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/bgColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCadastrarTurma" />
+        app:layout_constraintTop_toBottomOf="@+id/textAux"></Spinner>
 
     <Button
         android:id="@+id/btnCadastrarTurma"
-        android:layout_width="163dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="184dp"
+        android:layout_width="310dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/bg_button_rounded"
         android:text="@string/cadastrar"
-        app:layout_constraintStart_toEndOf="@+id/spinnerCursoTurma"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCursoTurma" />
 
 
 </android.support.constraint.ConstraintLayout>

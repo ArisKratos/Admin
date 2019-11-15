@@ -23,6 +23,8 @@ import com.example.projetotcc10.Modelo.Admin;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.UUID;
+
 public class ManterAdmin extends AppCompatActivity {
 
    private EditText aliasEmailAdmin, aliasSenhaAdmin, aliasNomeAdmin;
@@ -103,32 +105,32 @@ public class ManterAdmin extends AppCompatActivity {
     private void saveAdminInFirebase() {
 
        // String filename = UUID.randomUUID().toString();
-        String uid = FirebaseAuth.getInstance().getUid();
+
+        String uid = UUID.randomUUID().toString();
         String emailAdmin = aliasEmailAdmin.getText().toString();
         String nomeAdmin = aliasNomeAdmin.getText().toString();
         String senhaAdmin = aliasSenhaAdmin.getText().toString();
 
+
         Admin admin = new Admin(uid, nomeAdmin, emailAdmin);
         admin.setSenhaAdmin(senhaAdmin);
-        FirebaseFirestore.getInstance().collection("administradores")
-                .add(admin)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
+        FirebaseFirestore.getInstance().collection("administradores").document(admin.getId())
+                .set(admin)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void v) {
 
-              Log.i ("Teste \n", documentReference.getId());
+                        // Log.i ("Teste \n", documentReference.getId());
+                        Intent intent = new Intent(ManterAdmin.this, Listar_Admin.class);
+                        startActivity(intent);
 
-          Intent intent = new Intent(ManterAdmin.this, Listar_Admin.class);
-          startActivity(intent);
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-               Log.i("Teste \n", e.getMessage());
+                Log.i("Teste \n", e.getMessage());
             }
         });
-
     }
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {

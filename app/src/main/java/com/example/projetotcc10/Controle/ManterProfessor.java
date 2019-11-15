@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.UUID;
+
 public class ManterProfessor extends AppCompatActivity {
 
 
@@ -61,6 +63,8 @@ public class ManterProfessor extends AppCompatActivity {
         });
     }
        private void createProf() {
+
+
             String email = aliasEmailProfessor.getText().toString();
             String senha = aliasSenhaProfessor.getText().toString();
             String nome = aliasNomeProfessor.getText().toString();
@@ -94,10 +98,11 @@ public class ManterProfessor extends AppCompatActivity {
         }
         private void saveProfInFirebase() {
 
-            String uid = FirebaseAuth.getInstance().getUid();
+
             String emailProf = aliasEmailProfessor.getText().toString();
             String nomeProf = aliasNomeProfessor.getText().toString();
             String senhaProf = aliasSenhaProfessor.getText().toString();
+            String uid = UUID.randomUUID().toString();
 
             Professor professor = new Professor();
             professor.setId(uid);
@@ -105,17 +110,14 @@ public class ManterProfessor extends AppCompatActivity {
             professor.setNomeProfessor(nomeProf);
             professor.setSenhaProfessor(senhaProf);
 
-            FirebaseFirestore.getInstance().collection("professores")
-                    .add(professor)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            FirebaseFirestore.getInstance().collection("professores").document(professor.getId())
+                    .set(professor)
+                    .addOnSuccessListener(new OnSuccessListener <Void>() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
-
-                            Log.i ("Teste \n", documentReference.getId());
-
-                            Intent intent = new Intent(ManterProfessor.this, Listar_Professor.class);
-                            startActivity(intent);
-
+                        public void onSuccess(Void v) {
+                           Toast.makeText(getApplicationContext(), "Professor cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                           Intent intent = new Intent(ManterProfessor.this , Listar_Professor.class);
+                           startActivity(intent);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -124,6 +126,8 @@ public class ManterProfessor extends AppCompatActivity {
                 }
             });
         }
+
+
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar

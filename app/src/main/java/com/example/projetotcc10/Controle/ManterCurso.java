@@ -73,7 +73,6 @@ public class ManterCurso extends AppCompatActivity {
     private void saveCursoInFirebase() {
 
         String uid = UUID.randomUUID().toString();
-
         String nomeCurso = aliasCurso.getText().toString();
 
 
