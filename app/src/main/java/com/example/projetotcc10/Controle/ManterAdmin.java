@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.example.projetotcc10.Modelo.Admin;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.UUID;
 
@@ -106,7 +107,7 @@ public class ManterAdmin extends AppCompatActivity {
 
        // String filename = UUID.randomUUID().toString();
 
-        String uid = UUID.randomUUID().toString();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String emailAdmin = aliasEmailAdmin.getText().toString();
         String nomeAdmin = aliasNomeAdmin.getText().toString();
         String senhaAdmin = aliasSenhaAdmin.getText().toString();

@@ -6,15 +6,23 @@ import java.util.Date;
 
 public class Mensagem  {
 
-    public Mensagem(String mensagem, String professor, String turmaMensagem, String dataMensagem){
+    public Mensagem(String id,String mensagem, String adminMsg, String turmaMensagem, String dataMensagem , long timeMessage){
 
-        this.mensagem = mensagem; this.professor = professor;
-      this.turmaMensagem = turmaMensagem;
-      this.dataMensagem = dataMensagem;
+        this.id = id;
+        this.mensagem = mensagem;
+        this.adminMsg = adminMsg;
+        this.turmaMensagem = turmaMensagem;
+        this.dataMensagem = dataMensagem;
+        this.timeMassage = timeMessage;
     }
 
+    private String id;
+    private long timeMassage;
     private String mensagem;
-    private String professor;
+
+
+
+    private String adminMsg;
     private String turmaMensagem;
     private String dataMensagem;
 
@@ -33,9 +41,9 @@ public class Mensagem  {
     return turmaMensagem;
    }
 
- public void setTurmaMensagem(String turmaMensagem) {
+   public void setTurmaMensagem(String turmaMensagem) {
     this.turmaMensagem = turmaMensagem;
- }
+   }
 
     public String getMensagem() {
         return mensagem;
@@ -45,14 +53,30 @@ public class Mensagem  {
         this.mensagem = mensagem;
     }
 
-    public String getProfessor() {
-        return professor;
+
+    public long getTimeMassage() {
+        return timeMassage;
     }
 
-    public void setProfessor(String nomeProfessor) {
-        this.professor = nomeProfessor;
+    public void setTimeMassage(long timeMassage) {
+        this.timeMassage = timeMassage;
     }
 
+    public String getAdminMsg() {
+        return adminMsg;
+    }
+
+    public void setAdminMsg(String adminMsg) {
+        this.adminMsg = adminMsg;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
 
 }

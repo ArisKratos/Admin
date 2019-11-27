@@ -13,6 +13,9 @@ public class  Admin {
         this.emailAdmin = emailAdmin;
     }
 
+    public Admin() {
+    }
+
     public String getId() {
         return id;
     }

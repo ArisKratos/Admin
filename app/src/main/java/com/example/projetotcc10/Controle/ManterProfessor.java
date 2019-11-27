@@ -102,7 +102,7 @@ public class ManterProfessor extends AppCompatActivity {
             String emailProf = aliasEmailProfessor.getText().toString();
             String nomeProf = aliasNomeProfessor.getText().toString();
             String senhaProf = aliasSenhaProfessor.getText().toString();
-            String uid = UUID.randomUUID().toString();
+            String uid = FirebaseAuth.getInstance().getUid();
 
             Professor professor = new Professor();
             professor.setId(uid);

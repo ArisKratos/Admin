@@ -56,7 +56,7 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
 
         alisAnoTurma = findViewById(R.id.editAnoTurmaIngresso);
         aliasSpinnerSemestres = findViewById(R.id.spinnerSemestreTurma);
-        aliasSpinnerCursos = findViewById(R.id.spinnerCursoTurma);
+        aliasSpinnerCursos = findViewById(R.id.spinnerCurso);
         //aliasListTurma = findViewById(R.id.listTurmas);
         aliasBtnCadastrar = findViewById(R.id.btnCadastrarTurma);
 

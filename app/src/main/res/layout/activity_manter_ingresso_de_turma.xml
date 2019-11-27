@@ -71,7 +71,7 @@
 
 
     <Spinner
-        android:id="@+id/spinnerCursoTurma"
+        android:id="@+id/spinnerCurso"
         android:layout_width="129dp"
         android:layout_height="80px"
         android:layout_marginStart="8dp"
@@ -92,7 +92,7 @@
         android:text="@string/cadastrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCursoTurma" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCurso" />
 
 
 </android.support.constraint.ConstraintLayout>
