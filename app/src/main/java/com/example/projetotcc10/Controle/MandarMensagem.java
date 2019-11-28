@@ -19,8 +19,6 @@ import com.example.projetotcc10.Modelo.Mensagem;
 import com.example.projetotcc10.Modelo.Turma;
 import com.example.projetotcc10.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,11 +40,14 @@ public class MandarMensagem extends AppCompatActivity {
     private Spinner spnCursos;
     private Spinner spnTurmas;
     private String nomeAdmin;
-    private Spinner semestres;
     private CheckBox checkSendForAll;
+    private CheckBox checkMudancaDeHorario;
+    private boolean mudancaHorario;
+    private boolean paraTodos;
+    private String txtTurmaAno, txtTurmaSemestre;
+    private Button aliasBtnSeeTurmas;
     private Button enviarMensagem;
     private String nomeCurso;
-    private Integer anoTurmaNumero;
     private final static String TAG  = "Firelog";
 
 
@@ -61,10 +62,12 @@ public class MandarMensagem extends AppCompatActivity {
 
 
         spnCursos = findViewById(R.id.spinnerCurso);
-        semestres = findViewById(R.id.spinnerSemestreTurma);
-        checkSendForAll = findViewById(R.id.checkSendAll);
+        checkMudancaDeHorario = findViewById(R.id.editCheckAlertHorario);
+        checkSendForAll = findViewById(R.id.editCheckSendAll);
         enviarMensagem = findViewById(R.id.buttonEnviarMensagem);
         textMensagem = findViewById(R.id.editMensagem);
+        spnTurmas = findViewById(R.id.spinnerTurma);
+        aliasBtnSeeTurmas = findViewById(R.id.editBtnSeeTurmas);
 
 
         cursos = new ArrayList<>();
@@ -72,12 +75,6 @@ public class MandarMensagem extends AppCompatActivity {
         administradores = new ArrayList<>();
 
         carregarSpinnerCurso();
-
-
-        final ArrayAdapter<String> spinnerSemestres = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ArraySemestres);
-
-        spinnerSemestres.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        semestres.setAdapter(spinnerSemestres);
 
 
         enviarMensagem.setOnClickListener(new View.OnClickListener() {
@@ -93,19 +90,23 @@ public class MandarMensagem extends AppCompatActivity {
 
             }
 
-
-
-
-
         });
 
 
+      aliasBtnSeeTurmas.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+
+              carregarSpinnerTurma();
+          }
+      });
     }
+
+
 
     public void carregarSpinnerTurma(){
 
         Curso curso = (Curso) spnCursos.getSelectedItem();
-        nomeCurso = curso.getCurso();
 
         FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -133,7 +134,6 @@ public class MandarMensagem extends AppCompatActivity {
                     final ArrayAdapter<Turma> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, turmas);
                     adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spnTurmas.setAdapter(adaptador);
-                    adaptador.notifyDataSetChanged();
                 } else {
                     Log.w(TAG, "Error getting documents.", task.getException());
                 }
@@ -180,44 +180,106 @@ public class MandarMensagem extends AppCompatActivity {
 
     public void sendMassage(){
 
-        Curso curso = (Curso) spnCursos.getSelectedItem();
-        nomeCurso = curso.getCurso();
+        if(spnTurmas.getSelectedItem() != null) {
 
-        String text = textMensagem.getText().toString();
+            if(checkSendForAll.isChecked()){
+                paraTodos = true;
+            }
+            else {
+                paraTodos = false;
+            }
 
-        textMensagem.setText(null);
-
-        String idAdmilson = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String nomeAdmilson = nomeAdmin;
-
-        SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
-        Date data = new Date();
-        String dataFormatada = formataData.format(data);
-
-        long timeStamp = System.currentTimeMillis();
-
-        Mensagem mensagem = new Mensagem(idAdmilson, text, nomeAdmilson, );
-
-        FirebaseFirestore.getInstance().collection("administradores")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                          //  administradores.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+            if (checkMudancaDeHorario.isChecked()){
+                mudancaHorario = true;
+            }
+            else{
+                mudancaHorario = false;
+            }
 
 
-                                if (document.getId().equals(FirebaseAuth.getInstance().getUid())){
-                                    nomeAdmin= document.getString("nomeAdmin");
+
+            if(paraTodos == false) {
+
+
+                final Curso curso = (Curso) spnCursos.getSelectedItem();
+                nomeCurso = curso.getCurso();
+
+                Turma turma = (Turma) spnTurmas.getSelectedItem();
+
+                txtTurmaAno = turma.getAno();
+                txtTurmaSemestre = turma.getSemestre();
+
+                String textMsg = textMensagem.getText().toString();
+
+                textMensagem.setText(null);
+
+                String idAdmilson = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+                SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
+                Date data = new Date();
+                String dataFormatada = formataData.format(data);
+
+                long timeStamp = System.currentTimeMillis();
+
+
+                FirebaseFirestore.getInstance().collection("administradores")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    //  administradores.clear();
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                       ;
+
+
+
+                                        if (document.getId().equals(FirebaseAuth.getInstance().getUid())) {
+
+
+                                            String id = document.getString("id");
+                                            String nome = document.getString("nomeAdmin");
+                                            String email = document.getString("emailAdmin");
+
+
+
+                                           com.example.projetotcc10.Modelo.Admin u = new com.example.projetotcc10.Modelo.Admin(id, nome, email);
+
+                                           u.setNomeAdmin(nome);
+
+                                           nomeAdmin = nome;
+
+                                        }
+                                    }
+
+                                } else {
+                                    Log.w(TAG, "Error getting documents.", task.getException());
                                 }
                             }
+                        });
 
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
+
+                Mensagem mensagem = new Mensagem(idAdmilson, textMsg, nomeAdmin, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
+
+                if (!mensagem.getMensagem().isEmpty()) {
+                    FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(turma.getId())
+                            .collection("mensagens").document(idAdmilson).set(mensagem);
+
+                    Toast.makeText(getApplicationContext(), "mensagem enviada com sucesso", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "mensagem vazia", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
+        else{
+
+            Toast.makeText(getApplicationContext(), "Escolha uma turma para enviar a mensagem", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 

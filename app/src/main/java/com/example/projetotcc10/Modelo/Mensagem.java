@@ -6,26 +6,41 @@ import java.util.Date;
 
 public class Mensagem  {
 
-    public Mensagem(String id,String mensagem, String adminMsg, String turmaMensagem, String dataMensagem , long timeMessage){
+    public Mensagem(String id,String mensagem, String adminMsg, String turmaAnoMensagem, String semestreMensagem, String dataMensagem , long timeMessage,
+    boolean paraTodos, boolean mudancaHorario){
 
         this.id = id;
+        // fazaer o boolean e só
         this.mensagem = mensagem;
         this.adminMsg = adminMsg;
-        this.turmaMensagem = turmaMensagem;
+        this.turmaAnoMensagem = turmaAnoMensagem;
+        this.semestreMensagem = semestreMensagem;
         this.dataMensagem = dataMensagem;
         this.timeMassage = timeMessage;
+        this.paraTodos = paraTodos;
+        this.mudancaHorario = mudancaHorario;
     }
 
     private String id;
     private long timeMassage;
     private String mensagem;
-
-
-
     private String adminMsg;
-    private String turmaMensagem;
-    private String dataMensagem;
 
+
+
+    public boolean isMudancaHorario() {
+        return mudancaHorario;
+    }
+
+    public void setMudancaHorario(boolean mudancaHorario) {
+        this.mudancaHorario = mudancaHorario;
+    }
+
+    private String turmaAnoMensagem;
+    private String semestreMensagem;
+    private String dataMensagem;
+    private boolean paraTodos;
+    private boolean mudancaHorario;
     public String getDataMensagem()
     {
         return dataMensagem;
@@ -36,13 +51,13 @@ public class Mensagem  {
         this.dataMensagem = dataMensagem;
     }
 
-    public String getTurmaMensagem()
+    public String getTurmaAnoMensagem()
     {
-    return turmaMensagem;
+    return turmaAnoMensagem;
    }
 
-   public void setTurmaMensagem(String turmaMensagem) {
-    this.turmaMensagem = turmaMensagem;
+   public void setTurmaAnoMensagem(String turmaAnoMensagem) {
+    this.turmaAnoMensagem = turmaAnoMensagem;
    }
 
     public String getMensagem() {
@@ -78,5 +93,18 @@ public class Mensagem  {
         this.id = id;
     }
 
+    public String getSemestreMensagem() {
+        return semestreMensagem;
+    }
 
+    public void setSemestreMensagem(String semestreMensagem) {
+        this.semestreMensagem = semestreMensagem;
+    }
+    public boolean isParaTodos() {
+        return paraTodos;
+    }
+
+    public void setParaTodos(boolean paraTodos) {
+        this.paraTodos = paraTodos;
+    }
 }

@@ -74,17 +74,10 @@ public class Admin extends AppCompatActivity
         String dataFormatada = formataData.format(data);
 
 
-        Mensagem mensagem = new Mensagem("asdsad","Pessoal, amanhã tragam os trabalhos prontos, valerá nota!!", "Marcelo", "2016/2", dataFormatada, 213);
-        Mensagem mensagem1 = new Mensagem("asdsad","Bom dia turma, só para avisar que amanhã no lugar de Desenvolvimento terá Ed.Física", "Emilio", "2018/1",dataFormatada, 22);
-        Mensagem mensagem2 = new Mensagem("asdsad","Bom dia turma, só para avisar que amanhã no lugar de Desenvolvimento terá Ed.Física", "Emilio", "2018/1", dataFormatada, 22);
-        Mensagem mensagem3 = new Mensagem("asdsad","Bom dia turma, só para avisar que amanhã no lugar de Desenvolvimento terá Ed.Física", "Emilio", "2018/1", dataFormatada,22);
-        Mensagem mensagem4 = new Mensagem("asdsad","Pessoal, amanhã tragam os trabalhos prontos, valerá nota!!", "Marcelo", "2016/2", dataFormatada,22);
+        //Mensagem mensagem = new Mensagem("asdsad","Pessoal, amanhã tragam os trabalhos prontos, valerá nota!!", "Marcelo", "2016/2", dataFormatada, 213,123.4, true, false);
 
-        mensagens.add(mensagem);
-        mensagens.add(mensagem1);
-        mensagens.add(mensagem2);
-        mensagens.add(mensagem3);
-        mensagens.add(mensagem4);
+        //mensagens.add(mensagem);
+
 
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

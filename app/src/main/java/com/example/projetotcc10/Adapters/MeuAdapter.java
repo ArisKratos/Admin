@@ -53,7 +53,8 @@ public class MeuAdapter extends RecyclerView.Adapter implements View.OnClickList
 
         holder.mensagem.setText(mensagem.getMensagem());
         holder.professor.setText(mensagem.getAdminMsg());
-        holder.turma.setText(mensagem.getTurmaMensagem());
+        holder.turma.setText(mensagem.getTurmaAnoMensagem());
+        holder.turma.setText(mensagem.getSemestreMensagem());
         holder.data.setText(mensagem.getDataMensagem());
 
         holder.setItemClickListener(new ItemClickListener() {

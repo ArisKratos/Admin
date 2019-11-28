@@ -39,7 +39,7 @@ public class LoginAdmin extends AppCompatActivity {
             public void onClick(View v) {
 
 
-              String email = aliasEmailAdmin.getText().toString();
+                String email = aliasEmailAdmin.getText().toString();
                 String senha = aliasSenhaAdmin.getText().toString();
 
                 if (email == null || email.isEmpty() || senha == null || senha.isEmpty()) {

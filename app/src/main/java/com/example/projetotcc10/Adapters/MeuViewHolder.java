@@ -29,6 +29,8 @@ public class MeuViewHolder extends RecyclerView.ViewHolder implements View.OnCli
              view.findViewById(R.id.turmaMsg);
 
 
+
+
      itemView.setOnClickListener(this);
 
  }

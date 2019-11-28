@@ -7,6 +7,15 @@
     android:clipToPadding="false">
 
     <TextView
+        android:id="@+id/textAux4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toStartOf="@+id/semestreMsg"
+        tools:layout_editor_absoluteY="131dp" />
+
+    <TextView
         android:id="@+id/nome_Prof"
         android:layout_width="341dp"
         android:layout_height="107dp"
@@ -37,11 +46,11 @@
         android:id="@+id/turmaMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:text="2000/2"
+        android:text="2000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textAux2"
-        app:layout_constraintTop_toBottomOf="@+id/nome_Prof" />
+        app:layout_constraintEnd_toStartOf="@+id/textAux4"
+        app:layout_constraintTop_toBottomOf="@+id/nome_Prof"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textAux"
@@ -73,5 +82,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nome_Prof"
         tools:text="@tools:sample/date/mmddyy" />
+
+    <TextView
+        android:id="@+id/semestreMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="142dp" />
 
 </android.support.constraint.ConstraintLayout>
