@@ -60,7 +60,10 @@ public class Listar_Turma extends AppCompatActivity {
         cursos = new ArrayList <>();
         turmas = new ArrayList <>();
 
-         carregarSpinnerCurso();
+
+
+        carregarSpinnerCurso();
+
 
         FloatingActionButton cadastrar = findViewById(R.id.buttonActionCadastrarTurma);
         cadastrar.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +181,7 @@ public class Listar_Turma extends AppCompatActivity {
 
     private void carregalistview(){
 
+
         Curso curso = (Curso) aliasSpnCursos.getSelectedItem();
 
         FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas")
@@ -195,12 +199,14 @@ public class Listar_Turma extends AppCompatActivity {
                                 String id = document.getId();
                                 String ano = document.getString("ano");
                                 String semestre = document.getString("semestre");
+                                String curso = document.getString("curso");
 
                                 Turma u = new Turma();
 
                                 u.setId(id);
                                 u.setAno(ano);
                                 u.setSemestre(semestre);
+                                u.setCurso(curso);
 
 
                                 turmas.add(u);
@@ -210,10 +216,14 @@ public class Listar_Turma extends AppCompatActivity {
                             ArrayAdapter <Turma> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, turmas);
                             aliasListTurma.setAdapter(adaptador);
                             adaptador.notifyDataSetChanged();
+                            if(turmas.isEmpty()){
+                                Toast.makeText(getBaseContext(), "Não há turmas cadastradas aqui", Toast.LENGTH_SHORT).show();
+                            }
 
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
+
 
                     }
                 });

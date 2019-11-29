@@ -6,10 +6,13 @@ import java.util.Date;
 
 public class Mensagem  {
 
-    public Mensagem(String id,String mensagem, String adminMsg, String turmaAnoMensagem, String semestreMensagem, String dataMensagem , long timeMessage,
+    public Mensagem(String id, String idAdmin,String mensagem, String adminMsg, String turmaAnoMensagem, String semestreMensagem, String dataMensagem , long timeMessage,
     boolean paraTodos, boolean mudancaHorario){
 
+
+
         this.id = id;
+        this.idAdmin = idAdmin;
         // fazaer o boolean e só
         this.mensagem = mensagem;
         this.adminMsg = adminMsg;
@@ -22,8 +25,10 @@ public class Mensagem  {
     }
 
     private String id;
+    private String idAdmin;
     private long timeMassage;
     private String mensagem;
+
     private String adminMsg;
 
 
@@ -106,5 +111,13 @@ public class Mensagem  {
 
     public void setParaTodos(boolean paraTodos) {
         this.paraTodos = paraTodos;
+    }
+
+    public String getIdAdmin() {
+        return idAdmin;
+    }
+
+    public void setIdAdmin(String idAdmin) {
+        this.idAdmin = idAdmin;
     }
 }

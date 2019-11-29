@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class MandarMensagem extends AppCompatActivity {
 
@@ -47,6 +48,7 @@ public class MandarMensagem extends AppCompatActivity {
     private String txtTurmaAno, txtTurmaSemestre;
     private Button aliasBtnSeeTurmas;
     private Button enviarMensagem;
+    private String idMsg;
     private String nomeCurso;
     private final static String TAG  = "Firelog";
 
@@ -81,6 +83,11 @@ public class MandarMensagem extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+
+                String uid = UUID.randomUUID().toString();
+
+                idMsg = uid;
 
                 sendMassage();
 
@@ -196,8 +203,6 @@ public class MandarMensagem extends AppCompatActivity {
                 mudancaHorario = false;
             }
 
-
-
             if(paraTodos == false) {
 
 
@@ -261,11 +266,14 @@ public class MandarMensagem extends AppCompatActivity {
                         });
 
 
-                Mensagem mensagem = new Mensagem(idAdmilson, textMsg, nomeAdmin, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
+
+
+
+                Mensagem mensagem = new Mensagem(idMsg, idAdmilson, textMsg, nomeAdmin, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
 
                 if (!mensagem.getMensagem().isEmpty()) {
                     FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(turma.getId())
-                            .collection("mensagens").document(idAdmilson).set(mensagem);
+                            .collection("mensagens").document(idMsg).set(mensagem);
 
                     Toast.makeText(getApplicationContext(), "mensagem enviada com sucesso", Toast.LENGTH_SHORT).show();
                 }
@@ -273,6 +281,80 @@ public class MandarMensagem extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "mensagem vazia", Toast.LENGTH_SHORT).show();
                 }
             }
+
+            else {
+                final Curso curso = (Curso) spnCursos.getSelectedItem();
+                nomeCurso = curso.getCurso();
+
+                Turma turma = (Turma) spnTurmas.getSelectedItem();
+
+                txtTurmaAno = turma.getAno();
+                txtTurmaSemestre = turma.getSemestre();
+
+                String textMsg = textMensagem.getText().toString();
+
+                textMensagem.setText(null);
+
+                String idAdmilson = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+                SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
+                Date data = new Date();
+                String dataFormatada = formataData.format(data);
+
+                long timeStamp = System.currentTimeMillis();
+
+
+                FirebaseFirestore.getInstance().collection("administradores")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    //  administradores.clear();
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+
+                                        if (document.getId().equals(FirebaseAuth.getInstance().getUid())) {
+
+
+                                            String id = document.getString("id");
+                                            String nome2 = document.getString("nomeAdmin");
+                                            String email = document.getString("emailAdmin");
+
+
+
+                                            com.example.projetotcc10.Modelo.Admin u = new com.example.projetotcc10.Modelo.Admin(id, nome2, email);
+
+                                            u.setNomeAdmin(nome2);
+
+                                            nomeAdmin = nome2;
+
+                                        }
+                                    }
+
+                                } else {
+                                    Log.w(TAG, "Error getting documents.", task.getException());
+                                }
+                            }
+                        });
+
+
+
+                Mensagem mensagem = new Mensagem(idMsg, idAdmilson, textMsg, nomeAdmin, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
+
+                if (!mensagem.getMensagem().isEmpty()) {
+                    FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("mensagens")
+                            .document(idMsg).set(mensagem);
+                         //   .collection("mensagens").document(idAdmilson).set(mensagem);
+
+                    Toast.makeText(getApplicationContext(), "mensagem enviada com sucesso", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "mensagem vazia", Toast.LENGTH_SHORT).show();
+                }
+            }
+
 
         }
         else{

@@ -95,13 +95,15 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
 
 //                String id =  FirebaseFirestore.getInstance().collection("cursos").document(nomeCurso).collection("turmas").getId();
 
+                Curso curso = (Curso) aliasSpinnerCursos.getSelectedItem();
+                nomeCurso = curso.getCurso();
+
                 Turma turma = new Turma();
                 turma.setId(UUID.randomUUID().toString());
                 turma.setAno(anoTurmaNumero.toString());
                 turma.setSemestre(numeroSemestre.toString());
+                turma.setCurso(nomeCurso);
 
-                final Curso curso = (Curso) aliasSpinnerCursos.getSelectedItem();
-                nomeCurso = curso.getCurso();
 
                 //String xyzvariavel=aliasCurso.getitemselected;
                 //String id =  FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(curso.getId()).getId();
