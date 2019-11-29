@@ -195,7 +195,7 @@ public class Listar_Turma extends AppCompatActivity {
 
 
 
-                                // nao sei pq ele nao carrega a lista!!!
+
                                 String id = document.getId();
                                 String ano = document.getString("ano");
                                 String semestre = document.getString("semestre");
