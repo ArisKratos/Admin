@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Controle.Listar_Turma"></activity>
-        <activity android:name=".Controle.Listar_Turmas" />
         <activity android:name=".Controle.Mensagem_Completa" />
         <activity android:name=".Controle.ManterIngressoDeTurma" />
         <activity android:name=".Controle.Listar_Curso" />
