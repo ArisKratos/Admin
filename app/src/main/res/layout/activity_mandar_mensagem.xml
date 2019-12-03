@@ -11,8 +11,8 @@
         android:id="@+id/editCheckAlertHorario"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:buttonTint="@color/colorPrimary"
         android:text="Mudanca de Horário"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,13 +20,13 @@
 
     <Spinner
         android:id="@+id/spinnerTurma"
-        android:layout_width="190px"
-        android:layout_height="80px"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="92dp"
+        android:layout_width="150px"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="108dp"
         android:background="@drawable/bg_spinner_rounded"
         android:popupBackground="@drawable/bg_spinner_rounded"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinnerCurso"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -34,7 +34,7 @@
         style="@style/Animation.AppCompat.DropDownUp"
         android:layout_width="340dp"
         android:layout_height="300dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/bg_edittext_rounded"
         android:ems="10"
         android:gravity="top"
@@ -44,21 +44,21 @@
         android:selectAllOnFocus="false"
         android:singleLine="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEnviarMensagem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.776" />
 
     <CheckBox
         android:id="@+id/editCheckSendAll"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
         android:buttonTint="@color/colorPrimary"
         android:text="Enviar para todos"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/editCheckAlertHorario"
+        app:layout_constraintTop_toBottomOf="@+id/editCheckAlertHorario" />
 
     <Button
         android:id="@+id/buttonEnviarMensagem"
@@ -77,24 +77,25 @@
 
     <Spinner
         android:id="@+id/spinnerCurso"
-        android:layout_width="190px"
-        android:layout_height="80px"
+        android:layout_width="140dp"
+        android:layout_height="37dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="108dp"
         android:background="@drawable/bg_spinner_rounded"
         android:popupBackground="@drawable/bg_spinner_rounded"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/editBtnSeeTurmas"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/bg_button_rounded"
-        android:text="Ver turmas"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinnerTurma"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="108dp"
+        android:text="Para:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="25dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

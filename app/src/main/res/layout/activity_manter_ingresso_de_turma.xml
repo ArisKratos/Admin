@@ -21,9 +21,10 @@
 
     <EditText
         android:id="@+id/editAnoTurmaIngresso"
-        android:layout_width="130px"
-        android:layout_height="90px"
+        android:layout_width="120px"
+        android:layout_height="80px"
         android:layout_marginTop="92dp"
+        android:background="@drawable/bg_edittext_rounded"
         android:ems="10"
         android:hint="Ano"
         android:inputType="numberDecimal"
@@ -60,22 +61,20 @@
 
     <Spinner
         android:id="@+id/spinnerSemestreTurma"
-        android:layout_width="50px"
-        android:layout_height="80px"
-        android:layout_marginStart="8dp"
+        android:layout_width="45px"
+        android:layout_height="37dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_spinner_rounded"
         android:popupBackground="@drawable/bg_spinner_rounded"
         app:layout_constraintStart_toEndOf="@+id/textAux"
         app:layout_constraintTop_toBottomOf="@+id/textAux2" />
 
-
     <Spinner
         android:id="@+id/spinnerCurso"
-        android:layout_width="129dp"
-        android:layout_height="80px"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="140dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/bg_spinner_rounded"
         android:popupBackground="@drawable/bg_spinner_rounded"
         app:layout_constraintStart_toEndOf="@+id/textAux3"
@@ -83,6 +82,7 @@
 
     <Button
         android:id="@+id/btnCadastrarTurma"
+        android:textColor="@color/cardview_light_background"
         android:layout_width="310dp"
         android:layout_height="55dp"
         android:layout_marginStart="8dp"

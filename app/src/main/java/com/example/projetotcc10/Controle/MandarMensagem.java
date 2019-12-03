@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -31,7 +32,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class MandarMensagem extends AppCompatActivity {
+public class MandarMensagem extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private EditText textMensagem;
     private List <Curso> cursos;
@@ -69,7 +70,9 @@ public class MandarMensagem extends AppCompatActivity {
         enviarMensagem = findViewById(R.id.buttonEnviarMensagem);
         textMensagem = findViewById(R.id.editMensagem);
         spnTurmas = findViewById(R.id.spinnerTurma);
-        aliasBtnSeeTurmas = findViewById(R.id.editBtnSeeTurmas);
+
+
+        spnCursos.setOnItemSelectedListener(this);
 
 
         cursos = new ArrayList<>();
@@ -82,7 +85,6 @@ public class MandarMensagem extends AppCompatActivity {
         enviarMensagem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
 
                 String uid = UUID.randomUUID().toString();
@@ -100,15 +102,7 @@ public class MandarMensagem extends AppCompatActivity {
         });
 
 
-      aliasBtnSeeTurmas.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-
-              carregarSpinnerTurma();
-          }
-      });
     }
-
 
 
     public void carregarSpinnerTurma(){
@@ -376,4 +370,14 @@ public class MandarMensagem extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        carregarSpinnerTurma();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

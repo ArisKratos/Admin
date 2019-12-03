@@ -68,66 +68,74 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
         aliasBtnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (aliasSpinnerSemestres.getSelectedItemPosition()) {
-                    case 0:
-                        numeroSemestre = 1;
-                        break;
-                    case 1:
-                        numeroSemestre = 2;
-                        break;
 
-                    default:
-                }
-                try {
-                    if (alisAnoTurma.getText().length() == 0) {
-                        alisAnoTurma.setError("Precisa inserir \n o ano de ingresso\n da turma");
-                    } else {
+                String ano = alisAnoTurma.getText().toString();
 
-                        anoTurmaNumero = Integer.parseInt(alisAnoTurma.getText().toString());
-                        if (anoTurmaNumero < 2000 || anoTurmaNumero > 2100) {
-                            alisAnoTurma.setError("Ano inválido");
-                        }
+                if (ano.isEmpty()) {
+                    Toast.makeText(ManterIngressoDeTurma.this, "Digite o ano de ingresso da turma", Toast.LENGTH_SHORT).show();
+                } else {
+
+
+                    switch (aliasSpinnerSemestres.getSelectedItemPosition()) {
+                        case 0:
+                            numeroSemestre = 1;
+                            break;
+                        case 1:
+                            numeroSemestre = 2;
+                            break;
+
+                        default:
                     }
+                    try {
+                        if (alisAnoTurma.getText().length() == 0) {
+                            alisAnoTurma.setError("Precisa inserir \n o ano de ingresso\n da turma");
+                        } else {
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                            anoTurmaNumero = Integer.parseInt(alisAnoTurma.getText().toString());
+                            if (anoTurmaNumero < 2000 || anoTurmaNumero > 2100) {
+                                alisAnoTurma.setError("Ano inválido");
+                            }
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
 //                String id =  FirebaseFirestore.getInstance().collection("cursos").document(nomeCurso).collection("turmas").getId();
 
-                Curso curso = (Curso) aliasSpinnerCursos.getSelectedItem();
-                nomeCurso = curso.getCurso();
+                    Curso curso = (Curso) aliasSpinnerCursos.getSelectedItem();
+                    nomeCurso = curso.getCurso();
 
-                Turma turma = new Turma();
-                turma.setId(UUID.randomUUID().toString());
-                turma.setAno(anoTurmaNumero.toString());
-                turma.setSemestre(numeroSemestre.toString());
-                turma.setCurso(nomeCurso);
+                    Turma turma = new Turma();
+                    turma.setId(UUID.randomUUID().toString());
+                    turma.setAno(anoTurmaNumero.toString());
+                    turma.setSemestre(numeroSemestre.toString());
+                    turma.setCurso(nomeCurso);
 
 
-                //String xyzvariavel=aliasCurso.getitemselected;
-                //String id =  FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(curso.getId()).getId();
+                    //String xyzvariavel=aliasCurso.getitemselected;
+                    //String id =  FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(curso.getId()).getId();
 
-                FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(turma.getId())
-                        .set(turma)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void v) {
+                    FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(turma.getId())
+                            .set(turma)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void v) {
 
-                                Toast.makeText(getApplicationContext(), "Turma cadastrada com sucesso", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Turma cadastrada com sucesso", Toast.LENGTH_SHORT).show();
 
-                                Intent intent = new Intent(ManterIngressoDeTurma.this , Listar_Turma.class);
-                                startActivity(intent);
+                                    Intent intent = new Intent(ManterIngressoDeTurma.this, Listar_Turma.class);
+                                    startActivity(intent);
 
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.i("Teste \n", e.getMessage());
-                    }
-                });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.i("Teste \n", e.getMessage());
+                        }
+                    });
+                }
             }
-
             });
 
     }

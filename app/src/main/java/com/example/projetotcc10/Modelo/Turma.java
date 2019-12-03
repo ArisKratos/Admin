@@ -43,7 +43,7 @@ public class Turma {
 
     @Override
     public String toString() {
-        return   ano + "/" + semestre + "--" + curso;
+        return   ano + "/" + semestre;
     }
 }
 
