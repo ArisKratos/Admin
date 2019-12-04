@@ -221,43 +221,47 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
                 long timeStamp = System.currentTimeMillis();
 
+//
+//                FirebaseFirestore.getInstance().collection("administradores")
+//                        .get()
+//                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                if (task.isSuccessful()) {
+//                                    //  administradores.clear();
+//                                    for (QueryDocumentSnapshot document : task.getResult()) {
+//
+//                                       ;
+//
+//
+//
+//                                        if (document.getId().equals(FirebaseAuth.getInstance().getUid())) {
+//
+//
+//                                            String id = document.getString("id");
+//                                            String nome = document.getString("nomeAdmin");
+//                                            String email = document.getString("emailAdmin");
+//
+//
+//
+//                                           com.example.projetotcc10.Modelo.Admin u = new com.example.projetotcc10.Modelo.Admin(id, nome, email);
+//
+//                                           u.setNomeAdmin(nome);
+//
+//                                           nomeAdmin = nome;
+//
+//                                        }
+//                                    }
+//
+//                                } else {
+//                                    Log.w(TAG, "Error getting documents.", task.getException());
+//                                }
+//                            }
+//                        });
 
-                FirebaseFirestore.getInstance().collection("administradores")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    //  administradores.clear();
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                       ;
 
 
-
-                                        if (document.getId().equals(FirebaseAuth.getInstance().getUid())) {
-
-
-                                            String id = document.getString("id");
-                                            String nome = document.getString("nomeAdmin");
-                                            String email = document.getString("emailAdmin");
-
-
-
-                                           com.example.projetotcc10.Modelo.Admin u = new com.example.projetotcc10.Modelo.Admin(id, nome, email);
-
-                                           u.setNomeAdmin(nome);
-
-                                           nomeAdmin = nome;
-
-                                        }
-                                    }
-
-                                } else {
-                                    Log.w(TAG, "Error getting documents.", task.getException());
-                                }
-                            }
-                        });
+                nomeAdmin = "Cordenadoria";
 
 
 
