@@ -52,7 +52,7 @@ public class MeuAdapter extends RecyclerView.Adapter implements View.OnClickList
         final Mensagem mensagem = mensagens.get(position);
 
         holder.mensagem.setText(mensagem.getMensagem());
-        holder.professor.setText(mensagem.getAdminMsg());
+        holder.professor.setText(mensagem.getRemetenteMsg());
         holder.turma.setText(mensagem.getTurmaAnoMensagem());
         holder.turma.setText(mensagem.getSemestreMensagem());
         holder.data.setText(mensagem.getDataMensagem());

@@ -47,7 +47,7 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
     private boolean mudancaHorario;
     private boolean paraTodos;
     private String txtTurmaAno, txtTurmaSemestre;
-    private Button aliasBtnSeeTurmas;
+
     private Button enviarMensagem;
     private String idMsg;
     private String nomeCurso;
@@ -103,6 +103,8 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
 
     }
+
+
 
 
     public void carregarSpinnerTurma(){
