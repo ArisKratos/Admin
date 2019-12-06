@@ -41,12 +41,14 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
     private List <com.example.projetotcc10.Modelo.Admin> administradores;
     private Spinner spnCursos;
     private Spinner spnTurmas;
-    private String nomeAdmin;
+    private String nomeRemetente;
     private CheckBox checkSendForAll;
     private CheckBox checkMudancaDeHorario;
     private boolean mudancaHorario;
     private boolean paraTodos;
     private String txtTurmaAno, txtTurmaSemestre;
+
+    private String idRemetente;
 
     private Button enviarMensagem;
     private String idMsg;
@@ -54,16 +56,15 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
     private Curso curso;
     private final static String TAG  = "Firelog";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_mandar_mensagem);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle("Enviar mensagem");
-
 
         spnCursos = findViewById(R.id.spinnerCurso);
         checkMudancaDeHorario = findViewById(R.id.editCheckAlertHorario);
@@ -72,16 +73,18 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
         textMensagem = findViewById(R.id.editMensagem);
         spnTurmas = findViewById(R.id.spinnerTurma);
 
-
         spnCursos.setOnItemSelectedListener(this);
-
 
         cursos = new ArrayList<>();
         turmas = new ArrayList<>();
         administradores = new ArrayList<>();
 
-        carregarSpinnerCurso();
+        nomeRemetente = "Coordenadoria";
 
+
+        idRemetente = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        carregarSpinnerCurso();
 
         enviarMensagem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,19 +97,15 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
                 sendMassage();
 
-
 //                curso = (Curso) spnCursos.getSelectedItem();
 //                nomeCurso = curso.getCurso();
-
             }
 
         });
 
-
     }
 
     public void enviarParaTodos(){
-
 
         curso = (Curso) spnCursos.getSelectedItem();
 
@@ -115,9 +114,6 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
         final String textMsg = textMensagem.getText().toString();
 
         textMensagem.setText(null);
-
-        final String idAdmilson = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
         SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
         Date data = new Date();
@@ -150,16 +146,20 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                                 Log.d(TAG, id);
 
                             }
+                           // final ArrayAdapter<Turma> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, turmas);
 
-                            final ArrayAdapter<Turma> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, turmas);
-
-
-
-                            Mensagem mensagem = new Mensagem(idMsg, idAdmilson, textMsg, nomeAdmin, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
-
-                            if (!mensagem.getMensagem().isEmpty()) {
+                         //   Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
+                            if (textMsg != null) {
 
                                 for (int i = 0; i < turmas.size(); i++) {
+
+
+                                    txtTurmaAno = turmas.get(i).getAno();
+                                    txtTurmaSemestre = turmas.get(i).getSemestre();
+
+                                    Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
+
+
                                 FirebaseFirestore.getInstance().collection("cursos").document(curso.getId())
                                         .collection("turmas").document(turmas.get(i).getId()).collection("mensagens").document(mensagem.getId())
                                         .set(mensagem);
@@ -170,15 +170,10 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                             else{
                                 Toast.makeText(getApplicationContext(), "mensagem vazia", Toast.LENGTH_SHORT).show();
                             }
-
                         }
-
                     }
 
-
                 });
-
-
     }
 
     public void carregarSpinnerTurma(){
@@ -335,15 +330,7 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 //                            }
 //                        });
 
-
-
-                nomeAdmin = "Cordenadoria";
-
-
-
-
-
-                Mensagem mensagem = new Mensagem(idMsg, idAdmilson, textMsg, nomeAdmin, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
+                Mensagem mensagem = new Mensagem(idMsg, idAdmilson, textMsg, nomeRemetente, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
 
                 if (!mensagem.getMensagem().isEmpty()) {
                     FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(turma.getId())
@@ -360,7 +347,6 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                     enviarParaTodos();
             }
 
-
         }
         else{
 
@@ -368,7 +354,6 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
         }
     }
-
 
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
