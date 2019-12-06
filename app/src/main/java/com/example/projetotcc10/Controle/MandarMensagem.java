@@ -113,6 +113,8 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
         final String textMsg = textMensagem.getText().toString();
 
+        if(textMsg!=null){
+
         textMensagem.setText(null);
 
         SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
@@ -121,38 +123,39 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
         final long timeStamp = System.currentTimeMillis();
 
+        //pra cada curso
+        for( int j = 0; j < cursos.size(); j++) {
+            final int finalJ = j;
+            FirebaseFirestore.getInstance().collection("cursos").document(cursos.get(j).getId()).collection("turmas").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                turmas.clear();
+                                for (QueryDocumentSnapshot document : task.getResult()) {
 
-        FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").get()
-                .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task <QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            turmas.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String id = document.getId();
+                                    String ano = document.getString("ano");
+                                    String semestre = document.getString("semestre");
+                                    String curso = document.getString("curso");
 
-                                String id = document.getId();
-                                String ano = document.getString("ano");
-                                String semestre = document.getString("semestre");
-                                String curso = document.getString("curso");
+                                    Turma u = new Turma();
 
-                                Turma u = new Turma();
+                                    u.setId(id);
+                                    u.setAno(ano);
+                                    u.setSemestre(semestre);
+                                    u.setCurso(curso);
 
-                                u.setId(id);
-                                u.setAno(ano);
-                                u.setSemestre(semestre);
-                                u.setCurso(curso);
+                                    turmas.add(u);
+                                    Log.d(TAG, id);
+                                }
+                                // final ArrayAdapter<Turma> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, turmas);
+                                //   Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
 
-                                turmas.add(u);
-                                Log.d(TAG, id);
-
-                            }
-                           // final ArrayAdapter<Turma> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, turmas);
-
-                         //   Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
-                            if (textMsg != null) {
-
+//                                for(int j = 0; j < cursos.size(); j++) {
+//                                    cursos.get(j);
+                                //pra cada turma do curso
                                 for (int i = 0; i < turmas.size(); i++) {
-
 
                                     txtTurmaAno = turmas.get(i).getAno();
                                     txtTurmaSemestre = turmas.get(i).getSemestre();
@@ -160,23 +163,26 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                                     Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
 
 
-                                FirebaseFirestore.getInstance().collection("cursos").document(curso.getId())
-                                        .collection("turmas").document(turmas.get(i).getId()).collection("mensagens").document(mensagem.getId())
-                                        .set(mensagem);
-                                   Toast.makeText(MandarMensagem.this, ""+i, Toast.LENGTH_SHORT).show();
-                               }
+                                    final Task<Void> set = FirebaseFirestore.getInstance().collection("cursos").document(cursos.get(finalJ).getId())
+                                            .collection("turmas").document(turmas.get(i).getId()).collection("mensagens").document(mensagem.getId())
+                                            .set(mensagem);
 
-                            }
-                            else{
-                                Toast.makeText(getApplicationContext(), "mensagem vazia", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MandarMensagem.this, "" + i, Toast.LENGTH_SHORT).show();
+                                }
+//                            }
+
                             }
                         }
-                    }
 
-                });
+                    });
+        }
+        }
+        else {
+            Toast.makeText(this, "mensagem vazia", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void carregarSpinnerTurma(){
+    public void carregarSpinnerTurma() {
 
        curso = (Curso) spnCursos.getSelectedItem();
 
