@@ -117,11 +117,20 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
         textMensagem.setText(null);
 
+
+        SimpleDateFormat dateFormat_hora = new SimpleDateFormat("HH:mm");
+
         SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
+
         Date data = new Date();
+
         final String dataFormatada = formataData.format(data);
+        final String hora_atual = dateFormat_hora.format(data);
 
         final long timeStamp = System.currentTimeMillis();
+
+
+
 
         //pra cada curso
         for( int j = 0; j < cursos.size(); j++) {
@@ -160,14 +169,15 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                                     txtTurmaAno = turmas.get(i).getAno();
                                     txtTurmaSemestre = turmas.get(i).getSemestre();
 
-                                    Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
+                                    Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, txtTurmaAno,
+                                            txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario, hora_atual);
 
 
                                     final Task<Void> set = FirebaseFirestore.getInstance().collection("cursos").document(cursos.get(finalJ).getId())
                                             .collection("turmas").document(turmas.get(i).getId()).collection("mensagens").document(mensagem.getId())
                                             .set(mensagem);
 
-                                    Toast.makeText(MandarMensagem.this, "" + i, Toast.LENGTH_SHORT).show();
+
                                 }
 //                            }
 
@@ -176,6 +186,8 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
                     });
         }
+
+            Toast.makeText(this, "mensagem enviadas para todos com sucesso!!", Toast.LENGTH_LONG).show();
         }
         else {
             Toast.makeText(this, "mensagem vazia", Toast.LENGTH_SHORT).show();
@@ -291,12 +303,16 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
                 String idAdmilson = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+                SimpleDateFormat dateFormat_hora = new SimpleDateFormat("HH:mm");
 
                 SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
-                Date data = new Date();
-                String dataFormatada = formataData.format(data);
 
-                long timeStamp = System.currentTimeMillis();
+                Date data = new Date();
+
+                final String dataFormatada = formataData.format(data);
+                final String hora_atual = dateFormat_hora.format(data);
+
+                final long timeStamp = System.currentTimeMillis();
 
 //
 //                FirebaseFirestore.getInstance().collection("administradores")
@@ -336,13 +352,14 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 //                            }
 //                        });
 
-                Mensagem mensagem = new Mensagem(idMsg, idAdmilson, textMsg, nomeRemetente, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
+                Mensagem mensagem = new Mensagem(idMsg, idAdmilson, textMsg, nomeRemetente, txtTurmaAno,
+                        txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario,hora_atual);
 
                 if (!mensagem.getMensagem().isEmpty()) {
                     FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(turma.getId())
                             .collection("mensagens").document(idMsg).set(mensagem);
 
-                    Toast.makeText(getApplicationContext(), "mensagem enviada com sucesso", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "mensagem enviada com sucesso!!", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "mensagem vazia", Toast.LENGTH_SHORT).show();

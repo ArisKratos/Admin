@@ -111,6 +111,7 @@ public class ManterIngressoDeTurma extends AppCompatActivity {
                     turma.setAno(anoTurmaNumero.toString());
                     turma.setSemestre(numeroSemestre.toString());
                     turma.setCurso(nomeCurso);
+                    turma.setUrlGrade("");
 
 
                     //String xyzvariavel=aliasCurso.getitemselected;

@@ -8,7 +8,7 @@ import java.util.Date;
     public class Mensagem {
 
         public Mensagem(String id, String idRemetente,String mensagem, String remetenteMsg, String turmaAnoMensagem, String semestreMensagem, String dataMensagem , long timeMessage,
-                        boolean paraTodos, boolean mudancaHorario){
+                        boolean paraTodos, boolean mudancaHorario, String hora_atual){
 
             this.id = id;
             this.idRemetente = idRemetente;
@@ -20,6 +20,7 @@ import java.util.Date;
             this.timeMassage = timeMessage;
             this.paraTodos = paraTodos;
             this.mudancaHorario = mudancaHorario;
+            this.hora_atual = hora_atual;
         }
 
         private String id;
@@ -28,6 +29,7 @@ import java.util.Date;
         private String mensagem;
 
         private String remetenteMsg;
+        private String hora_atual;
 
 
 
@@ -118,6 +120,13 @@ import java.util.Date;
         public void setIdRemetente(String idAdmin) {
             this.idRemetente = idAdmin;
         }
+        public String getHora_atual() {
+            return hora_atual;
+        }
+
+        public void setHora_atual(String hora_atual) {
+            this.hora_atual = hora_atual;
+        }
 
 
 
@@ -125,7 +134,7 @@ import java.util.Date;
         public String toString() {
             return " De: " + remetenteMsg + "\n Mensagem: " + mensagem + "\n Para: " +
                     turmaAnoMensagem +"/"+semestreMensagem +"\n Data: " +
-                    dataMensagem + " Hora: " +timeMassage;
+                    dataMensagem + " Hora: " +hora_atual;
         }
     }
 

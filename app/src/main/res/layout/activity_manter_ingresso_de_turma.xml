@@ -17,7 +17,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAux" />
+        app:layout_constraintTop_toBottomOf="@+id/textAux3" />
 
     <EditText
         android:id="@+id/editAnoTurmaIngresso"
@@ -35,7 +35,7 @@
 
 
     <TextView
-        android:id="@+id/textAux"
+        android:id="@+id/textAux3"
         android:layout_width="243dp"
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
@@ -66,7 +66,7 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_spinner_rounded"
         android:popupBackground="@drawable/bg_spinner_rounded"
-        app:layout_constraintStart_toEndOf="@+id/textAux"
+        app:layout_constraintStart_toEndOf="@+id/textAux3"
         app:layout_constraintTop_toBottomOf="@+id/textAux2" />
 
     <Spinner
@@ -78,7 +78,7 @@
         android:background="@drawable/bg_spinner_rounded"
         android:popupBackground="@drawable/bg_spinner_rounded"
         app:layout_constraintStart_toEndOf="@+id/textAux3"
-        app:layout_constraintTop_toBottomOf="@+id/textAux"></Spinner>
+        app:layout_constraintTop_toBottomOf="@+id/textAux3"></Spinner>
 
     <Button
         android:id="@+id/btnCadastrarTurma"

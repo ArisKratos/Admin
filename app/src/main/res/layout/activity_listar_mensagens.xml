@@ -7,13 +7,34 @@
     android:clipToPadding="false">
 
     <TextView
+        android:id="@+id/horaMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="130dp"
+        android:text="16:30"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textAux3"
+        tools:text="@tools:sample/date/hhmm" />
+
+    <TextView
+        android:id="@+id/textAux5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="Para:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
         android:id="@+id/textAux4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="/"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintEnd_toStartOf="@+id/semestreMsg"
-        tools:layout_editor_absoluteY="131dp" />
+        app:layout_constraintStart_toEndOf="@+id/turmaMsg"
+        tools:layout_editor_absoluteY="130dp" />
 
     <TextView
         android:id="@+id/nome_Prof"
@@ -48,39 +69,33 @@
         android:layout_height="wrap_content"
         android:text="2000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textAux4"
-        app:layout_constraintTop_toBottomOf="@+id/nome_Prof"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/textAux5" />
 
     <TextView
-        android:id="@+id/textAux"
+        android:id="@+id/textAux3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Para:"
+        android:text="Hora:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintEnd_toStartOf="@+id/turmaMsg"
-        app:layout_constraintTop_toBottomOf="@+id/nome_Prof" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dataMsg" />
 
     <TextView
         android:id="@+id/textAux2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:text="Data:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dataMsg"
-        app:layout_constraintTop_toBottomOf="@+id/nome_Prof" />
+        app:layout_constraintStart_toEndOf="@+id/semestreMsg" />
 
     <TextView
         android:id="@+id/dataMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="124dp"
         android:text="12/10/19"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nome_Prof"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textAux2"
         tools:text="@tools:sample/date/mmddyy" />
 
     <TextView
@@ -89,6 +104,6 @@
         android:layout_height="wrap_content"
         android:text="2"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="142dp" />
+        app:layout_constraintStart_toEndOf="@+id/textAux4" />
 
 </android.support.constraint.ConstraintLayout>
