@@ -1,8 +1,14 @@
 package com.example.projetotcc10.Controle;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,10 +25,16 @@ import android.widget.Toast;
 import com.example.projetotcc10.Modelo.Curso;
 import com.example.projetotcc10.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +42,7 @@ import java.util.List;
 public class ManterGrades extends AppCompatActivity {
 
 
-    private TextView linkUparGrade;
+    private TextView linkSelectFile;
     private EditText anoTurma;
     private Button buttonUparGrade;
     private Spinner spnCursos;
@@ -38,7 +50,12 @@ public class ManterGrades extends AppCompatActivity {
     private String nomeCurso;
     private Integer numeroSemestre;
     private Integer anoTurmaNumero;
+    private Uri pdfUri;
     private List<Curso> cursos;
+
+    private FirebaseStorage storage;
+    private FirebaseFirestore database;
+
     private final static String TAG  = "Firelog";
 
 
@@ -60,7 +77,11 @@ public class ManterGrades extends AppCompatActivity {
 
 
 
-        linkUparGrade = findViewById(R.id.textSelecionarArquivo);
+
+         storage = FirebaseStorage.getInstance();
+         database = FirebaseFirestore.getInstance();
+
+        linkSelectFile = findViewById(R.id.textSelecionarArquivo);
         anoTurma = findViewById(R.id.editAnoTurmaGrades);
         semestres = findViewById(R.id.spinnerSemestreGrades);
         buttonUparGrade = findViewById(R.id.uparGrade);
@@ -70,13 +91,22 @@ public class ManterGrades extends AppCompatActivity {
         carregarSpinnerCurso();
 
 
-        linkUparGrade.setOnClickListener(new View.OnClickListener() {
+        linkSelectFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("application/pdf");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Selecione o arquivo PDF"), 1);
+
+
+                if(ContextCompat.checkSelfPermission(ManterGrades.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
+
+                  selectPdf();
+                }
+                else {
+                    ActivityCompat.requestPermissions(ManterGrades.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                }
+
+
             }
 
         });
@@ -90,50 +120,19 @@ public class ManterGrades extends AppCompatActivity {
         //   final ArrayAdapter<Curso> spinnerCursos = new ArrayAdapter<Curso>(this, android.R.layout.simple_spinner_item, cursos);
         //  spinnerCursos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //  cursos.setAdapter(spinnerCursos);
-
-
-
-
         buttonUparGrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (semestres.getSelectedItemPosition()) {
-
-                    case 0:
-
-                        numeroSemestre = 1;
-                        break;
-                    case 1:
-                        numeroSemestre = 2;
-                        break;
-
-                    default:
-                }
-
 
                 Curso curso = (Curso) spnCursos.getSelectedItem();
                 nomeCurso = curso.getCurso();
 
 
 
-                try {
-                    if (anoTurma.getText().length() == 0) {
-                        anoTurma.setError("Precisa inserir \n o ano de ingresso\n da turma");
-
-
-                    } else {
-
-                        anoTurmaNumero = Integer.parseInt(anoTurma.getText().toString());
-                        if (anoTurmaNumero < 2000|| anoTurmaNumero > 2100) {
-                            anoTurma.setError("Ano inválido");
-                        } else {
-
-                            Toast.makeText(getApplicationContext(), "Grade enviada com sucesso para: \n"+"Semestre: " + numeroSemestre + "\nCurso: " + nomeCurso + "\nAno: " + anoTurmaNumero, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                if(pdfUri!=null)
+                    uploadFile(pdfUri);
+                else
+                    Toast.makeText(ManterGrades.this, "select a file", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -148,6 +147,66 @@ public class ManterGrades extends AppCompatActivity {
         });
 
     }
+
+    private void uploadFile(Uri pdfUri) {
+
+        String fileName=System.currentTimeMillis()+"";
+        StorageReference storageReference = storage.getReference();
+
+
+        storageReference.child("Uploads").child(fileName).putFile(pdfUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+              //  String url = taskSnapshot.getDownloadUrl().toString;
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == 9 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+        }
+        else {
+            Toast.makeText(this, "please provide permission", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void selectPdf(){
+
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Selecione o arquivo PDF"), 86);
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode==86 && resultCode==RESULT_OK && data!=null){
+
+            pdfUri = data.getData();
+
+        }
+        else{
+            Toast.makeText(this, "Please select a file", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void carregarSpinnerCurso() {
 
         FirebaseFirestore.getInstance().collection("cursos")
