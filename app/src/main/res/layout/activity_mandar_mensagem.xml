@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:buttonTint="@color/colorPrimary"
-        android:text="Enviar para todos do curso"
+        android:text="Enviar para todos"
         app:layout_constraintStart_toStartOf="@+id/editCheckAlertHorario"
         app:layout_constraintTop_toBottomOf="@+id/editCheckAlertHorario" />
 

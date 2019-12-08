@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.projetotcc10.Modelo.Curso;
 import com.example.projetotcc10.Modelo.Mensagem;
+import com.example.projetotcc10.Modelo.Professor;
 import com.example.projetotcc10.Modelo.Turma;
 import com.example.projetotcc10.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +47,8 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
     private CheckBox checkMudancaDeHorario;
     private boolean mudancaHorario;
     private boolean paraTodos;
+    private String para;
+    private  String todos;
     private String txtTurmaAno, txtTurmaSemestre;
 
     private String idRemetente;
@@ -107,6 +110,9 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
     public void enviarParaTodos(){
 
+        para = "para";
+        todos = "todos";
+
         curso = (Curso) spnCursos.getSelectedItem();
 
         nomeCurso = curso.getCurso();
@@ -128,9 +134,6 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
         final String hora_atual = dateFormat_hora.format(data);
 
         final long timeStamp = System.currentTimeMillis();
-
-
-
 
         //pra cada curso
         for( int j = 0; j < cursos.size(); j++) {
@@ -158,12 +161,6 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                                     turmas.add(u);
                                     Log.d(TAG, id);
                                 }
-                                // final ArrayAdapter<Turma> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, turmas);
-                                //   Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, txtTurmaAno, txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario);
-
-//                                for(int j = 0; j < cursos.size(); j++) {
-//                                    cursos.get(j);
-                                //pra cada turma do curso
                                 for (int i = 0; i < turmas.size(); i++) {
 
                                     txtTurmaAno = turmas.get(i).getAno();
@@ -172,20 +169,23 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                                     Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, txtTurmaAno,
                                             txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario, hora_atual);
 
-
                                     final Task<Void> set = FirebaseFirestore.getInstance().collection("cursos").document(cursos.get(finalJ).getId())
                                             .collection("turmas").document(turmas.get(i).getId()).collection("mensagens").document(mensagem.getId())
                                             .set(mensagem);
-
-
                                 }
 //                            }
-
                             }
                         }
 
                     });
         }
+
+            Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, "para",
+                    "todos", dataFormatada, timeStamp, paraTodos, mudancaHorario, hora_atual);
+
+            FirebaseFirestore.getInstance().collection("mensagens").document(idMsg).set(mensagem);
+
+
 
             Toast.makeText(this, "mensagem enviadas para todos com sucesso!!", Toast.LENGTH_LONG).show();
         }
@@ -206,19 +206,14 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                     turmas.clear();
                     for (QueryDocumentSnapshot document : task.getResult()) {
 
-
-
                         String anoTurma = document.getString("ano");
                         String semestreTurma = document.getString("semestre");
-
 
                         Turma u = new Turma();
                         u.setId(document.getId());
                         u.setAno(anoTurma);
                         u.setSemestre(semestreTurma);
                         turmas.add(u);
-
-
                     }
 
                     final ArrayAdapter<Turma> adaptador = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, turmas);
@@ -314,52 +309,22 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
                 final long timeStamp = System.currentTimeMillis();
 
-//
-//                FirebaseFirestore.getInstance().collection("administradores")
-//                        .get()
-//                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                                if (task.isSuccessful()) {
-//                                    //  administradores.clear();
-//                                    for (QueryDocumentSnapshot document : task.getResult()) {
-//
-//                                       ;
-//
-//
-//
-//                                        if (document.getId().equals(FirebaseAuth.getInstance().getUid())) {
-//
-//
-//                                            String id = document.getString("id");
-//                                            String nome = document.getString("nomeAdmin");
-//                                            String email = document.getString("emailAdmin");
-//
-//
-//
-//                                           com.example.projetotcc10.Modelo.Admin u = new com.example.projetotcc10.Modelo.Admin(id, nome, email);
-//
-//                                           u.setNomeAdmin(nome);
-//
-//                                           nomeAdmin = nome;
-//
-//                                        }
-//                                    }
-//
-//                                } else {
-//                                    Log.w(TAG, "Error getting documents.", task.getException());
-//                                }
-//                            }
-//                        });
+
 
                 Mensagem mensagem = new Mensagem(idMsg, idAdmilson, textMsg, nomeRemetente, txtTurmaAno,
                         txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario,hora_atual);
 
                 if (!mensagem.getMensagem().isEmpty()) {
+
                     FirebaseFirestore.getInstance().collection("cursos").document(curso.getId()).collection("turmas").document(turma.getId())
                             .collection("mensagens").document(idMsg).set(mensagem);
 
+
+                        FirebaseFirestore.getInstance().collection("mensagens").document(idMsg).set(mensagem);
+
+
                     Toast.makeText(getApplicationContext(), "mensagem enviada com sucesso!!", Toast.LENGTH_SHORT).show();
+
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "mensagem vazia", Toast.LENGTH_SHORT).show();

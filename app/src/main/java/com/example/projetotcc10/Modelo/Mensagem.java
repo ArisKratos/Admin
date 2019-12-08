@@ -130,12 +130,12 @@ import java.util.Date;
 
 
 
-        @Override
-        public String toString() {
-            return " De: " + remetenteMsg + "\n Mensagem: " + mensagem + "\n Para: " +
-                    turmaAnoMensagem +"/"+semestreMensagem +"\n Data: " +
-                    dataMensagem + " Hora: " +hora_atual;
-        }
+//        @Override
+//        public String toString() {
+//            return " De: " + remetenteMsg + "\n Mensagem: " + mensagem + "\n Para: " +
+//                    turmaAnoMensagem +"/"+semestreMensagem +"\n Data: " +
+//                    dataMensagem + " Hora: " +hora_atual;
+//        }
     }
 
 

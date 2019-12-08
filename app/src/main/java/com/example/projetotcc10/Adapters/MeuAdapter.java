@@ -25,11 +25,9 @@ public class MeuAdapter extends RecyclerView.Adapter implements View.OnClickList
  public MeuAdapter(List<Mensagem> mensagens, Context context){
 
    this.mensagens = mensagens;
-       this.context = context;
+   this.context = context;
+
   }
-
-
-
 
     @NonNull
     @Override
@@ -52,10 +50,12 @@ public class MeuAdapter extends RecyclerView.Adapter implements View.OnClickList
         final Mensagem mensagem = mensagens.get(position);
 
         holder.mensagem.setText(mensagem.getMensagem());
-        holder.professor.setText(mensagem.getRemetenteMsg());
+        holder.remetente.setText(mensagem.getRemetenteMsg());
         holder.turma.setText(mensagem.getTurmaAnoMensagem());
-        holder.turma.setText(mensagem.getSemestreMensagem());
+        holder.semestre.setText(mensagem.getSemestreMensagem());
         holder.data.setText(mensagem.getDataMensagem());
+        holder.hora.setText(mensagem.getHora_atual());
+
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override

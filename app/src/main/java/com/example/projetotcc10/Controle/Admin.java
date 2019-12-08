@@ -2,9 +2,11 @@ package com.example.projetotcc10.Controle;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,13 +17,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.projetotcc10.Adapters.MeuAdapter;
 import com.example.projetotcc10.Adapters.MeuViewHolder;
+import com.example.projetotcc10.Modelo.Curso;
 import com.example.projetotcc10.Modelo.Mensagem;
 import com.example.projetotcc10.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.net.Inet4Address;
 import java.text.SimpleDateFormat;
@@ -32,7 +42,66 @@ import java.util.List;
 public class Admin extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-        private ArrayList<Mensagem> mensagens;
+        private List<Mensagem> mensagens;
+
+
+
+        MeuAdapter meuAdapter;
+        FirebaseFirestore mFirestore;
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.myRecycler);
+
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+        recyclerView.setLayoutManager(layout);
+
+        mensagens = new ArrayList <>();
+
+        FirebaseFirestore.getInstance().collection("mensagens").orderBy("timeMassage", Query.Direction.DESCENDING).limit(20)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task <QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            mensagens.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                String remetente = document.getString("remetenteMsg");
+                                String data = document.getString("dataMensagem");
+                                String id = document.getString("id");
+                                String idRemetente = document.getString("idRemetente");
+                                String mensagem = document.getString("mensagem");
+                                Boolean mudanca = document.getBoolean("mudancaHorario");
+                                Boolean paraTodos = document.getBoolean("paraTodos");
+                                String semestre = document.getString("semestreMensagem");
+                                long time = document.getLong("timeMassage");
+                                String turmaAno = document.getString("turmaAnoMensagem");
+                                String hora = document.getString("hora_atual");
+
+
+                                Mensagem u = new Mensagem(id, idRemetente, mensagem, remetente, turmaAno, semestre, data, time, paraTodos, mudanca, hora);
+
+
+                                mensagens.add(u);
+                            }
+
+                            meuAdapter = new MeuAdapter(mensagens, Admin.this);
+                            recyclerView.setAdapter(meuAdapter);
+
+                        } else {
+                            Toast.makeText(Admin.this, "leitura falhou", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+
+                });
+    }
 
 
     @Override
@@ -62,29 +131,40 @@ public class Admin extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.myRecycler);
-
-        mensagens = new ArrayList <>();
 
 
 
 
-        SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
-        Date data = new Date();
-        String dataFormatada = formataData.format(data);
-
-
-        //Mensagem mensagem = new Mensagem("asdsad","Pessoal, amanhã tragam os trabalhos prontos, valerá nota!!", "Marcelo", "2016/2", dataFormatada, 213,123.4, true, false);
-
-        //mensagens.add(mensagem);
+        // recyclerView.setAdapter(new MeuAdapter(mensagens, this));
 
 
 
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-        recyclerView.setLayoutManager(layout);
 
-        recyclerView.setAdapter(new MeuAdapter(mensagens, this));
+
+
+
+//        SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
+//
+//        Date data = new Date();
+//
+//        String dataFormatada = formataData.format(data);
+
+
+
+
+
+
+
+
+//Mensagem mensagem = new Mensagem("asdsad","Pessoal, amanhã tragam os trabalhos prontos, valerá nota!!", "Marcelo", "2016/2",
+//        dataFormatada, "2",dataFormatada, 342344654, false, false, "141");
+
+//mensagens.add(mensagem);
+
+    }
+
+    public void carregarListMensagens(){
 
 
     }
