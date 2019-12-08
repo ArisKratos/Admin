@@ -51,6 +51,7 @@ public class MeuAdapter extends RecyclerView.Adapter implements View.OnClickList
 
         holder.mensagem.setText(mensagem.getMensagem());
         holder.remetente.setText(mensagem.getRemetenteMsg());
+        holder.curso.setText(mensagem.getCursoMsg());
         holder.turma.setText(mensagem.getTurmaAnoMensagem());
         holder.semestre.setText(mensagem.getSemestreMensagem());
         holder.data.setText(mensagem.getDataMensagem());

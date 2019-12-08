@@ -8,7 +8,7 @@ import java.util.Date;
     public class Mensagem {
 
         public Mensagem(String id, String idRemetente,String mensagem, String remetenteMsg, String turmaAnoMensagem, String semestreMensagem, String dataMensagem , long timeMessage,
-                        boolean paraTodos, boolean mudancaHorario, String hora_atual){
+                        boolean paraTodos, boolean mudancaHorario, String hora_atual, String cursoMsg){
 
             this.id = id;
             this.idRemetente = idRemetente;
@@ -21,12 +21,14 @@ import java.util.Date;
             this.paraTodos = paraTodos;
             this.mudancaHorario = mudancaHorario;
             this.hora_atual = hora_atual;
+            this.cursoMsg = cursoMsg;
         }
 
         private String id;
         private String idRemetente;
         private long timeMassage;
         private String mensagem;
+        private String cursoMsg;
 
         private String remetenteMsg;
         private String hora_atual;
@@ -127,6 +129,15 @@ import java.util.Date;
         public void setHora_atual(String hora_atual) {
             this.hora_atual = hora_atual;
         }
+
+        public String getCursoMsg() {
+            return cursoMsg;
+        }
+
+        public void setCursoMsg(String cursoMsg) {
+            this.cursoMsg = cursoMsg;
+        }
+
 
 
 

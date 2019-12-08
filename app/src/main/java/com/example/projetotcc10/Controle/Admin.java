@@ -82,9 +82,10 @@ public class Admin extends AppCompatActivity
                                 long time = document.getLong("timeMassage");
                                 String turmaAno = document.getString("turmaAnoMensagem");
                                 String hora = document.getString("hora_atual");
+                                String curso = document.getString("cursoMsg");
 
 
-                                Mensagem u = new Mensagem(id, idRemetente, mensagem, remetente, turmaAno, semestre, data, time, paraTodos, mudanca, hora);
+                                Mensagem u = new Mensagem(id, idRemetente, mensagem, remetente, turmaAno, semestre, data, time, paraTodos, mudanca, hora, curso);
 
 
                                 mensagens.add(u);

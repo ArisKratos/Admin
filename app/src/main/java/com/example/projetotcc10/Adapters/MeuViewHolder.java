@@ -13,6 +13,7 @@ public class MeuViewHolder extends RecyclerView.ViewHolder implements View.OnCli
  final TextView data;
  final TextView hora;
  final TextView turma;
+ final TextView curso;
  final TextView semestre;
 
  ItemClickListener itemClickListener;
@@ -21,6 +22,9 @@ public class MeuViewHolder extends RecyclerView.ViewHolder implements View.OnCli
  public MeuViewHolder(View view) {
      super(view);
 
+
+     curso = (TextView)
+     view.findViewById(R.id.cursoMsg);
 
      hora = (TextView)
      view.findViewById(R.id.horaMsg);

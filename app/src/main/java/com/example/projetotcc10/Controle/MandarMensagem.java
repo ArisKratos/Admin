@@ -151,6 +151,7 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                                     String semestre = document.getString("semestre");
                                     String curso = document.getString("curso");
 
+
                                     Turma u = new Turma();
 
                                     u.setId(id);
@@ -167,7 +168,7 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                                     txtTurmaSemestre = turmas.get(i).getSemestre();
 
                                     Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, txtTurmaAno,
-                                            txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario, hora_atual);
+                                            txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario, hora_atual, nomeCurso );
 
                                     final Task<Void> set = FirebaseFirestore.getInstance().collection("cursos").document(cursos.get(finalJ).getId())
                                             .collection("turmas").document(turmas.get(i).getId()).collection("mensagens").document(mensagem.getId())
@@ -181,7 +182,7 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
         }
 
             Mensagem mensagem = new Mensagem(idMsg, idRemetente, textMsg, nomeRemetente, "para",
-                    "todos", dataFormatada, timeStamp, paraTodos, mudancaHorario, hora_atual);
+                    "todos", dataFormatada, timeStamp, paraTodos, mudancaHorario, hora_atual, nomeCurso);
 
             FirebaseFirestore.getInstance().collection("mensagens").document(idMsg).set(mensagem);
 
@@ -312,7 +313,7 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
 
                 Mensagem mensagem = new Mensagem(idMsg, idAdmilson, textMsg, nomeRemetente, txtTurmaAno,
-                        txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario,hora_atual);
+                        txtTurmaSemestre, dataFormatada, timeStamp, paraTodos, mudancaHorario,hora_atual, nomeCurso);
 
                 if (!mensagem.getMensagem().isEmpty()) {
 

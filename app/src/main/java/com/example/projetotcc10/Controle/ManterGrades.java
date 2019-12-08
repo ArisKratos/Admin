@@ -4,9 +4,11 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,11 +23,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetotcc10.Modelo.Curso;
+import com.example.projetotcc10.Modelo.Mensagem;
 import com.example.projetotcc10.Modelo.Turma;
 import com.example.projetotcc10.R;
 import com.google.android.gms.tasks.Continuation;
@@ -33,6 +37,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.collection.LLRBNode;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -42,8 +48,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class ManterGrades extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -57,6 +67,9 @@ public class ManterGrades extends AppCompatActivity implements AdapterView.OnIte
     private Uri pdfUri;
     private List<Curso> cursos;
     private List<Turma> turmas;
+    private ProgressBar mProgressBar;
+    private TextView aliasTxtProgress;
+    private String idRemetente;
 
     private Curso curso;
 
@@ -80,15 +93,21 @@ public class ManterGrades extends AppCompatActivity implements AdapterView.OnIte
 
         storage = FirebaseStorage.getInstance();
         database = FirebaseFirestore.getInstance();
+        idRemetente = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         linkSelectFile = findViewById(R.id.textSelecionarArquivo);
         buttonUparGrade = findViewById(R.id.uparGrade);
         spnCursos = findViewById(R.id.spinnerCursoGrades);
         spnTurmas = findViewById(R.id.spinnerTurma);
+        mProgressBar = findViewById(R.id.progressBar);
+        aliasTxtProgress = findViewById(R.id.txtProgress);
 
         spnCursos.setOnItemSelectedListener(this);
 
         carregarSpinnerCurso();
+
+
+        aliasTxtProgress.setText("selecione um arquivo");
 
         linkSelectFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +117,8 @@ public class ManterGrades extends AppCompatActivity implements AdapterView.OnIte
                         Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
 
                   selectPdf();
+
+
                 }
                 else {
                     ActivityCompat.requestPermissions(ManterGrades.this,
@@ -136,8 +157,6 @@ public class ManterGrades extends AppCompatActivity implements AdapterView.OnIte
                                           Turma turma = (Turma) spnTurmas.getSelectedItem();
                                           turma.setCurso(curso.getCurso());
 
-                                            Toast.makeText(getBaseContext(), "Upload successful", Toast.LENGTH_LONG).show();
-
                                             turma.setUrlGrade(uri.toString());
 
                                             FirebaseFirestore.getInstance().collection("cursos").document(curso.getId())
@@ -156,25 +175,68 @@ public class ManterGrades extends AppCompatActivity implements AdapterView.OnIte
                             .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                                   // mProgressBar.setProgress((int) progress);
+
+                                    mProgressBar.setVisibility(View.VISIBLE);
+                                    mProgressBar.setIndeterminate(false);
+
+                                    double progress = (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                   mProgressBar.setProgress((int) progress);
+
+                                   aliasTxtProgress.setText(progress + " %");
+                                   if(progress == 100){
+
+
+
+                                       aliasTxtProgress.setTextColor(Color.parseColor("#00c853"));
+                                       aliasTxtProgress.setText("100 % Upload efetuado com sucesso!");
+
+
+                                       String uid = UUID.randomUUID().toString();
+                                       Curso curso = (Curso) spnCursos.getSelectedItem();
+                                       nomeCurso = curso.getCurso();
+                                       Turma turma = (Turma) spnTurmas.getSelectedItem();
+                                       turma.setCurso(curso.getCurso());
+
+
+                                       SimpleDateFormat dateFormat_hora = new SimpleDateFormat("HH:mm");
+
+                                       SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
+
+                                       Date data = new Date();
+
+                                       final String dataFormatada = formataData.format(data);
+                                       final String hora_atual = dateFormat_hora.format(data);
+
+                                       final long timeStamp = System.currentTimeMillis();
+
+
+
+
+                                       Mensagem mensagem = new Mensagem(uid, idRemetente, "Upload de grade efetuada!",
+                                               "Upload grade", turma.getAno(), turma.getSemestre(), dataFormatada, timeStamp, false,
+                                               false, hora_atual, nomeCurso);
+
+                                       FirebaseFirestore.getInstance().collection("mensagens")
+                                               .document(uid).set(mensagem);
+
+                                       pdfUri = null;
+                                       mProgressBar.setVisibility(View.INVISIBLE);
+
+
+                                   }
                                 }
+
                             });
+
                 } else {
-                    Toast.makeText(getBaseContext(), "No file selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Selecione um arquivo", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        FloatingActionButton voltar = findViewById(R.id.buttonActionVoltar);
-        voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Admin.class);
-                startActivity(intent);
-            }
-        });
+       // aliasTxtProgress.setTextColor(View.);
     }
+
     public void carregarSpinnerCurso() {
 
         FirebaseFirestore.getInstance().collection("cursos")
@@ -276,6 +338,9 @@ public class ManterGrades extends AppCompatActivity implements AdapterView.OnIte
         if(requestCode==86 && resultCode==RESULT_OK && data!=null){
 
             pdfUri = data.getData();
+
+            aliasTxtProgress.setText("Arquivo selecionado");
+            aliasTxtProgress.setTextColor(Color.parseColor("#039be5"));
 
         }
         else{

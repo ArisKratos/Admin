@@ -7,6 +7,9 @@
     android:background="@color/bgColor"
     tools:context=".Controle.ManterGrades">
 
+
+
+
     <Button
         android:id="@+id/uparGrade"
         android:layout_width="wrap_content"
@@ -56,5 +59,29 @@
         android:textColor="@color/cardview_light_background"
         app:layout_constraintStart_toEndOf="@+id/spinnerTurma"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="394dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="100dp"
+        android:max="100"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/uparGrade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

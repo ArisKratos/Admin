@@ -7,6 +7,17 @@
     android:clipToPadding="false">
 
     <TextView
+        android:id="@+id/textAux"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+
+        android:text="-"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintStart_toEndOf="@+id/turmaAnoMsg"
+        app:layout_constraintTop_toBottomOf="@+id/nome_remetente" />
+
+    <TextView
         android:id="@+id/horaMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +32,7 @@
         android:id="@+id/textAux5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
+        android:layout_marginStart="32dp"
         android:text="Para:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,15 +41,15 @@
         app:layout_constraintTop_toBottomOf="@+id/nome_remetente"
         app:layout_constraintVertical_bias="0.0" />
 
+
     <TextView
         android:id="@+id/textAux4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
 
         android:text="-"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toEndOf="@+id/turmaAnoMsg"
+        app:layout_constraintStart_toEndOf="@+id/semestreMsg"
         app:layout_constraintTop_toBottomOf="@+id/nome_remetente" />
 
     <TextView
@@ -79,6 +90,15 @@
         app:layout_constraintTop_toBottomOf="@+id/nome_remetente" />
 
     <TextView
+        android:id="@+id/cursoMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="Informática"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textAux4" />
+
+    <TextView
         android:id="@+id/textAux3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,39 +106,28 @@
         android:text="Hora:"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dataMsg"
+        app:layout_constraintStart_toEndOf="@+id/cursoMsg"
         app:layout_constraintTop_toBottomOf="@+id/nome_remetente"
         app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textAux2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Data:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/semestreMsg"
-        app:layout_constraintTop_toBottomOf="@+id/nome_remetente" />
 
     <TextView
         android:id="@+id/dataMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:text="12/10/19"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textAux2"
-        app:layout_constraintTop_toBottomOf="@+id/nome_remetente"
+        app:layout_constraintEnd_toEndOf="@+id/nome_remetente"
+        app:layout_constraintTop_toTopOf="@+id/nome_remetente"
         tools:text="@tools:sample/date/mmddyy" />
 
     <TextView
         android:id="@+id/semestreMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textAux4"
+        app:layout_constraintStart_toEndOf="@+id/turmaAnoMsg"
         app:layout_constraintTop_toBottomOf="@+id/nome_remetente" />
 
 </android.support.constraint.ConstraintLayout>
