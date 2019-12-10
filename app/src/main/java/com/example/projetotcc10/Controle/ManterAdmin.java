@@ -49,14 +49,14 @@ public class ManterAdmin extends AppCompatActivity {
 
 
 
-        FloatingActionButton voltar = findViewById(R.id.buttonActionVoltar);
-        voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-     public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Listar_Admin.class);
-                startActivity(intent);
-     }
-        });
+//        FloatingActionButton voltar = findViewById(R.id.buttonActionVoltar);
+//        voltar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//     public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(), Listar_Admin.class);
+//                startActivity(intent);
+//     }
+//        });
 
 
         aliasBtncadastrarAdmin.setOnClickListener(new View.OnClickListener() {

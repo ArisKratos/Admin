@@ -73,12 +73,12 @@
         android:id="@+id/spinnerCurso"
         android:layout_width="140dp"
         android:layout_height="37dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="120dp"
         android:background="@drawable/bg_spinner_rounded"
         android:popupBackground="@drawable/bg_spinner_rounded"
-        app:layout_constraintStart_toEndOf="@+id/textAux3"
-        app:layout_constraintTop_toBottomOf="@+id/textAux3"></Spinner>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSemestreTurma"></Spinner>
 
     <Button
         android:id="@+id/btnCadastrarTurma"

@@ -194,8 +194,9 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                                     final Task<Void> set = FirebaseFirestore.getInstance().collection("cursos").document(cursos.get(finalJ).getId())
                                             .collection("turmas").document(turmas.get(i).getId()).collection("mensagens").document(mensagem.getId())
                                             .set(mensagem);
+
                                 }
-//                            }
+//
                             }
                         }
 
