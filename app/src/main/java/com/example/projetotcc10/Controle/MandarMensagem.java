@@ -15,11 +15,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.projetotcc10.Modelo.Aluno;
 import com.example.projetotcc10.Modelo.Curso;
 import com.example.projetotcc10.Modelo.Mensagem;
 import com.example.projetotcc10.Modelo.Professor;
 import com.example.projetotcc10.Modelo.Turma;
 import com.example.projetotcc10.R;
+import com.example.projetotcc10.Services.MySingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,10 +33,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class MandarMensagem extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
@@ -38,6 +49,7 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
     private EditText textMensagem;
     private List <Curso> cursos;
     private List<Turma> turmas;
+    private List<Aluno> alunos;
     com.example.projetotcc10.Modelo.Admin admin;
     private List <com.example.projetotcc10.Modelo.Admin> administradores;
     private Spinner spnCursos;
@@ -50,6 +62,16 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
     private String para;
     private  String todos;
     private String txtTurmaAno, txtTurmaSemestre;
+
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAAo7mweGA:APA91bGDHvSeiMjst5UU0sEhkyQ0Kga7_Nykjj9GnqA0stYRDEitbhuseng2ZDrBIEQjHYmwB6CMb_TLuD7ePP0vocyJB1iyDtplqC-vjqA434gFkhrzC3BqKP987w6TPFEJjdZRuPfs";
+    final private String contentType = "application/json";
+    final String TAG2 = "NOTIFICATION TAG";
+
+    String NOTIFICATION_TITLE;
+    String NOTIFICATION_MESSAGE;
+    String TOPIC, TOKEN;
+
 
     private String idRemetente;
 
@@ -80,6 +102,7 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
         cursos = new ArrayList<>();
         turmas = new ArrayList<>();
+        alunos = new ArrayList <>();
         administradores = new ArrayList<>();
 
         nomeRemetente = "Coordenadoria";
@@ -105,9 +128,7 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
             }
 
         });
-
     }
-
     public void enviarParaTodos(){
 
         para = "para";
@@ -264,6 +285,7 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
                 });
     }
 
+
     public void sendMassage(){
 
         if(spnTurmas.getSelectedItem() != null) {
@@ -323,6 +345,8 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
 
                         FirebaseFirestore.getInstance().collection("mensagens").document(idMsg).set(mensagem);
 
+                        prepararNotificacao(mensagem);
+
 
                     Toast.makeText(getApplicationContext(), "mensagem enviada com sucesso!!", Toast.LENGTH_SHORT).show();
 
@@ -342,6 +366,101 @@ public class MandarMensagem extends AppCompatActivity implements AdapterView.OnI
             Toast.makeText(getApplicationContext(), "Escolha uma turma para enviar a mensagem", Toast.LENGTH_SHORT).show();
 
         }
+    }
+    private void listadealunos() {
+
+        final Curso curso = (Curso) spnCursos.getSelectedItem();
+        final Turma turma = (Turma) spnTurmas.getSelectedItem();
+        FirebaseFirestore.getInstance().collection("cursos").document(curso.getId())
+                .collection("turmas").document(turma.getId())
+                .collection("alunos")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            alunos.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                String id = document.getId();
+
+                                String token = document.getString("token");
+
+//                                String nomeCurso = document.getString("curso");
+//
+//
+//                                Curso u = new Curso();
+//                                u.setId(document.getId());
+//                                u.setCurso(nomeCurso);
+                                Aluno a = new Aluno();
+                                a.setId(id);
+                                a.setToken(token);
+                                alunos.add(a);
+
+                            }
+
+                        }
+                    }
+                });
+
+        for (int i=0;i<alunos.size(); i++) {
+
+
+            JSONObject notification = new JSONObject();
+            JSONObject notifcationBody = new JSONObject();
+            try {
+                notifcationBody.put("title", NOTIFICATION_TITLE);
+                notifcationBody.put("message", NOTIFICATION_MESSAGE);
+
+                notification.put("to", alunos.get(i).getToken());
+                //notification.put("to", TOPIC);
+                notification.put("data", notifcationBody);
+                Log.i("notifica", alunos.get(i).toString());
+            } catch (JSONException e) {
+                Log.e(TAG, "onCreate: " + e.getMessage());
+            }
+            sendNotification(notification);
+        }
+
+    }
+
+
+    private void prepararNotificacao(Mensagem mensagem){
+        TOPIC = "/topics/userABC"; //topic has to match what the receiver subscribed to
+        NOTIFICATION_TITLE = mensagem.getRemetenteMsg().toString();
+        NOTIFICATION_MESSAGE = mensagem.getMensagem();
+
+        listadealunos();
+
+
+
+    }
+    private void sendNotification(JSONObject notification) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(TAG, "onResponse: " + response.toString());
+//                        edtTitle.setText("");
+//                        edtMessage.setText("");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MandarMensagem.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i(TAG, "onErrorResponse: Didn't work");
+                    }
+                }){
+            @Override
+            public Map <String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap <>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
